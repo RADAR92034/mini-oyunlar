@@ -213,7 +213,7 @@ T.forEach(x=>{const b=document.createElement("button");b.className=x[0]===t?"on"
 }
 let t0="mavi";try{t0=localStorage.getItem("th")||"mavi"}catch(e){}
 theme(T.some(x=>x[0]===t0)?t0:"mavi");
-const LINK="https://claude.ai/artifact/35uNQ1RpMRJ5QekH1hQCAH",TXT="Bu siteye bak: ";
+const LINK="https://mini-oyunlar.pages.dev",TXT="Mini Oyunlar sitesine bak: ";
 const iv=document.getElementById("iv");
 iv.innerHTML='<input id="lk" readonly value="'+LINK+'"><button id="cp">Linki kopyala</button><a target="_blank" rel="noopener" href="https://wa.me/?text='+encodeURIComponent(TXT+LINK)+'">WhatsApp ile gönder</a><a target="_blank" rel="noopener" href="https://t.me/share/url?url='+encodeURIComponent(LINK)+'&text='+encodeURIComponent(TXT)+'">Telegram ile gönder</a><button id="dc">Discord ile gönder</button>'+(navigator.share?'<button id="sh">Paylaş…</button>':'');
 const cp=document.getElementById("cp");
