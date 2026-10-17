@@ -108,6 +108,23 @@ nav button:not(.on){background:transparent}
 @keyframes bj-in{from{opacity:0;transform:translateY(-7px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:640px){.bj-table{border-width:6px;border-radius:28px;padding:13px 8px;min-height:290px}.bj-table:before{inset:8px;border-radius:20px}.bj-card{flex-basis:43px;width:43px;height:64px;font-size:.88rem;padding:0}.bj-card > span:first-child{left:4px;top:3px}.bj-card .bj-bottom{right:4px;bottom:3px}.bj-card .bj-suit{font-size:1.15rem}.bj-cards{gap:5px;min-height:72px}.bj-stat{min-width:95px;padding:10px}.bj-stat strong{font-size:1.05rem}}
 
+
+/* 101 Okey controls; existing table, tiles and wood rack appearance stay intact */
+.ok-controls{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin-top:8px}
+.ok-controls .btn{margin:2px;padding:8px 10px}
+.ok-controls .btn:disabled{opacity:.42;cursor:not-allowed}
+.ok-status{min-height:1.5em}
+.ok-points{font-size:.8rem;font-weight:500;color:#f3d9b8;margin-top:5px}
+.ok-selected{border:3px solid #ffd54a!important;transform:translateY(-3px);box-shadow:0 0 0 2px #0003,0 8px 10px #0004!important}
+.ok-opened{padding:3px 2px 8px;margin-bottom:6px;border-bottom:4px solid #4a2c14}
+.ok-meld-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:4px 0;font-size:.8rem}
+.ok-meld-row>b{min-width:44px;color:#f3d9b8}
+.ok-meld-row .grp{margin:2px;padding:1px}
+.ok-meld-row .tile{width:27px;height:37px;font-size:.78rem;margin:2px;box-shadow:0 1px 0 #d3c6a4,0 2px 0 #b3a27a,0 3px 4px #0003}
+.ok-meld-row .tile small{font-size:.48rem}
+.ok-opened .hint{display:block;margin-bottom:4px}
+@media(max-width:640px){.ok-controls .btn{font-size:.78rem;padding:8px 7px}.ok-meld-row .tile{width:24px;height:34px;font-size:.72rem}.ok-points{font-size:.75rem}}
+
 </style>
 </head>
 <body>
@@ -117,7 +134,7 @@ nav button:not(.on){background:transparent}
 <p class="d">Sitenin görünümünü buradan değiştir.</p>
 <h3>Tema</h3>
 <div class="th" id="th"></div></section><section id="p2" hidden><h2>👥 Arkadaşını davet et</h2><p class="d">Siteyi arkadaşına gönder.</p><div class="iv" id="iv" style="margin-top:14px;max-width:380px"></div></section>
-<section id="g1" hidden><h2>🐍 Yılan</h2><p class="d">Ok tuşları, WASD ya da düğmeler.</p><div id="m1" class="m"></div><canvas id="cv" width="360" height="360"></canvas><div class="pad"><span></span><button class="btn" data-d="0,-1">▲</button><span></span><button class="btn" data-d="-1,0">◀</button><button class="btn" data-d="0,1">▼</button><button class="btn" data-d="1,0">▶</button></div></section><section id="g2" hidden><h2>🃏 Hafıza</h2><p class="d">Eş kartları bul.</p><div id="sz"></div><div id="m2" class="m"></div><div class="grid" id="gr2"></div></section><section id="g3" hidden><h2>❌ XOX</h2><p class="d">Sen X’sin, bilgisayar O.</p><div id="m3" class="m"></div><div class="grid" id="gr3" style="grid-template-columns:repeat(3,1fr);max-width:300px"></div><button class="btn" id="rs3" style="margin-top:12px">Yeni oyun</button></section><section id="g4" hidden><h2>🎴 101 Okey</h2><p class="d">Elinde toplam en az 101 puanlık per (aynı sayı, farklı renk, en az 3 taş) ya da seri (aynı renk, ardışık, en az 3 taş) olunca “101 aç” ile kazanırsın. Taşları ıstakada sürükleyerek dizersin; 3 ve daha fazla taş geçerli per ya da seri olunca birbirine yapışır (sarı zemin). Atmak için taşı masanın ortasındaki boşa sürükle ya da taşa çift tıkla. Deste biterse en yüksek puanlı kazanır.</p><div id="ok"></div></section>
+<section id="g1" hidden><h2>🐍 Yılan</h2><p class="d">Ok tuşları, WASD ya da düğmeler.</p><div id="m1" class="m"></div><canvas id="cv" width="360" height="360"></canvas><div class="pad"><span></span><button class="btn" data-d="0,-1">▲</button><span></span><button class="btn" data-d="-1,0">◀</button><button class="btn" data-d="0,1">▼</button><button class="btn" data-d="1,0">▶</button></div></section><section id="g2" hidden><h2>🃏 Hafıza</h2><p class="d">Eş kartları bul.</p><div id="sz"></div><div id="m2" class="m"></div><div class="grid" id="gr2"></div></section><section id="g3" hidden><h2>❌ XOX</h2><p class="d">Sen X’sin, bilgisayar O.</p><div id="m3" class="m"></div><div class="grid" id="gr3" style="grid-template-columns:repeat(3,1fr);max-width:300px"></div><button class="btn" id="rs3" style="margin-top:12px">Yeni oyun</button></section><section id="g4" hidden><h2>🎴 101 Okey</h2><p class="d">22 taşla başlarsın; sıran geldiğinde desteden veya önceki oyuncunun attığı taştan alırsın. Aynı sayıdaki farklı renk taşlarla per, aynı renkte ardışık taşlarla seri oluştur. Geçerli grupların toplamı en az 101 puan olunca “101 Aç” düğmesini kullan. Taşı seçmek için tıkla, yerini değiştirmek için sürükle; atmak için “Seçili taşı at” düğmesine bas. Açtıktan sonra yeni grupları “Perleri masaya koy” ile oynayabilirsin. Deste bitince elde kalan puanı en az olan kazanır.</p><div id="ok"></div></section>
 <section id="g5" hidden>
   <div class="bj-wrap">
     <h2>🃏 21 Blackjack</h2>
@@ -245,151 +262,344 @@ function start(){b=Array(9).fill("");over=0;m.textContent="Sıra sende";draw()}
 q("rs3").onclick=start;start()}
 
 function okey101(){
-const COL=['#d32f2f','#c58a00','#1976d2','#222'],CN=['kırmızı','sarı','mavi','siyah'],box=q('ok');
-let deck,hands,piles,ind,ok,turn,phase,over,dead=false,tm,rack=[],note='',drag=null,lastTap={};
-const isW=t=>!t.f&&t.c===ok.c&&t.n===ok.n;
-const srt=h=>h.sort((a,b)=>a.c-b.c||a.n-b.n);
-function solve(h){
-const by={},wl=[];
-h.forEach(t=>{if(isW(t))wl.push(t);else{const k=t.c*14+t.n;(by[k]=by[k]||[]).push(t)}});
-const F=[],add=k=>{const pr=k.filter(x=>by[x]&&by[x].length).length;if(pr>=2&&k.length-pr<=wl.length)F.push({k,p:k.reduce((a,x)=>a+x%14,0)})};
-for(let n=1;n<=13;n++)for(let m=7;m<16;m++){const cs=[0,1,2,3].filter(c=>m>>c&1);if(cs.length>=3)add(cs.map(c=>c*14+n))}
-for(let c=0;c<4;c++)for(let s=1;s<=11;s++)for(let e=s+2;e<=13;e++){const k=[];for(let n=s;n<=e;n++)k.push(c*14+n);add(k)}
-let bp=0,bg=[],cur=[],it=0;
-(function d(i,pts){
-if(pts>bp){bp=pts;bg=cur.map(g=>g.slice())}
-if(++it>30000)return;
-for(let j=i;j<F.length;j++){
-const g=[];let real=0,good=1;
-for(const x of F[j].k){const a=by[x];if(a&&a.length){g.push(a.pop());real++}else if(wl.length)g.push(wl.pop());else{good=0;break}}
-if(good&&real>=2){cur.push(g);d(j,pts+F[j].p);cur.pop()}
-for(const t of g){if(isW(t))wl.push(t);else by[t.c*14+t.n].push(t)}}})(0,0);
-return{pts:bp,groups:bg}}
-function tl(t,b){const j=isW(t)?'<small>J</small>':t.f?'<small>🃏</small>':'';return(b?'<button':'<span')+` class='tile${isW(t)?' wl':''}' ${b?`data-i='${t.id}' `:''}style='color:${COL[t.c]}'>${t.n}${j}`+(b?'</button>':'</span>')}
-function start(){
-const t=[];let id=0;
-for(let k=0;k<2;k++)for(let c=0;c<4;c++)for(let n=1;n<=13;n++)t.push({c,n,id:id++});
-t.push({c:0,n:0,id:id++,f:1},{c:0,n:0,id:id++,f:1});
-deck=t.sort(()=>Math.random()-.5);
-ind=deck.splice(deck.findIndex(x=>!x.f),1)[0];
-ok={c:ind.c,n:ind.n%13+1};
-deck.forEach(x=>{if(x.f){x.c=ok.c;x.n=ok.n}});
-hands=[0,1,2,3].map(i=>srt(deck.splice(0,i?14:15)));
-piles=[[],[],[],[]];turn=0;phase='x';over='';note='';rack=Array(30).fill(null);hands[0].sort(()=>Math.random()-.5).forEach((t,i)=>rack[i]=t);sync();R()}
-function ROld(){
-if(dead)return;
-const h=hands[0],r=solve(h),used=new Set(r.groups.flat().map(t=>t.id)),rest=h.filter(t=>!used.has(t.id)),dr=!over&&!turn&&phase==='d';
-const last=p=>{const l=piles[p].slice(-1)[0];return l?tl(l):`<span class='tile emp'></span>`};
-const bk=(p,v)=>`<div class=seatn>Bot ${p} · ${hands[p].length} taş</div><div class='brack${v?' v':''}'>${`<i class=tb></i>`.repeat(hands[p].length)}</div>`;
-const left=dr&&piles[3].length?`<button class='pile glow' id=pl>${last(3)}</button>`:last(3);
-const msg=over||(turn?'Bot oynuyor…':phase==='d'?'Desteden çek ya da soldaki taşı al':'Atmak için bir taşa tıkla')+` · Perlerin: ${r.pts}/101`;
-let b='';
-if(!over&&!turn&&phase==='x'&&r.pts>=101)b=`<button class=btn id=op>101 aç (${r.pts})</button>`;
-if(over)b=`<button class=btn id=rs4>Yeni el</button>`;
-const sh1=r.groups.map(g=>`<span class=grp>${g.map(t=>tl(t,1)).join('')}</span>`).join('')||`<span class=hint>Henüz per yok</span>`;
-box.innerHTML=`<div class=tbl><div class=sT>${bk(2)}</div><div class=sL>${bk(3,1)}</div><div class=mid><div class=mT>${last(2)}</div><div class=mL>${left}</div><div class=mC><button class='deck${dr?' glow':''}' id=dk${dr?'':' disabled'}><i class=tb></i><br>${deck.length}</button><br>Gösterge ${tl(ind)}<br>Okey: <b>${CN[ok.c]} ${ok.n}</b></div><div class=mR>${last(1)}</div><div class=mB>${last(0)}</div></div><div class=sR>${bk(1,1)}</div><div class=msg>${msg} ${b}</div><div class=rack><div class=shelf>${sh1}</div><div class=shelf>${rest.map(t=>tl(t,1)).join('')}</div></div></div><p class=d>J = joker (okey taşı), 🃏 = sahte okey</p>`;
-const g=i=>box.querySelector('#'+i);
-if(g('dk'))g('dk').onclick=()=>take(0);
-if(g('pl'))g('pl').onclick=()=>take(1);
-if(g('op'))g('op').onclick=()=>fin(0);
-if(g('rs4'))g('rs4').onclick=start;
-box.querySelectorAll('button.tile').forEach(b=>b.onclick=()=>disc(+b.dataset.i))}
-function fin(p){over=p===0?'🎉 101 açtın, kazandın!':`Bot ${p} 101 açtı, kaybettin.`;R()}
-function endPts(){const sc=hands.map((x,i)=>i?solve(x).pts:groups().total),m=Math.max(...sc),w=sc.indexOf(m);over=`Deste bitti. ${w===0?`En yüksek puan sende (${m}), kazandın!`:`Bot ${w} kazandı (${m} puan).`}`;R()}
-function take(f){
-if(over||turn||phase!=='d')return;
-if(f)hands[0].push(piles[3].pop());else{if(!deck.length)return endPts();hands[0].push(deck.pop())}
-srt(hands[0]);phase='x';R()}
-function disc(id){
-if(over||turn||phase!=='x')return;
-const i=hands[0].findIndex(t=>t.id===id);
-piles[0].push(hands[0].splice(i,1)[0]);turn=1;R();tm=setTimeout(bot,700)}
-function bot(){
-if(dead||over)return;
-const p=turn,h=hands[p],lp=piles[(p+3)%4],top=lp[lp.length-1];
-if(top&&solve(h.concat(top)).pts>solve(h).pts)h.push(lp.pop());
-else if(deck.length)h.push(deck.pop());
-else return endPts();
-if(solve(h).pts>=101)return fin(p);
-let bi=0,bs=-1e9;
-h.forEach((t,i)=>{if(isW(t))return;const r=h.filter((_,j)=>j!==i),sy=r.filter(u=>(u.n===t.n&&u.c!==t.c)||(u.c===t.c&&u.n!==t.n&&Math.abs(u.n-t.n)<=2)).length,sc=solve(r).pts*100-sy;if(sc>bs){bs=sc;bi=i}});
-piles[p].push(h.splice(bi,1)[0]);srt(h);
-turn=(p+1)%4;if(turn===0)phase='d';
-R();if(turn)tm=setTimeout(bot,700)}
-function sync(){hands[0]=rack.filter(Boolean)}
-function meld(a){
-const n=a.length;if(n<3||n>13)return 0;
-const nw=a.filter(t=>!isW(t));if(!nw.length)return 0;
-if(n<=4&&nw.every(t=>t.n===nw[0].n)&&new Set(nw.map(t=>t.c)).size===nw.length)return nw[0].n*n;
-for(const b of[a,a.slice().reverse()]){
-let c=-1,st=null,good=1;
-b.forEach((t,i)=>{if(isW(t))return;if(c<0)c=t.c;if(t.c!==c)good=0;const s=t.n-i;if(st===null)st=s;else if(st!==s)good=0});
-if(good&&st>=1&&st+n-1<=13)return(2*st+n-1)*n/2}
-return 0}
-function groups(){
-const info={};let total=0;
-for(let row=0;row<2;row++){
-let i=0;
-while(i<15){
-if(!rack[row*15+i]){i++;continue}
-let j=i;while(j<15&&rack[row*15+j])j++;
-const blk=rack.slice(row*15+i,row*15+j),L=blk.length,dp=[{c:0,p:0,prev:-1,take:0}];
-for(let k=1;k<=L;k++){
-dp[k]={c:dp[k-1].c,p:dp[k-1].p,prev:k-1,take:0};
-for(let s=Math.max(0,k-13);s<=k-3;s++){const m=meld(blk.slice(s,k));if(m){const c=dp[s].c+(k-s),p=dp[s].p+m;if(c>dp[k].c||(c===dp[k].c&&p>dp[k].p))dp[k]={c,p,prev:s,take:m}}}}
-let k=L;
-while(k>0){const d=dp[k];if(d.take){for(let q=d.prev;q<k;q++)info[row*15+i+q]={l:q===d.prev,r:q===k-1};total+=d.take}k=d.prev}
-i=j}}
-return{info,total}}
-function R(){
-if(dead)return;
-const dr=!over&&!turn&&phase==='d',gr=groups(),dz=!over&&!turn&&phase==='x';
-const last=p=>{const l=piles[p].slice(-1)[0];return l?tl(l):`<span class='tile emp'></span>`};
-const bk=(p,v)=>`<div class=seatn>Bot ${p} · ${hands[p].length} taş</div><div class='brack${v?' v':''}'>${`<i class=tb></i>`.repeat(hands[p].length)}</div>`;
-const left=dr&&piles[3].length?`<button class='pile glow' id=pl>${last(3)}</button>`:last(3);
-const msg=over||(turn?'Bot oynuyor…':phase==='d'?'Desteden çek ya da soldaki taşı al':'Taşları sürükleyerek diz; atmak için taşı ortadaki boşa bırak')+(note?' · '+note:'');
-let b='';
-if(!over&&!turn&&phase==='x')b=`<button class=btn id=op>101 aç</button>`;
-if(over)b=`<button class=btn id=rs4>Yeni el</button>`;
-const row=r=>`<div class=rrow>${Array.from({length:15},(_,i)=>{const s=r*15+i,t=rack[s],g=gr.info[s];return `<div class='slot${g?' g':''}${g&&g.l?' gl':''}${g&&g.r?' gr':''}' data-s=${s}>${t?tl(t,1):''}</div>`}).join('')}</div>`;
-box.innerHTML=`<div class=tbl><div class=sT>${bk(2)}</div><div class=sL>${bk(3,1)}</div><div class=mid><div class=mT>${last(2)}</div><div class=mL>${left}</div><div class=mC><button class='deck${dr?' glow':''}' id=dk${dr?'':' disabled'}><i class=tb></i><br>${deck.length}</button><br>Gösterge ${tl(ind)}<br>Okey: <b>${CN[ok.c]} ${ok.n}</b></div><div class=mR>${last(1)}</div><div class='mB${dz?' glow':''}'>${last(0)}</div></div><div class=sR>${bk(1,1)}</div><div class=msg>${msg} ${b}</div><div class=rack>${row(0)}${row(1)}</div></div><p class=d>J = joker (okey taşı), 🃏 = sahte okey</p>`;
-const g=i=>box.querySelector('#'+i);
-if(g('dk'))g('dk').onclick=()=>takeCard(0);
-if(g('pl'))g('pl').onclick=()=>takeCard(1);
-if(g('op'))g('op').onclick=openIt;
-if(g('rs4'))g('rs4').onclick=start}
-function takeCard(f){
-if(over||turn||phase!=='d')return;
-let t;if(f)t=piles[3].pop();else{if(!deck.length)return endPts();t=deck.pop()}
-rack[rack.findIndex(x=>!x)]=t;sync();phase='x';note='';R()}
-function discard(s){
-if(over||turn||phase!=='x')return;
-const t=rack[s];if(!t)return;
-rack[s]=null;sync();piles[0].push(t);note='';turn=1;R();tm=setTimeout(bot,700)}
-function openIt(){
-if(over||turn||phase!=='x')return;
-if(groups().total>=101)fin(0);else{note='Perlerin 101 puana ulaşmıyor';R()}}
-box.onpointerdown=e=>{
-const el=e.target.closest('.rack .tile');if(!el||dead)return;
-const s=+el.parentElement.dataset.s;if(!rack[s])return;
-e.preventDefault();
-const r=el.getBoundingClientRect(),cl=el.cloneNode(true);
-cl.classList.add('fl');cl.style.cssText+=`;position:fixed;left:${r.left}px;top:${r.top}px;pointer-events:none;z-index:99;margin:0`;
-document.body.appendChild(cl);el.style.opacity=.3;
-drag={s,cl,ox:e.clientX-r.left,oy:e.clientY-r.top,mv:false,x:e.clientX,y:e.clientY};
-try{box.setPointerCapture(e.pointerId)}catch(x){}};
-box.onpointermove=e=>{if(!drag)return;const d=drag;if(Math.abs(e.clientX-d.x)+Math.abs(e.clientY-d.y)>4)d.mv=true;d.cl.style.left=(e.clientX-d.ox)+'px';d.cl.style.top=(e.clientY-d.oy)+'px'};
-box.onpointerup=e=>{
-if(!drag)return;
-const d=drag;drag=null;d.cl.remove();
-const el=document.elementFromPoint(e.clientX,e.clientY),sl=el&&el.closest('[data-s]'),dz=el&&el.closest('.mB');
-if(d.mv&&sl){const a=d.s,b=+sl.dataset.s,x=rack[a];rack[a]=rack[b];rack[b]=x;sync();note=''}
-else if(d.mv&&dz&&phase==='x'&&!turn&&!over){discard(d.s);return}
-else if(!d.mv){const n=Date.now();if(lastTap.s===d.s&&n-lastTap.t<350&&phase==='x'&&!turn&&!over){lastTap={};discard(d.s);return}lastTap={s:d.s,t:n}}
-R()};
-box.onpointercancel=()=>{if(drag){drag.cl.remove();drag=null;R()}};
-stopG=()=>{dead=true;clearTimeout(tm)};
-start()}
+  const COL=['#d32f2f','#c58a00','#1976d2','#222'],CN=['kırmızı','sarı','mavi','siyah'],box=q('ok');
+  let deck=[],hands=[[],[],[],[]],discards=[[],[],[],[]],indicator=null,ok=null,turn=0,phase='action',over='',dead=false,timer=null,rack=Array(30).fill(null),note='',drag=null,selectedSlot=null,opened=[false,false,false,false],tableMelds=[[],[],[],[]];
+  const isWild=t=>!!t&&!t.fake&&t.c===ok.c&&t.n===ok.n;
+  const fmtTiles=n=>`${n} taş`;
+  const sortTiles=a=>a.slice().sort((x,y)=>x.c-y.c||x.n-y.n||Number(!!x.fake)-Number(!!y.fake));
+  const hand0=()=>rack.filter(Boolean);
+  function sync(){hands[0]=hand0();if(selectedSlot!==null&&!rack[selectedSlot])selectedSlot=null}
+  function tileLabel(t){return t.fake?`${t.n}<small>🃏</small>`:`${t.n}${isWild(t)?'<small>J</small>':''}`}
+  function tileHTML(t,button=false,slot=null){
+    if(!t)return `<span class="tile emp"></span>`;
+    const wild=isWild(t),sel=button&&slot===selectedSlot;
+    const tag=button?'button':'span';
+    const attrs=button?` type="button" data-i="${t.id}" aria-label="${t.fake?'Sahte okey':CN[t.c]+' '+t.n}"`:'';
+    return `<${tag} class="tile${wild?' wl':''}${sel?' ok-selected':''}" ${attrs} style="color:${COL[t.c]}">${tileLabel(t)}</${tag}>`;
+  }
+  function pointsForMeld(cards){
+    const n=cards.length;
+    if(n<3||n>13)return null;
+    const wilds=cards.filter(isWild),plain=cards.filter(t=>!isWild(t));
+    if(plain.length<2)return null;
+    // Same-number set: each ordinary tile must have a different colour; jokers fill missing colours.
+    const rank=plain[0].n;
+    if(cards.length<=4&&plain.every(t=>t.n===rank)&&new Set(plain.map(t=>t.c)).size===plain.length){
+      if(new Set(plain.map(t=>t.c)).size+wilds.length<=4)return {points:rank*n,type:'set'};
+    }
+    // Same-colour consecutive run; no 13-to-1 wraparound. Wild tiles may fill missing ranks.
+    const colour=plain[0].c;
+    if(plain.every(t=>t.c===colour)){
+      for(let start=1;start+n-1<=13;start++){
+        const expected=new Set(Array.from({length:n},(_,i)=>start+i));
+        if(plain.every(t=>expected.has(t.n))&&new Set(plain.map(t=>t.n)).size===plain.length){
+          return {points:Array.from({length:n},(_,i)=>start+i).reduce((a,b)=>a+b,0),type:'run'};
+        }
+      }
+    }
+    return null;
+  }
+  function getMeldCandidates(cards){
+    const map=new Map(),n=cards.length;
+    const add=idxs=>{
+      if(idxs.length<3||idxs.length>13)return;
+      const sorted=idxs.slice().sort((a,b)=>a-b),mask=sorted.reduce((m,i)=>m|(1<<i),0),key=String(mask);
+      if(map.has(key))return;
+      const v=pointsForMeld(sorted.map(i=>cards[i]));
+      if(v)map.set(key,{mask,indices:sorted,tiles:sorted.map(i=>cards[i]),points:v.points,type:v.type});
+    };
+    // Sets: choose 3 or 4 tiles of a common number, allowing wild tiles to fill a missing colour.
+    for(let rank=1;rank<=13;rank++){
+      const eligible=cards.map((t,i)=>({t,i})).filter(x=>isWild(x.t)||x.t.n===rank).map(x=>x.i);
+      for(const size of [3,4]){
+        const walk=(at,chosen)=>{
+          if(chosen.length===size){add(chosen);return}
+          for(let k=at;k<=eligible.length-(size-chosen.length);k++)walk(k+1,chosen.concat(eligible[k]));
+        };
+        walk(0,[]);
+      }
+    }
+    // Runs: enumerate possible consecutive segments and choose matching tiles or wilds per rank.
+    for(let colour=0;colour<4;colour++){
+      for(let start=1;start<=13;start++){
+        for(let len=3;start+len-1<=13;len++){
+          const choices=[];
+          let missing=0;
+          const wildIndices=[];
+          for(let i=0;i<n;i++)if(isWild(cards[i]))wildIndices.push(i);
+          for(let step=0;step<len;step++){
+            const rank=start+step;
+            const exact=[];
+            for(let i=0;i<n;i++)if(cards[i].c===colour&&cards[i].n===rank)exact.push(i);
+            if(!exact.length)missing++;
+            // A run cannot contain more missing ranks than available wild tiles.
+            if(missing>wildIndices.length)break;
+            choices.push(Array.from(new Set(exact.concat(wildIndices))));
+          }
+          if(missing>wildIndices.length||choices.length!==len)continue;
+          const walk=(step,chosen,mask)=>{
+            if(step===len){add(chosen);return}
+            for(const i of choices[step]){
+              const bit=1<<i;if(mask&bit)continue;
+              walk(step+1,chosen.concat(i),mask|bit);
+            }
+          };
+          walk(0,[],0);
+        }
+      }
+    }
+    return Array.from(map.values());
+  }
+  function greedyMelds(cards){
+    if(!cards.length)return {groups:[],points:0,used:new Set()};
+    const candidates=getMeldCandidates(cards);
+    const strategies=[
+      (a,b)=>b.points-a.points||b.indices.length-a.indices.length,
+      (a,b)=>b.indices.length-a.indices.length||b.points-a.points,
+      (a,b)=>(b.points/b.indices.length)-(a.points/a.indices.length)||b.points-a.points,
+      (a,b)=>b.points-a.points||a.mask-b.mask
+    ];
+    let best={groups:[],points:0,used:new Set(),count:0};
+    for(const cmp of strategies){
+      const used=new Set(),groups=[];let points=0,count=0;
+      for(const c of candidates.slice().sort(cmp)){
+        if(c.indices.some(i=>used.has(i)))continue;
+        c.indices.forEach(i=>used.add(i));groups.push(c);points+=c.points;count+=c.indices.length;
+      }
+      if(points>best.points||(points===best.points&&count>best.count))best={groups,points,used,count};
+    }
+    return best;
+  }
+  function findOpeningMelds(cards){
+    const greedy=greedyMelds(cards);
+    if(greedy.points>=101)return greedy;
+    const candidates=getMeldCandidates(cards).sort((a,b)=>b.points-a.points||b.indices.length-a.indices.length);
+    let nodes=0,answer=null;
+    const chosen=[];
+    function dfs(start,mask,points){
+      if(points>=101){answer={groups:chosen.slice(),points,used:new Set(chosen.flatMap(c=>c.indices)),count:chosen.reduce((s,c)=>s+c.indices.length,0)};return true}
+      if(chosen.length>=7||nodes>35000)return false;
+      // A loose upper bound helps prune combinations that cannot reach 101.
+      const top=[];
+      for(let i=start;i<candidates.length&&top.length<7-chosen.length;i++)top.push(candidates[i].points);
+      if(points+top.reduce((a,b)=>a+b,0)<101)return false;
+      for(let i=start;i<candidates.length;i++){
+        const c=candidates[i];if(mask&c.mask)continue;
+        nodes++;chosen.push(c);
+        if(dfs(i+1,mask|c.mask,points+c.points))return true;
+        chosen.pop();if(nodes>35000)break;
+      }
+      return false;
+    }
+    dfs(0,0,0);
+    return answer||greedy;
+  }
+  function rackMeldInfo(){
+    const info={};let total=0;
+    for(let row=0;row<2;row++){
+      let i=row*15;
+      while(i<row*15+15){
+        if(!rack[i]){i++;continue}
+        let j=i+1;while(j<row*15+15&&rack[j])j++;
+        const cards=rack.slice(i,j),v=pointsForMeld(cards);
+        if(v){for(let k=i;k<j;k++)info[k]={l:k===i,r:k===j-1};total+=v.points}
+        i=j;
+      }
+    }
+    return {info,total};
+  }
+  function setMessage(s){note=s;}
+  function removeMeldGroups(player,groups){
+    const idSet=new Set(groups.flatMap(g=>g.tiles.map(t=>t.id)));
+    if(player===0){
+      rack=rack.map(t=>t&&idSet.has(t.id)?null:t);sync();
+    }else {const left=hands[player].filter(t=>!idSet.has(t.id));hands[player].splice(0,hands[player].length,...left);}
+    tableMelds[player].push(...groups.map(g=>g.tiles.slice()));
+  }
+  function openPlayer(player){
+    const cards=player===0?hand0():hands[player];
+    const result=findOpeningMelds(cards);
+    if(result.points<101)return false;
+    removeMeldGroups(player,result.groups);
+    opened[player]=true;
+    return true;
+  }
+  function layAvailableMelds(player){
+    const cards=player===0?hand0():hands[player];
+    const result=greedyMelds(cards);
+    if(!result.groups.length)return 0;
+    removeMeldGroups(player,result.groups);
+    return result.groups.length;
+  }
+  function arrangeRack(){
+    const cards=hand0(),result=greedyMelds(cards),ids=new Set(result.groups.flatMap(g=>g.tiles.map(t=>t.id)));
+    const ordered=[];
+    let pos=0;
+    for(const group of result.groups){
+      const g=group.tiles.slice();
+      if(pos%15+g.length>15)pos=Math.ceil(pos/15)*15;
+      while(pos%15!==0&&pos<30&&pos%15+g.length>15)pos++;
+      if(pos+g.length>30)break;
+      for(const t of g){ordered[pos++]=t;}
+      pos++; // one empty slot visually separates adjacent melds
+    }
+    const leftovers=sortTiles(cards.filter(t=>!ids.has(t.id)));
+    for(const t of leftovers){while(pos<30&&ordered[pos])pos++;if(pos>=30){pos=ordered.findIndex(x=>!x);if(pos<0)break;}ordered[pos++]=t;}
+    rack=Array(30).fill(null);ordered.forEach((t,i)=>{if(i<30)rack[i]=t});
+    // If the hand was too crowded for the gaps, retain every tile in a compact layout.
+    const laid=rack.filter(Boolean).length;
+    if(laid!==cards.length){rack=Array(30).fill(null);cards.forEach((t,i)=>rack[i]=t)}
+    selectedSlot=null;sync();setMessage(result.groups.length?`Dizildi: ${result.groups.length} per, ${result.points} puan.`:'Şimdilik geçerli per bulamadım. Taşları sürükleyerek elle dizebilirsin.');render();
+  }
+  function tileAffinity(t,others){
+    if(isWild(t))return 99;
+    let n=0;
+    for(const u of others){if(u.id===t.id)continue;if(isWild(u)){n+=1;continue;}if(u.n===t.n&&u.c!==t.c)n+=3;if(u.c===t.c&&Math.abs(u.n-t.n)===1)n+=3;else if(u.c===t.c&&Math.abs(u.n-t.n)===2)n+=1;}
+    return n;
+  }
+  function maybeTakeDiscard(player){
+    const pile=discards[(player+3)%4],top=pile[pile.length-1];
+    if(!top)return false;
+    const hand=hands[player];
+    const score=tileAffinity(top,hand);
+    return score>=2||isWild(top);
+  }
+  function chooseBotDiscard(hand,player){
+    let best=0,bestScore=Infinity;
+    hand.forEach((t,i)=>{
+      const others=hand.filter((_,j)=>i!==j);
+      let score=tileAffinity(t,others)*10;
+      if(isWild(t))score+=100;
+      // Before opening, shed high-value isolated tiles first.
+      if(!opened[player])score-=t.n*0.3;
+      else score-=t.n*0.05;
+      if(t.fake)score+=1;
+      if(score<bestScore){bestScore=score;best=i;}
+    });
+    return best;
+  }
+  function finish(winner,message){
+    if(over)return;
+    over=message||(winner===0?'🎉 Kazandın! Istakanı bitirdin.':`Bot ${winner} eli bitirdi.`);
+    phase='over';turn=-1;clearTimeout(timer);render();
+  }
+  function endByPenalty(){
+    const scores=[hand0(),hands[1],hands[2],hands[3]].map((h,i)=>h.reduce((sum,t)=>sum+(isWild(t)?25:t.n),0));
+    const min=Math.min(...scores),winner=scores.indexOf(min);
+    finish(winner,`Deste bitti. En düşük elde kalan puan: ${winner===0?'sen':`Bot ${winner}`} (${min}).`);
+  }
+  function start(){
+    clearTimeout(timer);dead=false;deck=[];hands=[[],[],[],[]];discards=[[],[],[],[]];tableMelds=[[],[],[],[]];opened=[false,false,false,false];selectedSlot=null;note='';over='';turn=0;phase='action';rack=Array(30).fill(null);
+    let id=1;
+    for(let copy=0;copy<2;copy++)for(let c=0;c<4;c++)for(let n=1;n<=13;n++)deck.push({id:id++,c,n,fake:false});
+    deck.push({id:id++,c:0,n:0,fake:true},{id:id++,c:0,n:0,fake:true});
+    for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}
+    const ix=deck.findIndex(t=>!t.fake);indicator=deck.splice(ix,1)[0];
+    ok={c:indicator.c,n:indicator.n===13?1:indicator.n+1};
+    // A fake joker shows the indicator's face; it is not a wild tile.
+    deck.filter(t=>t.fake).forEach(t=>{t.c=indicator.c;t.n=indicator.n;});
+    hands[0]=deck.splice(0,22);for(let p=1;p<4;p++)hands[p]=deck.splice(0,21);
+    hands[0]=sortTiles(hands[0]);hands[0].forEach((t,i)=>rack[i]=t);
+    phase='action';note='Sen başlıyorsun: taşların hazır. Dilersen perleri aç, sonra bir taş at.';render();
+  }
+  function addToRack(t){const i=rack.findIndex(x=>!x);if(i<0){setMessage('Istakada boş yer yok. Önce bir taş at.');render();return false;}rack[i]=t;sync();return true;}
+  function takeFromDeck(){
+    if(over||turn!==0||phase!=='draw')return;
+    if(!deck.length){const pile=discards[3];if(!pile.length){endByPenalty();return;}setMessage('Deste bitti. Soldaki atılan taşı alabilirsin.');render();return;}
+    if(addToRack(deck.pop())){phase='action';selectedSlot=null;setMessage('Taş çektin. Perlerini düzenle veya bir taş seçip at.');render();}
+  }
+  function takeFromDiscard(){
+    if(over||turn!==0||phase!=='draw')return;
+    const pile=discards[3];if(!pile.length){setMessage('Alabileceğin atılmış taş yok; desteden çek.');render();return;}
+    if(addToRack(pile.pop())){phase='action';selectedSlot=null;setMessage('Atılan taşı aldın. Şimdi perlerini düzenleyip bir taş at.');render();}
+  }
+  function humanDiscard(){
+    if(over||turn!==0||phase!=='action')return;
+    if(selectedSlot===null||!rack[selectedSlot]){setMessage('Önce ıstakandaki atmak istediğin taşa tıkla.');render();return;}
+    const t=rack[selectedSlot];rack[selectedSlot]=null;selectedSlot=null;sync();discards[0].push(t);
+    if(hand0().length===0){finish(0,'🎉 Kazandın! Son taşını attın.');return;}
+    turn=1;phase='bot';setMessage('Taş atıldı. Botlar oynuyor…');render();timer=setTimeout(playBot,450);
+  }
+  function playBot(){
+    if(dead||over||turn<1||turn>3)return;
+    const p=turn,h=hands[p],pile=discards[(p+3)%4];
+    if(maybeTakeDiscard(p))h.push(pile.pop());
+    else if(deck.length)h.push(deck.pop());
+    else if(pile.length)h.push(pile.pop());
+    else{endByPenalty();return;}
+    if(!opened[p]){
+      const openResult=findOpeningMelds(h);
+      if(openResult.points>=101){removeMeldGroups(p,openResult.groups);opened[p]=true;}
+    }
+    if(opened[p])layAvailableMelds(p);
+    if(h.length===0){finish(p,`🏆 Bot ${p} eli bitirdi.`);return;}
+    const di=chooseBotDiscard(h,p),t=h.splice(di,1)[0];discards[p].push(t);
+    if(h.length===0){finish(p,`🏆 Bot ${p} son taşını attı ve kazandı.`);return;}
+    if(deck.length===0&&discards[(p+3)%4].length===0){endByPenalty();return;}
+    turn=p===3?0:p+1;
+    if(turn===0){phase='draw';setMessage('Sıra sende. Desteden taş çek veya Bot 3’ün attığı taşı al.');render();}
+    else{phase='bot';render();timer=setTimeout(playBot,350);}
+  }
+  function onOpen(){
+    if(over||turn!==0||phase!=='action')return;
+    if(opened[0]){setMessage('Zaten açtın. Yeni perlerin varsa “Perleri masaya koy” düğmesini kullan.');render();return;}
+    const cards=hand0(),r=findOpeningMelds(cards);
+    if(r.points<101){setMessage(`101 açmak için en az 101 puan gerekir. Bulunan per puanın: ${r.points}.`);render();return;}
+    removeMeldGroups(0,r.groups);opened[0]=true;selectedSlot=null;
+    if(hand0().length===0){finish(0,'🎉 101 açtın ve ıstakanı bitirdin!');return;}
+    setMessage(`101 açtın! ${r.groups.length} per, toplam ${r.points} puan masaya kondu. Bir taş at.`);render();
+  }
+  function onLay(){
+    if(over||turn!==0||phase!=='action')return;
+    if(!opened[0]){setMessage('Önce en az 101 puanla açmalısın.');render();return;}
+    const n=layAvailableMelds(0);selectedSlot=null;
+    if(hand0().length===0){finish(0,'🎉 Masaya perlerini koydun ve ıstakanı bitirdin!');return;}
+    setMessage(n?`${n} yeni per masaya kondu. Kalan taşlarından birini at.`:'Istakanda masaya koyulabilecek yeni bir per yok.');render();
+  }
+  function render(){
+    if(dead)return;
+    sync();
+    const g=rackMeldInfo(),cur=hand0(),pot=greedyMelds(cur),available=pileTop(3);
+    const active=turn===0&&!over,canDraw=active&&phase==='draw',canPlay=active&&phase==='action';
+    const last=p=>{const t=discards[p].slice(-1)[0];return t?tileHTML(t,false):`<span class="tile emp"></span>`;};
+    const botBox=p=>`<div class="seatn">Bot ${p} · ${hands[p].length} taş${opened[p]?' · açtı':' · açmadı'}</div><div class="brack${p===3?' v':''}${turn===p?' glow':''}">${'<i class="tb"></i>'.repeat(hands[p].length)}</div>`;
+    const status=over||note|| (turn===0?(phase==='draw'?'Desteden taş çek veya Bot 3’ün attığı taşı al.':'Taşını seçip at; per yapmak için taşları sürükle.'):`Bot ${turn} oynuyor…`);
+    const openButton=!opened[0]?`<button class="btn" id="ok-open" ${!canPlay?'disabled':''}>101 Aç</button>`:`<button class="btn" id="ok-lay" ${!canPlay?'disabled':''}>Perleri masaya koy</button>`;
+    const openedHTML=tableMelds.map((groups,p)=>groups.length?`<div class="ok-meld-row"><b>${p===0?'Sen':'Bot '+p}</b><span>${groups.map(group=>`<span class="grp">${group.map(t=>tileHTML(t,false)).join('')}</span>`).join(' ')}</span></div>`:'').join('')||`<span class="hint">Henüz masaya açılmış per yok.</span>`;
+    const rackRow=row=>`<div class="rrow">${Array.from({length:15},(_,i)=>{const s=row*15+i,t=rack[s],m=g.info[s];return `<div class="slot${m?' g':''}${m&&m.l?' gl':''}${m&&m.r?' gr':''}" data-s="${s}">${t?tileHTML(t,true,s):''}</div>`;}).join('')}</div>`;
+    box.innerHTML=`<div class="tbl"><div class="sT">${botBox(2)}</div><div class="sL">${botBox(3)}</div><div class="mid"><div class="mT">${last(2)}</div><div class="mL">${active&&canDraw&&discards[3].length?`<button class="pile glow" id="ok-take-discard">${last(3)}</button>`:last(3)}</div><div class="mC"><button class="deck${canDraw?' glow':''}" id="ok-draw" ${canDraw&&deck.length?'':'disabled'}><i class="tb"></i><br>${deck.length}</button><br>Gösterge ${tileHTML(indicator,false)}<br>Okey: <b>${CN[ok.c]} ${ok.n}</b></div><div class="mR">${last(1)}</div><div class="mB${active&&canPlay?' glow':''}">${last(0)}</div></div><div class="sR">${botBox(1)}</div><div class="msg"><div class="ok-status">${status}</div><div class="ok-controls"><button class="btn" id="ok-draw2" ${canDraw&&deck.length?'':'disabled'}>Taş çek</button><button class="btn" id="ok-take2" ${canDraw&&discards[3].length?'':'disabled'}>Yerden al</button>${openButton}<button class="btn" id="ok-arrange" ${canPlay?'':'disabled'}>Perleri diz</button><button class="btn" id="ok-discard" ${canPlay&&selectedSlot!==null&&!!rack[selectedSlot]?'':'disabled'}>Seçili taşı at</button>${over?'<button class="btn" id="ok-new">Yeni el</button>':''}</div>${active?`<div class="ok-points">Istaka: ${cur.length} taş · Bulunan per: ${pot.points} puan${opened[0]?' · 101 açıldı':''}</div>`:''}</div><div class="rack"><div class="ok-opened"><div class="hint">Masadaki perler</div>${openedHTML}</div>${rackRow(0)}${rackRow(1)}</div></div><p class="d">Taş seçmek için tıkla, yerini değiştirmek için sürükle. Açmak için geçerli perlerin toplamı en az 101 olmalı. J = okey (joker), 🃏 = sahte okey.</p>`;
+    const el=id=>box.querySelector('#'+id);
+    if(el('ok-draw'))el('ok-draw').onclick=takeFromDeck;
+    if(el('ok-draw2'))el('ok-draw2').onclick=takeFromDeck;
+    if(el('ok-take-discard'))el('ok-take-discard').onclick=takeFromDiscard;
+    if(el('ok-take2'))el('ok-take2').onclick=takeFromDiscard;
+    if(el('ok-open'))el('ok-open').onclick=onOpen;
+    if(el('ok-lay'))el('ok-lay').onclick=onLay;
+    if(el('ok-arrange'))el('ok-arrange').onclick=arrangeRack;
+    if(el('ok-discard'))el('ok-discard').onclick=humanDiscard;
+    if(el('ok-new'))el('ok-new').onclick=start;
+  }
+  function pileTop(p){return discards[p].slice(-1)[0]||null;}
+  box.onpointerdown=e=>{
+    const tile=e.target.closest('.rack .tile[data-i]');if(!tile||dead||turn!==0||phase!=='action'||over)return;
+    const slot=tile.closest('.slot');if(!slot)return;
+    e.preventDefault();const r=tile.getBoundingClientRect(),clone=tile.cloneNode(true);
+    clone.classList.add('fl');clone.style.cssText+=`;position:fixed;left:${r.left}px;top:${r.top}px;pointer-events:none;z-index:9999;margin:0`;
+    document.body.appendChild(clone);drag={from:+slot.dataset.s,clone,ox:e.clientX-r.left,oy:e.clientY-r.top,startX:e.clientX,startY:e.clientY,moved:false,pointerId:e.pointerId};
+  };
+  box.onpointermove=e=>{if(!drag)return;const d=drag;if(Math.abs(e.clientX-d.startX)+Math.abs(e.clientY-d.startY)>5)d.moved=true;d.clone.style.left=(e.clientX-d.ox)+'px';d.clone.style.top=(e.clientY-d.oy)+'px';};
+  box.onpointerup=e=>{
+    if(!drag)return;const d=drag;drag=null;d.clone.remove();
+    if(!d.moved){selectedSlot=d.from;setMessage(`Seçili taş: ${rack[d.from]?.fake?'Sahte okey':rack[d.from]?.n+' '+CN[rack[d.from]?.c]}. “Seçili taşı at” ile atabilirsin.`);render();return;}
+    const target=document.elementFromPoint(e.clientX,e.clientY),slot=target&&target.closest('.rack .slot[data-s]');
+    if(slot){const to=+slot.dataset.s;if(to!==d.from){const tmp=rack[to];rack[to]=rack[d.from];rack[d.from]=tmp;selectedSlot=to;sync();setMessage('Taşın yeri değiştirildi.');}}
+    render();
+  };
+  box.onpointercancel=()=>{if(drag){drag.clone.remove();drag=null;render();}};
+  stopG=()=>{dead=true;clearTimeout(timer);drag?.clone.remove();drag=null;box.onpointerdown=box.onpointermove=box.onpointerup=box.onpointercancel=null;};
+  start();
+}
+
 
 function blackjack(){
   const $=id=>document.getElementById(id);
