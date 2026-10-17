@@ -233,7 +233,7 @@ const q=id=>document.getElementById(id);
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 function pg(id){
 stopG();stopG=()=>{};
-q("main").classList.toggle("okey-wide",id==="g4");
+document.querySelector("main").classList.toggle("okey-wide",id==="g4");
 document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);
 document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.p===id));
 if(id==="g1")snake();if(id==="g2")memory();if(id==="g3")xox();if(id==="g4")okey101();if(id==="g5")blackjack()}
