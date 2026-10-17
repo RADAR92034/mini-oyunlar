@@ -329,56 +329,67 @@ function okey101(){
     }
     return null;
   }
+  const meldCandidateCache=new Map();
   function getMeldCandidates(cards){
-    const map=new Map(),n=cards.length;
+    const cacheKey=`${ok.c}:${ok.n}|${cards.map(t=>t.id).join(',')}`;
+    const cached=meldCandidateCache.get(cacheKey);
+    if(cached)return cached;
+    const map=new Map(),n=cards.length,MAX_CANDIDATES=1400;
     const add=idxs=>{
-      if(idxs.length<3||idxs.length>13)return;
+      if(map.size>=MAX_CANDIDATES||idxs.length<3||idxs.length>13)return;
       const sorted=idxs.slice().sort((a,b)=>a-b),mask=sorted.reduce((m,i)=>m|(1<<i),0),key=String(mask);
       if(map.has(key))return;
       const v=pointsForMeld(sorted.map(i=>cards[i]));
       if(v)map.set(key,{mask,indices:sorted,tiles:sorted.map(i=>cards[i]),points:v.points,type:v.type});
     };
-    // Sets: choose 3 or 4 tiles of a common number, allowing wild tiles to fill a missing colour.
-    for(let rank=1;rank<=13;rank++){
+    // Bound recursion so pathological hands cannot lock the browser.
+    for(let rank=1;rank<=13&&map.size<MAX_CANDIDATES;rank++){
       const eligible=cards.map((t,i)=>({t,i})).filter(x=>isWild(x.t)||x.t.n===rank).map(x=>x.i);
       for(const size of [3,4]){
         const walk=(at,chosen)=>{
-          if(chosen.length===size){add(chosen);return}
-          for(let k=at;k<=eligible.length-(size-chosen.length);k++)walk(k+1,chosen.concat(eligible[k]));
+          if(map.size>=MAX_CANDIDATES)return;
+          if(chosen.length===size){add(chosen);return;}
+          for(let k=at;k<=eligible.length-(size-chosen.length)&&map.size<MAX_CANDIDATES;k++)walk(k+1,chosen.concat(eligible[k]));
         };
         walk(0,[]);
       }
     }
-    // Runs: enumerate possible consecutive segments and choose matching tiles or wilds per rank.
-    for(let colour=0;colour<4;colour++){
-      for(let start=1;start<=13;start++){
-        for(let len=3;start+len-1<=13;len++){
-          const choices=[];
-          let missing=0;
-          const wildIndices=[];
-          for(let i=0;i<n;i++)if(isWild(cards[i]))wildIndices.push(i);
+    const wildIndices=[];for(let i=0;i<n;i++)if(isWild(cards[i]))wildIndices.push(i);
+    // Runs: use a deterministic copy for each rank, then create only single-copy
+    // alternatives. The old full Cartesian product could explode with duplicate tiles.
+    for(let colour=0;colour<4&&map.size<MAX_CANDIDATES;colour++){
+      for(let start=1;start<=13&&map.size<MAX_CANDIDATES;start++){
+        for(let len=3;start+len-1<=13&&map.size<MAX_CANDIDATES;len++){
+          const byRank=[];let missing=0;
           for(let step=0;step<len;step++){
-            const rank=start+step;
-            const exact=[];
-            for(let i=0;i<n;i++)if(cards[i].c===colour&&cards[i].n===rank)exact.push(i);
-            if(!exact.length)missing++;
-            // A run cannot contain more missing ranks than available wild tiles.
-            if(missing>wildIndices.length)break;
-            choices.push(exact.length ? exact : wildIndices);
+            const rank=start+step,exact=[];
+            for(let i=0;i<n;i++)if(!isWild(cards[i])&&!cards[i].fake&&cards[i].c===colour&&cards[i].n===rank)exact.push(i);
+            byRank.push(exact);if(!exact.length)missing++;
           }
-          if(missing>wildIndices.length||choices.length!==len)continue;
-          const walk=(step,chosen,mask)=>{
-            if(step===len){add(chosen);return}
-            for(const i of choices[step]){
-              const bit=1<<i;if(mask&bit)continue;
-              walk(step+1,chosen.concat(i),mask|bit);
-            }
-          };
-          walk(0,[],0);
+          if(missing>wildIndices.length)continue;
+          const variants=[-1];
+          for(let step=0;step<len;step++)if(byRank[step].length>1)variants.push(step);
+          for(const variantStep of variants){
+            if(map.size>=MAX_CANDIDATES)break;
+            const choices=byRank.map((exact,step)=>exact.length?[exact[variantStep===step?1:0]]:wildIndices);
+            const walk=(step,chosen,mask)=>{
+              if(map.size>=MAX_CANDIDATES)return;
+              if(step===len){add(chosen);return;}
+              for(const i of choices[step]){
+                const bit=1<<i;if(mask&bit)continue;
+                walk(step+1,chosen.concat(i),mask|bit);
+                if(map.size>=MAX_CANDIDATES)return;
+              }
+            };
+            walk(0,[],0);
+          }
         }
       }
     }
-    return Array.from(map.values());
+    const result=Array.from(map.values());
+    if(meldCandidateCache.size>=64)meldCandidateCache.delete(meldCandidateCache.keys().next().value);
+    meldCandidateCache.set(cacheKey,result);
+    return result;
   }
   function greedyMelds(cards){
     if(!cards.length)return {groups:[],points:0,used:new Set()};
@@ -408,7 +419,7 @@ function okey101(){
     const chosen=[];
     function dfs(start,mask,points){
       if(points>=101){answer={groups:chosen.slice(),points,used:new Set(chosen.flatMap(c=>c.indices)),count:chosen.reduce((s,c)=>s+c.indices.length,0)};return true}
-      if(chosen.length>=7||nodes>35000)return false;
+      if(chosen.length>=7||nodes>8000)return false;
       // A loose upper bound helps prune combinations that cannot reach 101.
       const top=[];
       for(let i=start;i<candidates.length&&top.length<7-chosen.length;i++)top.push(candidates[i].points);
@@ -417,7 +428,7 @@ function okey101(){
         const c=candidates[i];if(mask&c.mask)continue;
         nodes++;chosen.push(c);
         if(dfs(i+1,mask|c.mask,points+c.points))return true;
-        chosen.pop();if(nodes>35000)break;
+        chosen.pop();if(nodes>8000)break;
       }
       return false;
     }
@@ -432,12 +443,12 @@ function okey101(){
     let nodes=0,answer=null;const chosen=[];
     function dfs(start,mask,points,usesRequired){
       if(points>=101&&usesRequired){answer={groups:chosen.slice(),points,used:new Set(chosen.flatMap(c=>c.indices)),count:chosen.reduce((sum,c)=>sum+c.indices.length,0)};return true;}
-      if(chosen.length>=7||nodes>60000)return false;
+      if(chosen.length>=7||nodes>10000)return false;
       for(let i=start;i<candidates.length;i++){
         const c=candidates[i];if(mask&c.mask)continue;
         nodes++;chosen.push(c);
         if(dfs(i+1,mask|c.mask,points+c.points,usesRequired||!!(c.mask&requiredBit)))return true;
-        chosen.pop();if(nodes>60000)break;
+        chosen.pop();if(nodes>10000)break;
       }
       return false;
     }
@@ -577,7 +588,7 @@ function okey101(){
     finish(winner,`Deste bitti. En düşük elde kalan puan: ${winner===0?'sen':`Bot ${winner}`} (${min}).`);
   }
   function start(){
-    clearTimeout(timer);dead=false;deck=[];hands=[[],[],[],[]];discards=[[],[],[],[]];tableMelds=[[],[],[],[]];opened=[false,false,false,false];selectedSlot=null;note='';over='';turn=0;phase='action';rack=Array(30).fill(null);
+    clearTimeout(timer);meldCandidateCache.clear();dead=false;deck=[];hands=[[],[],[],[]];discards=[[],[],[],[]];tableMelds=[[],[],[],[]];opened=[false,false,false,false];selectedSlot=null;note='';over='';turn=0;phase='action';rack=Array(30).fill(null);
     let id=1;
     for(let copy=0;copy<2;copy++)for(let c=0;c<4;c++)for(let n=1;n<=13;n++)deck.push({id:id++,c,n,fake:false});
     deck.push({id:id++,c:0,n:0,fake:true},{id:id++,c:0,n:0,fake:true});
