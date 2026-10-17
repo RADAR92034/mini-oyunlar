@@ -125,6 +125,33 @@ nav button:not(.on){background:transparent}
 .ok-opened .hint{display:block;margin-bottom:4px}
 @media(max-width:640px){.ok-controls .btn{font-size:.78rem;padding:8px 7px}.ok-meld-row .tile{width:24px;height:34px;font-size:.72rem}.ok-points{font-size:.75rem}}
 
+
+/* 101 Okey improvements: side table melds, playable markers and face-down Okey tile */
+main.okey-wide{max-width:1500px}
+#ok{width:100%}
+.ok-game-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,31%);gap:12px;align-items:start}
+.ok-hand-area{min-width:0}
+.ok-hand-area .rrow{max-width:100%}
+.ok-opened{margin:0;padding:9px;border:1px solid #f3d9b84a;border-bottom:6px solid #4a2c14;border-radius:10px;background:rgba(0,0,0,.16);max-height:400px;overflow:auto}
+.ok-opened>.hint{font-size:.9rem;font-weight:700;letter-spacing:.02em;margin-bottom:8px;padding-bottom:7px;border-bottom:1px solid #f3d9b84a}
+.ok-meld-row{display:flex;flex-direction:column;gap:5px;align-items:stretch;margin:8px 0;padding:7px;border:1px solid #ffffff20;border-radius:8px;background:#00000012}
+.ok-meld-head{display:flex;justify-content:space-between;align-items:center;gap:5px;flex-wrap:wrap}
+.ok-meld-row>b,.ok-meld-head>b{color:#f3d9b8;min-width:0}
+.ok-meld-target{display:flex;flex-wrap:wrap;gap:2px;align-items:center;min-height:45px;padding:4px;border:1px solid #ffffff20;border-radius:7px;background:rgba(0,0,0,.14);transition:box-shadow .12s,border-color .12s}
+.ok-meld-target.ok-can-process{border-color:#ffd54a;box-shadow:0 0 0 1px #ffd54a55;background:rgba(255,213,74,.10)}
+.ok-meld-target .tile{width:28px;height:38px;font-size:.78rem;margin:1px;cursor:default;touch-action:auto}
+.ok-meld-target .tile small{font-size:.48rem}
+.ok-meld-actions{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.ok-meld-actions .btn{font-size:.7rem;padding:6px 7px;margin:0}
+.ok-meld-actions .btn:disabled{opacity:.35;cursor:not-allowed}
+.ok-meld-hint{font-size:.68rem;color:#ffdf81;font-weight:700}
+.ok-meld-hint.none{color:#f3d9b899}
+.ok-closed-wrap{display:inline-flex;align-items:center;gap:4px;margin-top:4px;vertical-align:middle;color:#f3d9b8;font-size:.72rem}
+.ok-closed-tile{display:inline-grid;place-items:center;width:24px;height:34px;border:2px solid #f6efdc;border-radius:4px;background:repeating-linear-gradient(45deg,#17366a,#17366a 4px,#315b98 4px,#315b98 8px);color:#fff;font-size:.8rem;box-shadow:0 2px 4px #0005}
+.ok-status{line-height:1.45}
+@media(max-width:1050px){main.okey-wide{max-width:100%}.ok-game-layout{grid-template-columns:minmax(0,1fr) minmax(220px,31%)}.ok-meld-target .tile{width:24px;height:34px;font-size:.72rem}}
+@media(max-width:760px){.ok-game-layout{grid-template-columns:minmax(0,1fr)}.ok-opened{grid-row:1;max-height:260px}.ok-hand-area{grid-row:2}.ok-meld-row{display:flex}.ok-meld-actions .btn{font-size:.74rem}.ok-meld-target .tile{width:25px;height:35px}}
+
 </style>
 </head>
 <body>
@@ -206,6 +233,7 @@ const q=id=>document.getElementById(id);
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 function pg(id){
 stopG();stopG=()=>{};
+q("main").classList.toggle("okey-wide",id==="g4");
 document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);
 document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.p===id));
 if(id==="g1")snake();if(id==="g2")memory();if(id==="g3")xox();if(id==="g4")okey101();if(id==="g5")blackjack()}
@@ -290,12 +318,14 @@ function okey101(){
     // Same-colour consecutive run; no 13-to-1 wraparound. Wild tiles may fill missing ranks.
     const colour=plain[0].c;
     if(plain.every(t=>t.c===colour)){
+      let bestRunPoints=0;
       for(let start=1;start+n-1<=13;start++){
         const expected=new Set(Array.from({length:n},(_,i)=>start+i));
         if(plain.every(t=>expected.has(t.n))&&new Set(plain.map(t=>t.n)).size===plain.length){
-          return {points:Array.from({length:n},(_,i)=>start+i).reduce((a,b)=>a+b,0),type:'run'};
+          bestRunPoints=Math.max(bestRunPoints,Array.from({length:n},(_,i)=>start+i).reduce((a,b)=>a+b,0));
         }
       }
+      if(bestRunPoints)return {points:bestRunPoints,type:'run'};
     }
     return null;
   }
@@ -334,7 +364,7 @@ function okey101(){
             if(!exact.length)missing++;
             // A run cannot contain more missing ranks than available wild tiles.
             if(missing>wildIndices.length)break;
-            choices.push(Array.from(new Set(exact.concat(wildIndices))));
+            choices.push(exact.length ? exact : wildIndices);
           }
           if(missing>wildIndices.length||choices.length!==len)continue;
           const walk=(step,chosen,mask)=>{
@@ -394,6 +424,47 @@ function okey101(){
     dfs(0,0,0);
     return answer||greedy;
   }
+  function findOpeningUsingTile(cards,requiredId){
+    const requiredIndex=cards.findIndex(t=>t.id===requiredId);
+    if(requiredIndex<0)return null;
+    const requiredBit=1<<requiredIndex;
+    const candidates=getMeldCandidates(cards).sort((a,b)=>b.points-a.points||b.indices.length-a.indices.length);
+    let nodes=0,answer=null;const chosen=[];
+    function dfs(start,mask,points,usesRequired){
+      if(points>=101&&usesRequired){answer={groups:chosen.slice(),points,used:new Set(chosen.flatMap(c=>c.indices)),count:chosen.reduce((sum,c)=>sum+c.indices.length,0)};return true;}
+      if(chosen.length>=7||nodes>60000)return false;
+      for(let i=start;i<candidates.length;i++){
+        const c=candidates[i];if(mask&c.mask)continue;
+        nodes++;chosen.push(c);
+        if(dfs(i+1,mask|c.mask,points+c.points,usesRequired||!!(c.mask&requiredBit)))return true;
+        chosen.pop();if(nodes>60000)break;
+      }
+      return false;
+    }
+    dfs(0,0,0,false);
+    return answer;
+  }
+  function findMeldUsingTile(cards,requiredId){
+    return getMeldCandidates(cards).filter(c=>c.tiles.some(t=>t.id===requiredId)).sort((a,b)=>b.points-a.points||b.indices.length-a.indices.length)[0]||null;
+  }
+  function canAddTileToMeld(tile,group){
+    return !!tile&&group.length<13&&pointsForMeld(group.concat(tile))!==null;
+  }
+  function canReplaceWildInMeld(tile,group){
+    if(!tile||isWild(tile)||tile.fake)return -1;
+    for(let i=0;i<group.length;i++){
+      if(!isWild(group[i]))continue;
+      const replacement=group.filter((_,j)=>j!==i).concat(tile);
+      if(pointsForMeld(replacement)!==null)return i;
+    }
+    return -1;
+  }
+  function findTableMeldForTile(tile){
+    for(let p=0;p<tableMelds.length;p++)for(let i=0;i<tableMelds[p].length;i++){
+      if(canAddTileToMeld(tile,tableMelds[p][i]))return {player:p,index:i};
+    }
+    return null;
+  }
   function rackMeldInfo(){
     const info={};let total=0;
     for(let row=0;row<2;row++){
@@ -431,6 +502,22 @@ function okey101(){
     removeMeldGroups(player,result.groups);
     return result.groups.length;
   }
+  function processSelectedOnMeld(player,meldIndex){
+    if(over||turn!==0||phase!=='action'||!opened[0])return;
+    if(selectedSlot===null||!rack[selectedSlot]){setMessage('Önce ıstakadan işleyeceğin taşı seç. Sarı işaretli perler uygun taş bekliyor.');render();return;}
+    const tile=rack[selectedSlot],group=tableMelds[player]?.[meldIndex];
+    if(!group||!canAddTileToMeld(tile,group)){setMessage('Bu taş seçili perin kuralına uymuyor. Yanındaki sarı işaretli perlerden birini seç.');render();return;}
+    group.push(tile);rack[selectedSlot]=null;selectedSlot=null;sync();
+    setMessage(`${tile.fake?'Sahte okey':tile.n+' '+CN[tile.c]} masadaki pere işlendi. Şimdi taş atabilir veya başka taş işleyebilirsin.`);render();
+  }
+  function reclaimOkeyFromMeld(player,meldIndex){
+    if(over||turn!==0||phase!=='action'||!opened[0])return;
+    if(selectedSlot===null||!rack[selectedSlot]){setMessage('Okeyi geri almak için önce yerine koyacağın taşı seç.');render();return;}
+    const tile=rack[selectedSlot],group=tableMelds[player]?.[meldIndex],wildIndex=group?canReplaceWildInMeld(tile,group):-1;
+    if(wildIndex<0){setMessage('Seçili taş bu perin okeyinin yerine geçemiyor.');render();return;}
+    const wild=group[wildIndex];group[wildIndex]=tile;rack[selectedSlot]=wild;sync();
+    setMessage('Okeyi geri aldın; yerine doğru taşı koydun. Okeyi ıstakanda kullanabilir veya atabilirsin.');render();
+  }
   function arrangeRack(){
     const cards=hand0(),result=greedyMelds(cards),ids=new Set(result.groups.flatMap(g=>g.tiles.map(t=>t.id)));
     const ordered=[];
@@ -461,8 +548,9 @@ function okey101(){
     const pile=discards[(player+3)%4],top=pile[pile.length-1];
     if(!top)return false;
     const hand=hands[player];
-    const score=tileAffinity(top,hand);
-    return score>=2||isWild(top);
+    if(!opened[player])return !!findOpeningUsingTile(hand.concat(top),top.id);
+    if(findTableMeldForTile(top))return true;
+    return !!findMeldUsingTile(hand.concat(top),top.id);
   }
   function chooseBotDiscard(hand,player){
     let best=0,bestScore=Infinity;
@@ -508,10 +596,31 @@ function okey101(){
     if(!deck.length){const pile=discards[3];if(!pile.length){endByPenalty();return;}setMessage('Deste bitti. Soldaki atılan taşı alabilirsin.');render();return;}
     if(addToRack(deck.pop())){phase='action';selectedSlot=null;setMessage('Taş çektin. Perlerini düzenle veya bir taş seçip at.');render();}
   }
+  function forceCenterDraw(warning){
+    phase='fallback';selectedSlot=null;setMessage(warning+' Yan taş bırakıldı; ortadan taş çekiliyor.');render();
+    timer=setTimeout(()=>{
+      if(dead||over||turn!==0||phase!=='fallback')return;
+      if(!deck.length){endByPenalty();return;}
+      if(addToRack(deck.pop())){phase='action';selectedSlot=null;setMessage(warning+' Ortadan taş çektin.');render();}
+    },850);
+  }
   function takeFromDiscard(){
     if(over||turn!==0||phase!=='draw')return;
-    const pile=discards[3];if(!pile.length){setMessage('Alabileceğin atılmış taş yok; desteden çek.');render();return;}
-    if(addToRack(pile.pop())){phase='action';selectedSlot=null;setMessage('Atılan taşı aldın. Şimdi perlerini düzenleyip bir taş at.');render();}
+    const pile=discards[3],top=pile[pile.length-1];
+    if(!top){setMessage('Alabileceğin atılmış taş yok; desteden çek.');render();return;}
+    if(!opened[0]){
+      const preview=hand0().concat(top),opening=findOpeningUsingTile(preview,top.id);
+      if(!opening||opening.points<101){forceCenterDraw('Yan taşı almak için o taşı kullanarak aynı turda en az 101 puanla açmalısın.');return;}
+      pile.pop();removeMeldGroups(0,opening.groups);opened[0]=true;phase='action';selectedSlot=null;
+      if(!hand0().length){finish(0,'🎉 Yan taşla 101 açtın ve elini bitirdin!');return;}
+      setMessage(`Yan taşı kullanarak ${opening.points} puanla 101 açtın. Şimdi elinden bir taş at.`);render();return;
+    }
+    // Once open, a discard is accepted only if it can be used immediately on a table meld or in a new meld.
+    const target=findTableMeldForTile(top);
+    if(target){pile.pop();tableMelds[target.player][target.index].push(top);phase='action';selectedSlot=null;setMessage('Yan taş mevcut pere işlendi. Şimdi elinden bir taş atabilir veya başka taş işleyebilirsin.');render();return;}
+    const candidate=findMeldUsingTile(hand0().concat(top),top.id);
+    if(candidate){pile.pop();removeMeldGroups(0,[candidate]);phase='action';selectedSlot=null;setMessage('Yan taşı kullanarak yeni bir per oluşturdun ve masaya koydun. Şimdi bir taş at.');render();return;}
+    forceCenterDraw('Bu yan taşı açılmış perlerine işleyemiyorsun.');
   }
   function humanDiscard(){
     if(over||turn!==0||phase!=='action')return;
@@ -522,11 +631,26 @@ function okey101(){
   }
   function playBot(){
     if(dead||over||turn<1||turn>3)return;
-    const p=turn,h=hands[p],pile=discards[(p+3)%4];
-    if(maybeTakeDiscard(p))h.push(pile.pop());
-    else if(deck.length)h.push(deck.pop());
-    else if(pile.length)h.push(pile.pop());
-    else{endByPenalty();return;}
+    const p=turn,h=hands[p],pile=discards[(p+3)%4],top=pile[pile.length-1];
+    let sideTaken=false,taken=null;
+    if(top&&maybeTakeDiscard(p)){taken=pile.pop();sideTaken=true;}
+    if(sideTaken&&!opened[p]){
+      const opening=findOpeningUsingTile(h.concat(taken),taken.id);
+      if(opening){h.push(taken);removeMeldGroups(p,opening.groups);opened[p]=true;}
+      else{pile.push(taken);sideTaken=false;}
+    }else if(sideTaken&&opened[p]){
+      const target=findTableMeldForTile(taken);
+      if(target)tableMelds[target.player][target.index].push(taken);
+      else{
+        const meld=findMeldUsingTile(h.concat(taken),taken.id);
+        if(meld)removeMeldGroups(p,[meld]);
+        else{pile.push(taken);sideTaken=false;}
+      }
+    }
+    if(!sideTaken){
+      if(deck.length)h.push(deck.pop());
+      else{endByPenalty();return;}
+    }
     if(!opened[p]){
       const openResult=findOpeningMelds(h);
       if(openResult.points>=101){removeMeldGroups(p,openResult.groups);opened[p]=true;}
@@ -538,7 +662,7 @@ function okey101(){
     if(deck.length===0&&discards[(p+3)%4].length===0){endByPenalty();return;}
     turn=p===3?0:p+1;
     if(turn===0){phase='draw';setMessage('Sıra sende. Desteden taş çek veya Bot 3’ün attığı taşı al.');render();}
-    else{phase='bot';render();timer=setTimeout(playBot,350);}
+    else{phase='bot';note=`Bot ${turn} oynuyor…`;render();timer=setTimeout(playBot,350);}
   }
   function onOpen(){
     if(over||turn!==0||phase!=='action')return;
@@ -559,15 +683,23 @@ function okey101(){
   function render(){
     if(dead)return;
     sync();
-    const g=rackMeldInfo(),cur=hand0(),pot=greedyMelds(cur),available=pileTop(3);
-    const active=turn===0&&!over,canDraw=active&&phase==='draw',canPlay=active&&phase==='action';
+    const g=rackMeldInfo(),cur=hand0(),pot=greedyMelds(cur),active=turn===0&&!over,canDraw=active&&phase==='draw',canPlay=active&&phase==='action';
     const last=p=>{const t=discards[p].slice(-1)[0];return t?tileHTML(t,false):`<span class="tile emp"></span>`;};
     const botBox=p=>`<div class="seatn">Bot ${p} · ${hands[p].length} taş${opened[p]?' · açtı':' · açmadı'}</div><div class="brack${p===3?' v':''}${turn===p?' glow':''}">${'<i class="tb"></i>'.repeat(hands[p].length)}</div>`;
-    const status=over||note|| (turn===0?(phase==='draw'?'Desteden taş çek veya Bot 3’ün attığı taşı al.':'Taşını seçip at; per yapmak için taşları sürükle.'):`Bot ${turn} oynuyor…`);
+    const status=over||note||(turn===0?(phase==='draw'?'Desteden taş çek veya Bot 3’ün attığı taşı al.':phase==='fallback'?'Yan taş uygun olmadığı için ortadan taş çekiliyor.':'Taşını seçip at; sarı işaretli perlere taş işleyebilirsin.'):`Bot ${turn} oynuyor…`);
     const openButton=!opened[0]?`<button class="btn" id="ok-open" ${!canPlay?'disabled':''}>101 Aç</button>`:`<button class="btn" id="ok-lay" ${!canPlay?'disabled':''}>Perleri masaya koy</button>`;
-    const openedHTML=tableMelds.map((groups,p)=>groups.length?`<div class="ok-meld-row"><b>${p===0?'Sen':'Bot '+p}</b><span>${groups.map(group=>`<span class="grp">${group.map(t=>tileHTML(t,false)).join('')}</span>`).join(' ')}</span></div>`:'').join('')||`<span class="hint">Henüz masaya açılmış per yok.</span>`;
-    const rackRow=row=>`<div class="rrow">${Array.from({length:15},(_,i)=>{const s=row*15+i,t=rack[s],m=g.info[s];return `<div class="slot${m?' g':''}${m&&m.l?' gl':''}${m&&m.r?' gr':''}" data-s="${s}">${t?tileHTML(t,true,s):''}</div>`;}).join('')}</div>`;
-    box.innerHTML=`<div class="tbl"><div class="sT">${botBox(2)}</div><div class="sL">${botBox(3)}</div><div class="mid"><div class="mT">${last(2)}</div><div class="mL">${active&&canDraw&&discards[3].length?`<button class="pile glow" id="ok-take-discard">${last(3)}</button>`:last(3)}</div><div class="mC"><button class="deck${canDraw?' glow':''}" id="ok-draw" ${canDraw&&deck.length?'':'disabled'}><i class="tb"></i><br>${deck.length}</button><br>Gösterge ${tileHTML(indicator,false)}<br>Okey: <b>${CN[ok.c]} ${ok.n}</b></div><div class="mR">${last(1)}</div><div class="mB${active&&canPlay?' glow':''}">${last(0)}</div></div><div class="sR">${botBox(1)}</div><div class="msg"><div class="ok-status">${status}</div><div class="ok-controls"><button class="btn" id="ok-draw2" ${canDraw&&deck.length?'':'disabled'}>Taş çek</button><button class="btn" id="ok-take2" ${canDraw&&discards[3].length?'':'disabled'}>Yerden al</button>${openButton}<button class="btn" id="ok-arrange" ${canPlay?'':'disabled'}>Perleri diz</button><button class="btn" id="ok-discard" ${canPlay&&selectedSlot!==null&&!!rack[selectedSlot]?'':'disabled'}>Seçili taşı at</button>${over?'<button class="btn" id="ok-new">Yeni el</button>':''}</div>${active?`<div class="ok-points">Istaka: ${cur.length} taş · Bulunan per: ${pot.points} puan${opened[0]?' · 101 açıldı':''}</div>`:''}</div><div class="rack"><div class="ok-opened"><div class="hint">Masadaki perler</div>${openedHTML}</div>${rackRow(0)}${rackRow(1)}</div></div><p class="d">Taş seçmek için tıkla, yerini değiştirmek için sürükle. Açmak için geçerli perlerin toplamı en az 101 olmalı. J = okey (joker), 🃏 = sahte okey.</p>`;
+    const selected=selectedSlot!==null?rack[selectedSlot]:null;
+    const ownerLabel=p=>p===0?'Sen':'Bot '+p;
+    const openedHTML=tableMelds.map((groups,p)=>groups.map((group,mi)=>{
+      const appendable=opened[0]&&canPlay?cur.filter(t=>canAddTileToMeld(t,group)):[];
+      const reclaimable=opened[0]&&canPlay?cur.filter(t=>canReplaceWildInMeld(t,group)>=0):[];
+      const selectedCanAdd=!!selected&&opened[0]&&canPlay&&canAddTileToMeld(selected,group);
+      const selectedCanReclaim=!!selected&&opened[0]&&canPlay&&canReplaceWildInMeld(selected,group)>=0;
+      const targetClass=appendable.length?'ok-can-process':'';
+      return `<div class="ok-meld-row"><div class="ok-meld-head"><b>${ownerLabel(p)} · ${group.length} taş</b><span class="ok-meld-hint${appendable.length?'':' none'}">${appendable.length?'✦ '+appendable.length+' taş işlenebilir':'İşlenecek taş bekliyor'}</span></div><div class="ok-meld-target ${targetClass}" data-ok-target="1" data-owner="${p}" data-meld="${mi}" title="Uygun taşı seçip buraya sürükleyebilirsin">${group.map(t=>tileHTML(t,false)).join('')}</div><div class="ok-meld-actions"><button class="btn" data-ok-process="1" data-owner="${p}" data-meld="${mi}" ${selectedCanAdd?'':'disabled'}>${selectedCanAdd?'＋ Seçili taşı işle':'＋ İşle'}</button>${group.some(isWild)?`<button class="btn" data-ok-reclaim="1" data-owner="${p}" data-meld="${mi}" ${selectedCanReclaim?'':'disabled'}>${selectedCanReclaim?'↶ Okeyi geri al':'↶ Okeyi al'}</button>`:''}</div></div>`;
+    }).join('')).join('')||`<span class="hint">Henüz masaya açılmış per yok.</span>`;
+    const rackRow=row=>`<div class="rrow">${Array.from({length:15},(_,i)=>{const slot=row*15+i,t=rack[slot],m=g.info[slot];return `<div class="slot${m?' g':''}${m&&m.l?' gl':''}${m&&m.r?' gr':''}" data-s="${slot}">${t?tileHTML(t,true,slot):''}</div>`;}).join('')}</div>`;
+    box.innerHTML=`<div class="tbl"><div class="sT">${botBox(2)}</div><div class="sL">${botBox(3)}</div><div class="mid"><div class="mT">${last(2)}</div><div class="mL">${active&&canDraw&&discards[3].length?`<button class="pile glow" id="ok-take-discard">${last(3)}</button>`:last(3)}</div><div class="mC"><button class="deck${canDraw?' glow':''}" id="ok-draw" ${canDraw&&deck.length?'':'disabled'}><i class="tb"></i><br>${deck.length}</button><br>Gösterge ${tileHTML(indicator,false)}<br><span class="ok-closed-wrap"><span class="ok-closed-tile" aria-label="Okey taşı kapalı">✦</span><span>Okey (arkası kapalı)</span></span></div><div class="mR">${last(1)}</div><div class="mB${active&&canPlay?' glow':''}">${last(0)}</div></div><div class="sR">${botBox(1)}</div><div class="msg"><div class="ok-status">${status}</div><div class="ok-controls"><button class="btn" id="ok-draw2" ${canDraw&&deck.length?'':'disabled'}>Taş çek</button><button class="btn" id="ok-take2" ${canDraw&&discards[3].length?'':'disabled'}>Yerden al</button>${openButton}<button class="btn" id="ok-arrange" ${canPlay?'':'disabled'}>Perleri diz</button><button class="btn" id="ok-discard" ${canPlay&&selectedSlot!==null&&!!rack[selectedSlot]?'':'disabled'}>Seçili taşı at</button>${over?'<button class="btn" id="ok-new">Yeni el</button>':''}</div>${active?`<div class="ok-points">Istaka: ${cur.length} taş · Bulunan per: ${pot.points} puan${opened[0]?' · 101 açıldı':''}</div>`:''}</div><div class="rack"><div class="ok-game-layout"><div class="ok-hand-area">${rackRow(0)}${rackRow(1)}</div><aside class="ok-opened"><div class="hint">Masadaki perler · sağ taraf</div>${openedHTML}</aside></div></div></div><p class="d">Taş seçmek için tıkla, yerini değiştirmek için sürükle. Yan taş almak için açılmamışsan o taşın da içinde olduğu en az 101 puanlık açılış gerekir. Açtıktan sonra sarı işaretli perlere taş ekleyebilir veya doğru taşı koyarak okeyi geri alabilirsin.</p>`;
     const el=id=>box.querySelector('#'+id);
     if(el('ok-draw'))el('ok-draw').onclick=takeFromDeck;
     if(el('ok-draw2'))el('ok-draw2').onclick=takeFromDeck;
@@ -578,6 +710,8 @@ function okey101(){
     if(el('ok-arrange'))el('ok-arrange').onclick=arrangeRack;
     if(el('ok-discard'))el('ok-discard').onclick=humanDiscard;
     if(el('ok-new'))el('ok-new').onclick=start;
+    box.querySelectorAll('[data-ok-process]').forEach(b=>b.onclick=()=>processSelectedOnMeld(+b.dataset.owner,+b.dataset.meld));
+    box.querySelectorAll('[data-ok-reclaim]').forEach(b=>b.onclick=()=>reclaimOkeyFromMeld(+b.dataset.owner,+b.dataset.meld));
   }
   function pileTop(p){return discards[p].slice(-1)[0]||null;}
   box.onpointerdown=e=>{
@@ -591,8 +725,13 @@ function okey101(){
   box.onpointerup=e=>{
     if(!drag)return;const d=drag;drag=null;d.clone.remove();
     if(!d.moved){selectedSlot=d.from;setMessage(`Seçili taş: ${rack[d.from]?.fake?'Sahte okey':rack[d.from]?.n+' '+CN[rack[d.from]?.c]}. “Seçili taşı at” ile atabilirsin.`);render();return;}
-    const target=document.elementFromPoint(e.clientX,e.clientY),slot=target&&target.closest('.rack .slot[data-s]');
-    if(slot){const to=+slot.dataset.s;if(to!==d.from){const tmp=rack[to];rack[to]=rack[d.from];rack[d.from]=tmp;selectedSlot=to;sync();setMessage('Taşın yeri değiştirildi.');}}
+    const target=document.elementFromPoint(e.clientX,e.clientY),meldTarget=target&&target.closest('.ok-meld-target[data-ok-target]'),slot=target&&target.closest('.rack .slot[data-s]');
+    if(meldTarget&&opened[0]&&phase==='action'&&turn===0){
+      const owner=+meldTarget.dataset.owner,index=+meldTarget.dataset.meld,tile=rack[d.from],group=tableMelds[owner]?.[index];
+      if(tile&&group&&canAddTileToMeld(tile,group)){selectedSlot=d.from;processSelectedOnMeld(owner,index);return;}
+      if(tile&&group&&canReplaceWildInMeld(tile,group)>=0){selectedSlot=d.from;reclaimOkeyFromMeld(owner,index);return;}
+      setMessage('Bu taş seçili pere işlenemiyor. Sarı işaretli perleri kullan.');
+    }else if(slot){const to=+slot.dataset.s;if(to!==d.from){const tmp=rack[to];rack[to]=rack[d.from];rack[d.from]=tmp;selectedSlot=to;sync();setMessage('Taşın yeri değiştirildi.');}}
     render();
   };
   box.onpointercancel=()=>{if(drag){drag.clone.remove();drag=null;render();}};
