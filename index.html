@@ -1108,7 +1108,7 @@ function okey101(){
     let id=1;for(let copy=0;copy<2;copy++)for(let color=0;color<4;color++)for(let n=1;n<=13;n++)deck.push({id:id++,c:color,n:n,fake:false});
     deck.push({id:id++,c:0,n:0,fake:true},{id:id++,c:0,n:0,fake:true});
     for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}
-    const ix=deck.findIndex(function(t){return !t.fake;});indicator=deck.splice(ix,1)[0];ok={c:indicator.c,n:indicator.n===13?1:indicator.n+1};deck.filter(function(t){return t.fake;}).forEach(function(t){t.c=indicator.c;t.n=indicator.n;});
+    const ix=deck.findIndex(function(t){return !t.fake;});indicator=deck.splice(ix,1)[0];ok={c:indicator.c,n:indicator.n===13?1:indicator.n+1};deck.filter(function(t){return t.fake;}).forEach(function(t){t.c=ok.c;t.n=ok.n;});
     for(let offset=0;offset<4;offset++){const p=(startingPlayer+offset)%4;hands[p]=sortTiles(deck.splice(0,p===startingPlayer?22:21));}
     hands[0].forEach(function(t,i){rack[i]=t;});
     if(startingPlayer===0){phase='action';note='Sen başlıyorsun: 22 taşın hazır. İlk hamlede taş çekmeden bir taş atmalısın.';startTurnClock(0);render();}
@@ -1320,7 +1320,7 @@ function okey101(){
   }
   function renderMatchResult(){
     const winner=matchWinner===null?sortedPlayers()[0]:matchWinner;
-    box.innerHTML='<div class="ok-result-screen"><div class="ok-setup-icon">🏆</div><h2>Maç tamamlandı</h2><p>Kazanan: <b>'+playerLabel(winner)+'</b> · '+totalPenalties[winner]+' toplam ceza puanı</p>'+scoreboardHTML()+reportHTML()+'<div class="ok-setup-actions"><button type="button" class="btn" id="ok-new-match">Yeni maç başlat</button></div></div>';
+    box.innerHTML='<div class="ok-result-screen'+(handReport&&handReport.endingWithOkey?' ok-okey-finish':'')+'"><div class="ok-setup-icon">🏆</div><h2>Maç tamamlandı</h2><p>Kazanan: <b>'+playerLabel(winner)+'</b> · '+totalPenalties[winner]+' toplam ceza puanı</p>'+scoreboardHTML()+reportHTML()+'<div class="ok-setup-actions"><button type="button" class="btn" id="ok-new-match">Yeni maç başlat</button></div></div>';
     const fresh=box.querySelector('#ok-new-match');if(fresh)fresh.onclick=function(){matchStarted=false;matchOver=false;pendingSaved=null;selectedRoundCount=roundCount;renderSetup();};
   }
   function render(){
