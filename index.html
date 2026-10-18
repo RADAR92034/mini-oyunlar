@@ -159,10 +159,23 @@ main.okey-wide{max-width:1500px}
 .b2k .c.pop{animation:p2k .15s}
 @keyframes p2k{from{transform:scale(.4)}to{transform:scale(1)}}
 .btn.off{background:var(--card);color:var(--fg)}
+
+/* SOLITAIRE CSS */
+.sol{--cw:clamp(40px,11.5vw,88px);--ch:calc(var(--cw)*1.42);--g:clamp(4px,1.2vw,12px);margin-top:8px}
+#sol-board{display:grid;grid-template-columns:repeat(7,var(--cw));gap:calc(var(--g)*2) var(--g);justify-content:center;padding:14px 10px 30px;border-radius:16px;background:radial-gradient(circle at 50% 30%,#2f7d4f,#1d5a37);touch-action:none;user-select:none}
+.sol .slot{position:relative;width:var(--cw);height:var(--ch);border-radius:6px;background:rgba(255,255,255,.1);color:#ffffff66;display:flex;align-items:center;justify-content:center;font-size:calc(var(--cw)*.4)}
+.sol .slot.nobg{background:none}
+.sol .card{position:absolute;left:0;width:var(--cw);height:var(--ch);border-radius:6px;background:#fff;border:1px solid #0004;box-shadow:0 1px 3px #0005;overflow:hidden;user-select:none;touch-action:none;font-family:system-ui,sans-serif}
+.sol .card.back{background:repeating-linear-gradient(45deg,#1d4ed8 0 6px,#1e3a8a 6px 12px);border:2px solid #fff}
+.sol .card b{position:absolute;left:6%;top:3%;font-size:calc(var(--cw)*.27);line-height:1}
+.sol .card i{position:absolute;left:6%;top:calc(var(--cw)*.3);font-style:normal;font-size:calc(var(--cw)*.24);line-height:1}
+.sol .card u{position:absolute;right:8%;bottom:4%;text-decoration:none;font-size:calc(var(--cw)*.5);line-height:1}
+.sol .red{color:#c62828}.sol .blk{color:#111}
+.sol-fl .card{position:absolute;box-shadow:0 8px 14px rgba(0,0,0,.5)}
 </style>
 </head>
 <body>
-<nav><button id="n1" class="on" data-p="p1">⚙️ Ayarlar</button><button id="n2" data-p="p2">👥 Arkadaşını davet et</button><h1 style="margin-top:18px">🎮 Mini Oyunlar</h1><input id="gs" placeholder="Oyun ara…" aria-label="Oyun ara"><button data-p="g1">🐍 Yılan</button><button data-p="g2">🃏 Hafıza</button><button data-p="g3">❌ XOX</button><button data-p="g4">🎴 101 Okey</button><button data-p="g5">🃏 21 Blackjack</button><button data-p="g6">🔢 2048</button></nav>
+<nav><button id="n1" class="on" data-p="p1">⚙️ Ayarlar</button><button id="n2" data-p="p2">👥 Arkadaşını davet et</button><h1 style="margin-top:18px">🎮 Mini Oyunlar</h1><input id="gs" placeholder="Oyun ara…" aria-label="Oyun ara"><button data-p="g1">🐍 Yılan</button><button data-p="g2">🃏 Hafıza</button><button data-p="g3">❌ XOX</button><button data-p="g4">🎴 101 Okey</button><button data-p="g5">🃏 21 Blackjack</button><button data-p="g6">🔢 2048</button><button data-p="g7">♠ Solitaire</button></nav>
 <main><section id="p1">
 <h2>⚙️ Ayarlar</h2>
 <p class="d">Sitenin görünümünü buradan değiştir.</p>
@@ -230,6 +243,10 @@ h2{margin:0 0 4px}
 <div class="m"><span id="s2048">Skor: 0</span> · <span id="bs2048">En iyi: 0</span> · <span id="x2048"></span></div>
 <div id="z2048" style="margin:8px 0"></div><div id="b2048" class="b2k"></div>
 <div style="margin-top:12px"><button class="btn" id="u2048">↶ Geri al</button><button class="btn" id="n2048">Yeni oyun</button></div></section>
+<section id="g7"><h2>♠ Solitaire</h2><p class="d">Kartları sürükle. Kırmızı-siyah sırayla büyükten küçüğe diz; sağ üstte aynı cinsi As’tan Papaz’a topla. Karta çift tıkla, uygunsa yukarı gider.</p>
+<div class="m"><span id="sol-info">Hamle: 0</span> <span id="sol-msg"></span></div>
+<div><button class="btn" id="sol-undo">↶ Geri al</button><button class="btn" id="sol-new">Yeni oyun</button><button class="btn" id="sol-n1">1 kart çek</button><button class="btn off" id="sol-n3">3 kart çek</button></div>
+<div class="sol"><div id="sol-board"></div></div></section>
 </main>
 <script>
 const T=[["beyaz","Beyaz","#ffffff"],["siyah","Siyah","#000000"],["mavi","Mavi","#1c3d73"],["yesil","Yeşil","#1e5a3a"]];
@@ -265,7 +282,7 @@ stopG();stopG=()=>{};
 document.querySelector("main").classList.toggle("okey-wide",id==="g4");
 document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);
 document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.p===id));
-if(id==="g1")snake();if(id==="g2")memory();if(id==="g3")xox();if(id==="g4")okey101();if(id==="g5")blackjack();if(id==="g6")game2048()}
+if(id==="g1")snake();if(id==="g2")memory();if(id==="g3")xox();if(id==="g4")okey101();if(id==="g5")blackjack();if(id==="g6")game2048();if(id==="g7")solitaire()}
 function snake(){
 const x=q("cv").getContext("2d"),N=18,S=20,m=q("m1");
 let s,d,f,sc,run;
@@ -893,6 +910,102 @@ bd.onpointerup=e=>{const dx=e.clientX-sx,dy=e.clientY-sy;if(Math.max(Math.abs(dx
 q('u2048').onclick=undo;q('n2048').onclick=start;
 stopG=()=>{document.removeEventListener('keydown',kh);bd.onpointerdown=bd.onpointerup=null};
 start()}
+
+function solitaire(){
+const RK=['','A','2','3','4','5','6','7','8','9','10','J','Q','K'],SU=['♠','♥','♦','♣'];
+const red=c=>c.s===1||c.s===2;
+const board=q('sol-board');
+let S,moves=0,hist=[],nDraw=1,dr=null,lastTap={};
+window.S=null;
+function newGame(){
+const deck=[];for(let s=0;s<4;s++)for(let r=1;r<=13;r++)deck.push({s,r,up:false});
+for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]]}
+S={stock:[],waste:[],f:[[],[],[],[]],t:[[],[],[],[],[],[],[]]};
+for(let i=0;i<7;i++)for(let k=0;k<=i;k++){const c=deck.pop();c.up=k===i;S.t[i].push(c)}
+S.stock=deck;moves=0;hist=[];window.S=S;draw()}
+function pile(id){return id==='stock'?S.stock:id==='waste'?S.waste:id[0]==='f'?S.f[+id[1]]:S.t[+id[1]]}
+function snap(){hist.push(JSON.stringify({S,moves}));if(hist.length>300)hist.shift()}
+function undo(){const h=hist.pop();if(!h)return;const o=JSON.parse(h);S=o.S;moves=o.moves;window.S=S;draw()}
+function canDrop(cards,to){
+const top=pile(to).slice(-1)[0],c=cards[0];
+if(to[0]==='f')return cards.length===1&&(top?(top.s===c.s&&c.r===top.r+1):c.r===1);
+if(to[0]==='t')return top?(top.up&&red(top)!==red(c)&&top.r===c.r+1):c.r===13;
+return false}
+function moveCards(from,i,to){
+if(from===to){draw();return false}
+const src=pile(from),cards=src.slice(i);
+if(!cards.length||!canDrop(cards,to)){draw();return false}
+snap();src.splice(i);pile(to).push(...cards);
+if(from[0]==='t'){const s=src[src.length-1];if(s&&!s.up)s.up=true}
+moves++;draw();return true}
+function autoF(p,i){
+const src=pile(p);if(i!==src.length-1){draw();return}
+for(let k=0;k<4;k++)if(canDrop([src[i]],'f'+k)){moveCards(p,i,'f'+k);return}
+draw()}
+function drawStock(){
+if(!S.stock.length&&!S.waste.length)return;
+snap();
+if(S.stock.length){for(let k=0;k<nDraw&&S.stock.length;k++){const c=S.stock.pop();c.up=true;S.waste.push(c)}}
+else{while(S.waste.length){const c=S.waste.pop();c.up=false;S.stock.push(c)}}
+moves++;draw()}
+function cardEl(c,p,i,style){
+const d=document.createElement('div');
+d.className='card'+(c.up?(red(c)?' red':' blk'):' back');
+d.dataset.p=p;d.dataset.i=i;d.dataset.up=c.up?1:0;
+if(c.up)d.innerHTML=`<b>${RK[c.r]}</b><i>${SU[c.s]}</i><u>${SU[c.s]}</u>`;
+d.style.cssText=style||'top:0';
+return d}
+function slot(id,cls){const d=document.createElement('div');d.className='slot'+(cls?' '+cls:'');d.dataset.pile=id;board.appendChild(d);return d}
+function draw(){
+board.innerHTML='';
+const st=slot('stock');
+if(S.stock.length)st.appendChild(cardEl(S.stock[S.stock.length-1],'stock',S.stock.length-1));
+else if(S.waste.length)st.textContent='↻';
+const w=slot('waste','nobg');
+const sh=Math.min(nDraw===3?3:1,S.waste.length);
+for(let k=0;k<sh;k++){const idx=S.waste.length-sh+k;w.appendChild(cardEl(S.waste[idx],'waste',idx,`top:0;left:calc(var(--cw)*${(k*.24).toFixed(2)})`))}
+slot('x','nobg').dataset.pile='';
+for(let k=0;k<4;k++){const f=slot('f'+k),a=S.f[k];f.textContent=a.length?'':'A';if(a.length)f.appendChild(cardEl(a[a.length-1],'f'+k,a.length-1))}
+for(let k=0;k<7;k++){
+const col=S.t[k],c=slot('t'+k);
+let off=0;
+col.forEach((x,i)=>{c.appendChild(cardEl(x,'t'+k,i,`top:calc(var(--ch)*${off.toFixed(2)})`));off+=x.up?.3:.14});
+const H=col.length?1+off-(col[col.length-1].up?.3:.14):1;
+c.style.height=`calc(var(--ch)*${H.toFixed(2)})`;
+if(col.length)c.classList.add('nobg')}
+q('sol-info').textContent='Hamle: '+moves;
+const won=S.f.reduce((a,x)=>a+x.length,0)===52;
+q('sol-msg').textContent=won?'🎉 Kazandın!':'';
+}
+board.onclick=e=>{if(e.target.closest('[data-pile="stock"]'))drawStock()};
+board.onpointerdown=e=>{
+const el=e.target.closest('.card');
+if(!el||el.dataset.up!=='1')return;
+const p=el.dataset.p,i=+el.dataset.i,src=pile(p);
+if((p==='waste'||p[0]==='f')&&i!==src.length-1)return;
+e.preventDefault();
+const els=[...board.querySelectorAll(`.card[data-p="${p}"]`)].filter(x=>+x.dataset.i>=i);
+const r0=els[0].getBoundingClientRect(),fl=document.createElement('div');
+fl.className='sol-fl sol';
+fl.style.cssText=`position:fixed;left:${r0.left}px;top:${r0.top}px;z-index:99;pointer-events:none;--cw:${r0.width}px;--ch:${r0.height}px`;
+els.forEach(x=>{const r=x.getBoundingClientRect(),c=x.cloneNode(true);c.style.cssText=`left:${r.left-r0.left}px;top:${r.top-r0.top}px`;fl.appendChild(c);x.style.opacity=.3});
+document.body.appendChild(fl);
+dr={p,i,fl,ox:e.clientX-r0.left,oy:e.clientY-r0.top,x:e.clientX,y:e.clientY,mv:false};
+try{board.setPointerCapture(e.pointerId)}catch(x){}};
+board.onpointermove=e=>{if(!dr)return;const d=dr;if(Math.abs(e.clientX-d.x)+Math.abs(e.clientY-d.y)>5)d.mv=true;d.fl.style.left=(e.clientX-d.ox)+'px';d.fl.style.top=(e.clientY-d.oy)+'px'};
+board.onpointerup=e=>{
+if(!dr)return;
+const d=dr;dr=null;d.fl.remove();
+const t=document.elementFromPoint(e.clientX,e.clientY),tp=t&&t.closest('[data-pile]');
+if(d.mv&&tp&&tp.dataset.pile){moveCards(d.p,d.i,tp.dataset.pile);return}
+if(!d.mv){const n=Date.now(),k=d.p+':'+d.i;if(lastTap.k===k&&n-lastTap.t<400){lastTap={};autoF(d.p,d.i);return}lastTap={k,t:n}}
+draw()};
+board.onpointercancel=()=>{if(dr){dr.fl.remove();dr=null;draw()}};
+function setN(n){nDraw=n;q('sol-n1').className='btn'+(n===1?'':' off');q('sol-n3').className='btn'+(n===3?'':' off');newGame()}
+q('sol-undo').onclick=undo;q('sol-new').onclick=newGame;
+q('sol-n1').onclick=()=>setN(1);q('sol-n3').onclick=()=>setN(3);
+stopG=()=>{board.onclick=board.onpointerdown=board.onpointermove=board.onpointerup=board.onpointercancel=null;if(dr){dr.fl.remove();dr=null}};
+newGame()}
 
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>pg(b.dataset.p));
 q("gs").oninput=e=>{const v=e.target.value.toLocaleLowerCase("tr-TR").trim();document.querySelectorAll("nav [data-p^=g]").forEach(b=>b.style.display=b.textContent.toLocaleLowerCase("tr-TR").includes(v)?"":"none")};
