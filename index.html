@@ -265,18 +265,8 @@ const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim
 function pg(id){
 stopG();stopG=()=>{};
 const mainEl=document.querySelector("main");
-const isSolitaire=id==="g7";
 mainEl.classList.toggle("okey-wide",id==="g4");
-mainEl.classList.toggle("solitaire-wide",isSolitaire);
-document.body.classList.toggle("solitaire-active",isSolitaire);
-if(isSolitaire){
-  mainEl.style.maxWidth="none";
-  mainEl.style.width="calc(100vw - 250px)";
-  mainEl.style.margin="0";
-  mainEl.style.padding="16px 20px";
-  mainEl.style.flex="1 1 calc(100vw - 250px)";
-  mainEl.style.minWidth="0";
-}else{
+else{
   mainEl.style.maxWidth="";
   mainEl.style.width="";
   mainEl.style.margin="";
