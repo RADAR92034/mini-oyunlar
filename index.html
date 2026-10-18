@@ -186,11 +186,81 @@ main.okey-wide{max-width:1500px}
 .wd-topic-row #wd-theme{display:block;width:100%;min-width:0;max-width:100%;margin:0}
 .wd-lens{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;width:100%;margin-top:8px}
 .wd-lens .btn{display:block;width:100%;min-width:0;margin:0;text-align:center}
+
+/* Ana menü */
+main.home-wide{max-width:none!important;width:auto!important;flex:1 1 auto!important;margin:0!important;min-width:0}
+.home-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,280px);gap:22px;align-items:stretch;margin-bottom:28px}
+.home-welcome{padding:25px 24px;border-radius:16px;background:linear-gradient(125deg,var(--side),var(--card));border:1px solid color-mix(in srgb,var(--mut) 25%,transparent)}
+.home-eyebrow{font-size:.72rem;font-weight:800;letter-spacing:.13em;color:var(--acc);margin:0 0 9px}
+.home-welcome h2{font-size:clamp(1.55rem,3vw,2.25rem);line-height:1.16;margin:0 0 10px}
+.home-welcome .d{font-size:.98rem;max-width:540px}
+.home-contact{padding:18px;border-radius:14px;border:1px solid color-mix(in srgb,var(--mut) 30%,transparent);background:var(--side);display:flex;flex-direction:column;justify-content:center;gap:12px}
+.home-contact-label{font-size:.68rem;letter-spacing:.13em;color:var(--mut);font-weight:800}
+.home-ig{display:flex;align-items:center;gap:10px;color:var(--fg);text-decoration:none;min-width:0}
+.home-ig-mark{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--acc);font-size:.83rem;font-weight:900;color:#fff;flex-shrink:0}
+.home-ig b{display:block;font-size:.96rem}.home-ig small{display:block;color:var(--mut);font-size:.76rem;margin-top:2px}
+.home-arrow{margin-left:auto;color:var(--mut)}
+.home-section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 12px}
+.home-section-heading h3{margin:0;color:var(--fg);font-size:1.1rem}
+.home-section-heading>span{font-size:.8rem;color:var(--mut)}
+.home-games{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.home-game{display:flex;align-items:center;gap:11px;text-align:left;min-width:0;padding:13px 12px;border:1px solid color-mix(in srgb,var(--mut) 22%,transparent);border-radius:12px;background:var(--side);color:var(--fg);cursor:pointer;transition:border-color .12s,transform .12s}
+.home-game:hover{border-color:var(--acc);transform:translateY(-1px)}
+.home-game-icon{width:42px;height:42px;flex-shrink:0;display:grid;place-items:center;border-radius:10px;background:var(--card);font-size:1.35rem}
+.home-game-copy{display:block;min-width:0;flex:1}
+.home-game-copy b{display:block;font-size:.94rem}
+.home-game-copy small{display:block;margin-top:3px;color:var(--mut);font-size:.76rem;line-height:1.3}
+.home-play{font-size:.72rem;white-space:nowrap;color:var(--acc);font-weight:800}
+.home-suggest{margin-top:22px;padding:18px;border:1px solid color-mix(in srgb,var(--mut) 25%,transparent);border-radius:14px}
+.home-suggest-intro{display:flex;gap:11px;align-items:flex-start;margin-bottom:12px}
+.home-suggest-mark{width:38px;height:38px;flex-shrink:0;display:grid;place-items:center;background:var(--side);border-radius:10px;font-size:1.2rem}
+.home-suggest h3{margin:0 0 4px;color:var(--fg);font-size:1rem}
+.home-suggest .d{line-height:1.45}
+.home-suggest textarea{display:block;width:100%;resize:vertical;min-height:70px;padding:11px;border:1px solid var(--mut);border-radius:9px;background:var(--side);color:var(--fg);font:inherit;font-size:.9rem}
+.home-suggest-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:9px}
+.home-suggest-actions .btn{margin:0}.home-suggest-actions a{font-size:.82rem;color:var(--mut);text-decoration:none}
+.home-suggest .m{font-size:.84rem;margin:8px 0 0}
+.home-note{font-size:.73rem;color:var(--mut);margin:6px 0 0}
+@media(max-width:900px){.home-hero{grid-template-columns:minmax(0,1fr) 230px;gap:12px}}
+@media(max-width:700px){main.home-wide{padding:12px!important}.home-hero{grid-template-columns:1fr;gap:10px;margin-bottom:22px}.home-welcome{padding:19px}.home-contact{padding:13px;gap:7px}.home-games{gap:8px}.home-game{gap:8px;padding:10px 8px}.home-game-icon{width:34px;height:34px;font-size:1.05rem}.home-game-copy b{font-size:.85rem}.home-game-copy small{font-size:.69rem}.home-play{font-size:.66rem}.home-suggest{padding:13px}}
+@media(max-width:400px){.home-games{grid-template-columns:1fr}.home-game-copy b{font-size:.92rem}.home-game-copy small{font-size:.76rem}}
 </style>
 </head>
 <body>
-<nav><button id="n1" class="on" data-p="p1">⚙️ Ayarlar</button><button id="n2" data-p="p2">👥 Arkadaşını davet et</button><h1 style="margin-top:18px">🎮 Mini Oyunlar</h1><input id="gs" placeholder="Oyun ara…" aria-label="Oyun ara"><button data-p="g1">🐍 Yılan</button><button data-p="g2">🃏 Hafıza</button><button data-p="g3">❌ XOX</button><button data-p="g4">🎴 101 Okey</button><button data-p="g5">🃏 21 Blackjack</button><button data-p="g6">🔢 2048</button><button data-p="g8">💣 Mayın Tarlası</button><button data-p="g9">🔤 Kelime Tahmin</button></nav>
-<main><section id="p1">
+<nav><button id="n0" class="on" data-p="p0">🏠 Ana Menü</button><button id="n1" data-p="p1">⚙️ Ayarlar</button><button id="n2" data-p="p2">👥 Arkadaşını davet et</button><h1 style="margin-top:18px">🎮 Mini Oyunlar</h1><input id="gs" placeholder="Oyun ara…" aria-label="Oyun ara"><button data-p="g1">🐍 Yılan</button><button data-p="g2">🃏 Hafıza</button><button data-p="g3">❌ XOX</button><button data-p="g4">🎴 101 Okey</button><button data-p="g5">🃏 21 Blackjack</button><button data-p="g6">🔢 2048</button><button data-p="g8">💣 Mayın Tarlası</button><button data-p="g9">🔤 Kelime Tahmin</button></nav>
+<main>
+<section id="p0">
+  <div class="home-hero">
+    <div class="home-welcome">
+      <p class="home-eyebrow">OYNA · KEŞFET · EĞLEN</p>
+      <h2>🎮 Mini Oyunlar'a hoş geldin!</h2>
+      <p class="d">Bir oyun seç ve hemen başla. İndirme yok, doğrudan tarayıcıda oyna.</p>
+    </div>
+    <div class="home-contact">
+      <span class="home-contact-label">İLETİŞİM</span>
+      <a class="home-ig" href="https://www.instagram.com/fth.rdr/" target="_blank" rel="noopener noreferrer"><span class="home-ig-mark">IG</span><span><b>@fth.rdr</b><small>Instagram'dan ulaş</small></span><span class="home-arrow">↗</span></a>
+    </div>
+  </div>
+  <div class="home-section-heading"><h3>Oyun seç</h3><span>İstediğini aç ve oyna</span></div>
+  <div class="home-games">
+    <button type="button" class="home-game" data-home-go="g1"><span class="home-game-icon">🐍</span><span class="home-game-copy"><b>Yılan</b><small>Yemleri topla, duvarlara çarpma.</small></span><span class="home-play">Oyna ↗</span></button>
+    <button type="button" class="home-game" data-home-go="g2"><span class="home-game-icon">🃏</span><span class="home-game-copy"><b>Hafıza</b><small>Eşleşen kartları bul.</small></span><span class="home-play">Oyna ↗</span></button>
+    <button type="button" class="home-game" data-home-go="g3"><span class="home-game-icon">❌</span><span class="home-game-copy"><b>XOX</b><small>Bilgisayara karşı oyna.</small></span><span class="home-play">Oyna ↗</span></button>
+    <button type="button" class="home-game" data-home-go="g4"><span class="home-game-icon">🎴</span><span class="home-game-copy"><b>101 Okey</b><small>Perlerini oluştur, elini bitir.</small></span><span class="home-play">Oyna ↗</span></button>
+    <button type="button" class="home-game" data-home-go="g5"><span class="home-game-icon">♠️</span><span class="home-game-copy"><b>21 Blackjack</b><small>21'e yaklaş, krupiyeyi geç.</small></span><span class="home-play">Oyna ↗</span></button>
+    <button type="button" class="home-game" data-home-go="g6"><span class="home-game-icon">🔢</span><span class="home-game-copy"><b>2048</b><small>Aynı sayıları birleştir.</small></span><span class="home-play">Oyna ↗</span></button>
+    <button type="button" class="home-game" data-home-go="g8"><span class="home-game-icon">💣</span><span class="home-game-copy"><b>Mayın Tarlası</b><small>Mayınlara basmadan alanı aç.</small></span><span class="home-play">Oyna ↗</span></button>
+    <button type="button" class="home-game" data-home-go="g9"><span class="home-game-icon">🔤</span><span class="home-game-copy"><b>Kelime Tahmin</b><small>Gizli kelimeyi altı hakta bul.</small></span><span class="home-play">Oyna ↗</span></button>
+  </div>
+  <div class="home-suggest">
+    <div class="home-suggest-intro"><span class="home-suggest-mark">💡</span><div><h3>Oyun önerin var mı?</h3><p class="d">Eklenmesini istediğin oyunu yaz. Öneri metnini kopyalayalım ve Instagram'dan gönderebil.</p></div></div>
+    <textarea id="home-suggestion" rows="2" maxlength="500" placeholder="Örn. Satranç, tavla veya başka bir oyun…"></textarea>
+    <div class="home-suggest-actions"><button type="button" class="btn" id="home-suggest-send">Öneriyi hazırla ↗</button><a href="https://www.instagram.com/fth.rdr/" target="_blank" rel="noopener noreferrer">IG @fth.rdr</a></div>
+    <p id="home-suggestion-msg" class="m" role="status" aria-live="polite"></p>
+    <p class="home-note">Not: Öneriler bu sitede otomatik kaydedilmez; Instagram üzerinden kendin gönderebilirsin.</p>
+  </div>
+</section>
+<section id="p1" hidden>
 <h2>⚙️ Ayarlar</h2>
 <p class="d">Sitenin görünümünü buradan değiştir.</p>
 <h3>Tema</h3>
@@ -310,6 +380,7 @@ function pg(id){
 stopG();stopG=()=>{};
 const mainEl=document.querySelector("main");
 mainEl.classList.toggle("okey-wide",id==="g4");
+mainEl.classList.toggle("home-wide",id==="p0");
 document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);
 document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.p===id));
 if(id==="g1")snake();
@@ -1087,6 +1158,26 @@ start()}
 
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>pg(b.dataset.p));
 q("gs").oninput=e=>{const v=e.target.value.toLocaleLowerCase("tr-TR").trim();document.querySelectorAll("nav [data-p^=g]").forEach(b=>b.style.display=b.textContent.toLocaleLowerCase("tr-TR").includes(v)?"":"none")};
+
+document.querySelectorAll("[data-home-go]").forEach(b=>b.onclick=()=>pg(b.dataset.homeGo));
+q("home-suggest-send").onclick=()=>{
+  const idea=q("home-suggestion").value.trim();
+  const status=q("home-suggestion-msg");
+  if(!idea){status.textContent="Önce eklenmesini istediğin oyunu yaz.";q("home-suggestion").focus();return}
+  const message="Merhaba! Mini Oyunlar için oyun önerim: "+idea;
+  window.open("https://www.instagram.com/fth.rdr/","_blank","noopener,noreferrer");
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(message).then(()=>{
+      status.textContent="Öneri metni kopyalandı. Instagram'da @fth.rdr profiline girip mesajına yapıştırabilirsin.";
+    }).catch(()=>{
+      status.textContent="Instagram profili açıldı. Öneri metnini kopyalayıp DM ile gönder: "+message;
+    });
+  }else{
+    status.textContent="Instagram profili açıldı. Öneri metnini kopyalayıp DM ile gönder: "+message;
+  }
+};
+pg("p0");
+
 
 
 </script>
