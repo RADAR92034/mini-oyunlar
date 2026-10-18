@@ -296,8 +296,21 @@ const q=id=>document.getElementById(id);
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 function pg(id){
 stopG();stopG=()=>{};
-document.querySelector("main").classList.toggle("okey-wide",id==="g4");
-document.querySelector("main").classList.toggle("solitaire-wide",id==="g7");
+const mainEl=document.querySelector("main");
+const isSolitaire=id==="g7";
+mainEl.classList.toggle("okey-wide",id==="g4");
+mainEl.classList.toggle("solitaire-wide",isSolitaire);
+if(isSolitaire){
+  mainEl.style.maxWidth="none";
+  mainEl.style.width="auto";
+  mainEl.style.margin="0 20px";
+  mainEl.style.flex="1 1 auto";
+}else{
+  mainEl.style.maxWidth="";
+  mainEl.style.width="";
+  mainEl.style.margin="";
+  mainEl.style.flex="";
+}
 document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);
 document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.p===id));
 if(id==="g1")snake();if(id==="g2")memory();if(id==="g3")xox();if(id==="g4")okey101();if(id==="g5")blackjack();if(id==="g6")game2048();if(id==="g7")solitaire()}
