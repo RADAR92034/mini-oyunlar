@@ -522,7 +522,7 @@ main.zombie-wide{
 <p class="d">Sitenin görünümünü buradan değiştir.</p>
 <h3>Tema</h3>
 <div class="th" id="th"></div></section><section id="p2" hidden><h2>👥 Arkadaşını davet et</h2><p class="d">Siteyi arkadaşına gönder.</p><div class="iv" id="iv" style="margin-top:14px;max-width:380px"></div></section>
-<section id="g1" hidden><h2>🐍 Yılan</h2><p class="d">Ok tuşları, WASD ya da düğmeler. Başlamak için Space tuşuna bas veya ekrandaki düğmeye tıkla.</p><div id="m1" class="m"></div><div id="snake-stage" style="position:relative;width:min(360px,100%);max-width:100%"><canvas id="cv" width="360" height="360" style="width:100%;height:auto"></canvas><div id="snake-start-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.62);border-radius:8px;padding:16px;box-sizing:border-box"><div style="display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;color:#fff"><strong id="snake-start-title">🐍 Hazır mısın?</strong><span id="snake-start-hint">Space tuşuna bas veya düğmeye tıkla</span><button type="button" class="btn" id="snake-start" style="font-size:1rem;padding:12px 20px">▶ Oyuna Başla</button></div></div></div><div class="pad"><span></span><button class="btn" data-d="0,-1">▲</button><span></span><button class="btn" data-d="-1,0">◀</button><button class="btn" data-d="0,1">▼</button><button class="btn" data-d="1,0">▶</button></div></section><section id="g2" hidden><h2>🃏 Hafıza</h2><p class="d">Eş kartları bul.</p><div id="sz"></div><div id="m2" class="m"></div><div class="grid" id="gr2"></div></section><section id="g3" hidden><h2>❌ XOX</h2><p class="d">Sen X’sin, bilgisayar O.</p><div id="m3" class="m"></div><div class="grid" id="gr3" style="grid-template-columns:repeat(3,1fr);max-width:300px"></div><button class="btn" id="rs3" style="margin-top:12px">Yeni oyun</button></section><section id="g4" hidden><h2>🎴 101 Okey</h2><p class="d">22 taşla başlarsın; sıran geldiğinde desteden veya önceki oyuncunun attığı taştan alırsın. Aynı sayıdaki farklı renk taşlarla per, aynı renkte ardışık taşlarla seri oluştur. Geçerli grupların toplamı en az 101 puan olunca “101 Aç” düğmesini kullan. Taşı seçmek için tıkla, yerini değiştirmek için sürükle; atmak için “Seçili taşı at” düğmesine bas. Açtıktan sonra yeni grupları “Perleri masaya koy” ile oynayabilirsin. Deste bitince elde kalan puanı en az olan kazanır.</p><div id="ok"></div></section>
+<section id="g1" hidden><h2>🐍 Yılan</h2><p class="d">Ok tuşları, WASD ya da düğmeler. Başlamak için Space tuşuna bas veya ekrandaki düğmeye tıkla.</p><div id="m1" class="m"></div><div id="snake-stage" style="position:relative;width:min(540px,100%);max-width:100%"><canvas id="cv" width="540" height="540" style="display:block;width:100%;height:auto;border-radius:12px"></canvas><div id="snake-start-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.62);border-radius:8px;padding:16px;box-sizing:border-box"><div style="display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;color:#fff"><strong id="snake-start-title">🐍 Hazır mısın?</strong><span id="snake-start-hint">Space tuşuna bas veya düğmeye tıkla</span><button type="button" class="btn" id="snake-start" style="font-size:1rem;padding:12px 20px">▶ Oyuna Başla</button></div></div></div><div class="pad"><span></span><button class="btn" data-d="0,-1">▲</button><span></span><button class="btn" data-d="-1,0">◀</button><button class="btn" data-d="0,1">▼</button><button class="btn" data-d="1,0">▶</button></div></section><section id="g2" hidden><h2>🃏 Hafıza</h2><p class="d">Eş kartları bul.</p><div id="sz"></div><div id="m2" class="m"></div><div class="grid" id="gr2"></div></section><section id="g3" hidden><h2>❌ XOX</h2><p class="d">Sen X’sin, bilgisayar O.</p><div id="m3" class="m"></div><div class="grid" id="gr3" style="grid-template-columns:repeat(3,1fr);max-width:300px"></div><button class="btn" id="rs3" style="margin-top:12px">Yeni oyun</button></section><section id="g4" hidden><h2>🎴 101 Okey</h2><p class="d">22 taşla başlarsın; sıran geldiğinde desteden veya önceki oyuncunun attığı taştan alırsın. Aynı sayıdaki farklı renk taşlarla per, aynı renkte ardışık taşlarla seri oluştur. Geçerli grupların toplamı en az 101 puan olunca “101 Aç” düğmesini kullan. Taşı seçmek için tıkla, yerini değiştirmek için sürükle; atmak için “Seçili taşı at” düğmesine bas. Açtıktan sonra yeni grupları “Perleri masaya koy” ile oynayabilirsin. Deste bitince elde kalan puanı en az olan kazanır.</p><div id="ok"></div></section>
 <section id="g5" hidden>
   <div class="bj-wrap">
     <h2>🃏 21 Blackjack</h2>
@@ -734,15 +734,27 @@ if(id==="g9")kelimeTahmin();
 if(id==="g10")zombieSurvival();
 }
 function snake(){
-const canvas=q("cv"),x=canvas.getContext("2d"),N=18,S=20,m=q("m1");
+const canvas=q("cv"),x=canvas.getContext("2d"),N=18,S=30,m=q("m1");
 const overlay=q("snake-start-overlay"),startBtn=q("snake-start"),startTitle=q("snake-start-title"),startHint=q("snake-start-hint");
 let s,d,f,sc,run=false,gameOver=false;
 function food(){do{f=[Math.floor(Math.random()*N),Math.floor(Math.random()*N)]}while(s.some(p=>p[0]===f[0]&&p[1]===f[1]))}
 function dir(a,b){if(!run)return;if(a+d[0]!==0||b+d[1]!==0)d=[a,b]}
 function draw(){
-x.fillStyle=css("--side");x.fillRect(0,0,360,360);
-x.fillStyle="#e5484d";x.fillRect(f[0]*S+2,f[1]*S+2,S-4,S-4);
-x.fillStyle=css("--acc");s.forEach(p=>x.fillRect(p[0]*S+1,p[1]*S+1,S-2,S-2));
+const size=N*S;
+x.fillStyle=css("--side");x.fillRect(0,0,size,size);
+x.strokeStyle="rgba(255,255,255,.055)";x.lineWidth=1;
+for(let i=0;i<=N;i++){x.beginPath();x.moveTo(i*S+.5,0);x.lineTo(i*S+.5,size);x.stroke();x.beginPath();x.moveTo(0,i*S+.5);x.lineTo(size,i*S+.5);x.stroke()}
+x.fillStyle="#e5484d";x.beginPath();x.roundRect(f[0]*S+4,f[1]*S+4,S-8,S-8,7);x.fill();
+x.fillStyle=css("--acc");
+for(let i=s.length-1;i>=1;i--){const p=s[i];x.beginPath();x.roundRect(p[0]*S+2,p[1]*S+2,S-4,S-4,8);x.fill()}
+const h=s[0],cx=h[0]*S+S/2,cy=h[1]*S+S/2;
+x.fillStyle="#a8f06a";x.beginPath();x.roundRect(h[0]*S+1,h[1]*S+1,S-2,S-2,10);x.fill();
+const ex=cx+d[0]*6,ey=cy+d[1]*6,px=-d[1]*6,py=d[0]*6;
+for(const side of [-1,1]){
+const exy=[ex+px*side,ey+py*side];
+x.fillStyle="#fff";x.beginPath();x.arc(exy[0],exy[1],4.6,0,Math.PI*2);x.fill();
+x.fillStyle="#17251a";x.beginPath();x.arc(exy[0]+d[0]*1.5,exy[1]+d[1]*1.5,2.1,0,Math.PI*2);x.fill()
+}
 }
 function showOverlay(title,hint,buttonText){
 startTitle.textContent=title;startHint.textContent=hint;startBtn.textContent=buttonText;overlay.style.display="flex";
