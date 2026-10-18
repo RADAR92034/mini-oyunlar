@@ -1231,6 +1231,228 @@ q('wd-new').onclick=start;
 stopG=()=>document.removeEventListener('keydown',kh);
 start()}
 
+
+function zombieSurvival(){
+const canvas=q('zs-canvas'),ctx=canvas.getContext('2d'),W=900,H=540;
+let state='menu',raf=0,last=0,held=new Set(),player=null,mobs=[],shots=[],orbs=[];
+let wave=1,kills=0,runElapsed=0,spawnTimer=.9,fireTimer=.2,toastTimer=0,uiTimer=0;
+let level=1,xp=0,nextXp=8,runGold=0,runStats=null;
+const META_KEY='mini_zs_meta_v1';
+function defaultMeta(){return {gold:0,bestWave:0,totalKills:0,upgrades:{damage:0,hp:0,speed:0,magnet:0}}}
+function loadMeta(){
+const m=defaultMeta();
+try{
+const saved=JSON.parse(localStorage.getItem(META_KEY)||'null');
+if(saved&&typeof saved==='object'){
+m.gold=Math.max(0,Math.floor(Number(saved.gold)||0));
+m.bestWave=Math.max(0,Math.floor(Number(saved.bestWave)||0));
+m.totalKills=Math.max(0,Math.floor(Number(saved.totalKills)||0));
+['damage','hp','speed','magnet'].forEach(k=>m.upgrades[k]=Math.max(0,Math.min(99,Math.floor(Number(saved.upgrades&&saved.upgrades[k])||0))));
+}
+}catch(e){}
+return m;
+}
+let meta=loadMeta(),shopGoldAt=-1;
+function saveMeta(){try{localStorage.setItem(META_KEY,JSON.stringify(meta))}catch(e){}}
+const upgradeDefs=[
+{key:'damage',icon:'⚔️',name:'Silah hasarı',desc:'Her mermi daha fazla hasar verir.',base:30},
+{key:'hp',icon:'❤️',name:'Maksimum can',desc:'Her tur daha fazla canla başlarsın.',base:25},
+{key:'speed',icon:'👟',name:'Hareket hızı',desc:'Zombilerden daha hızlı kaçarsın.',base:25},
+{key:'magnet',icon:'🧲',name:'XP mıknatısı',desc:'Deneyim parçalarını uzaktan toplarsın.',base:20}
+];
+function shop(){
+const el=q('zs-shop');el.innerHTML='';
+upgradeDefs.forEach(d=>{
+const lvl=meta.upgrades[d.key],cost=d.base*(lvl+1);
+const card=document.createElement('div');card.className='zs-upgrade';
+const title=document.createElement('b');title.textContent=d.icon+' '+d.name+' · Lv.'+lvl;
+const desc=document.createElement('small');desc.textContent=d.desc;
+const btn=document.createElement('button');btn.type='button';btn.className='btn'+(meta.gold<cost?' off':'');btn.textContent='Geliştir · '+cost+' altın';btn.disabled=meta.gold<cost;
+btn.onclick=()=>{
+if(meta.gold<cost)return;
+meta.gold-=cost;meta.upgrades[d.key]++;saveMeta();shopGoldAt=-1;updateHud();
+toast('Kalıcı geliştirme alındı: '+d.name,2.2);
+};
+card.append(title,desc,btn);el.appendChild(card);
+});
+q('zs-shop-gold').textContent=meta.gold.toLocaleString('tr-TR');
+q('zs-best-wave').textContent=meta.bestWave;
+q('zs-total-kills').textContent=meta.totalKills.toLocaleString('tr-TR');
+q('zs-gold').textContent=meta.gold.toLocaleString('tr-TR');
+}
+function shopIfNeeded(){if(shopGoldAt!==meta.gold){shopGoldAt=meta.gold;shop()}}
+function toast(text,duration){toastTimer=duration||1.8;q('zs-toast').textContent=text}
+function updateHud(){
+if(player){
+q('zs-wave').textContent=wave;q('zs-kills').textContent=kills;q('zs-level').textContent=level;
+q('zs-gold').textContent=meta.gold.toLocaleString('tr-TR');
+q('zs-hp-text').textContent=Math.max(0,Math.ceil(player.hp))+' / '+player.maxHp;
+q('zs-hp-fill').style.width=(Math.max(0,player.hp)/player.maxHp*100)+'%';
+q('zs-xp-text').textContent=xp+' / '+nextXp;q('zs-xp-fill').style.width=Math.min(100,xp/nextXp*100)+'%';
+}
+q('zs-shop-gold').textContent=meta.gold.toLocaleString('tr-TR');
+q('zs-best-wave').textContent=meta.bestWave;q('zs-total-kills').textContent=meta.totalKills.toLocaleString('tr-TR');
+shopIfNeeded();
+}
+function startRun(){
+held.clear();mobs=[];shots=[];orbs=[];wave=1;kills=0;runElapsed=0;spawnTimer=.45;fireTimer=.1;toastTimer=0;level=1;xp=0;nextXp=8;runGold=0;
+const maxHp=100+meta.upgrades.hp*20;
+runStats={damage:24+meta.upgrades.damage*3,fireDelay:.58,speed:190+meta.upgrades.speed*7,magnet:72+meta.upgrades.magnet*18,projectiles:1,armor:0,shield:0};
+player={x:W/2,y:H/2,r:14,hp:maxHp,maxHp:maxHp,hurtTimer:0};
+state='playing';last=0;
+q('zs-start-panel').hidden=true;q('zs-level-panel').hidden=true;q('zs-pause-panel').hidden=true;q('zs-end-panel').hidden=true;
+q('zs-run-note').textContent='Bu turda kazanılan altın: 0';updateHud();toast('İlk dalga geliyor!',2);
+}
+function spawnMob(boss){
+let side=Math.floor(Math.random()*4),x,y,margin=30;
+if(side===0){x=Math.random()*W;y=-margin}else if(side===1){x=W+margin;y=Math.random()*H}else if(side===2){x=Math.random()*W;y=H+margin}else{x=-margin;y=Math.random()*H}
+const b=!!boss,hp=b?65+wave*8:2+Math.floor(wave*.32);
+mobs.push({x,y,r:b?24:10+Math.random()*2,hp,maxHp:hp,speed:b?28:42+Math.min(40,wave*1.6),damage:b?22:8,boss:b,touch:Math.random()*.3});
+}
+function killMob(i){
+const m=mobs[i];if(!m)return;mobs.splice(i,1);kills++;meta.totalKills++;
+runGold+=m.boss?20:2+Math.floor(wave/2);meta.gold+=m.boss?20:2+Math.floor(wave/2);saveMeta();
+orbs.push({x:m.x,y:m.y,r:m.boss?10:6,value:m.boss?5:1,life:20});
+q('zs-run-note').textContent='Bu turda kazanılan altın: '+runGold;updateHud();
+if(m.boss)toast('Büyük zombi yenildi! +20 altın',2);
+}
+function dist(a,b){return Math.hypot(a.x-b.x,a.y-b.y)}
+function nearest(){let t=null,bd=Infinity;for(const m of mobs){const d=dist(player,m);if(d<bd){bd=d;t=m}}return t}
+function fire(){
+const target=nearest();if(!target)return;
+const a=Math.atan2(target.y-player.y,target.x-player.x),count=runStats.projectiles;
+for(let j=0;j<count;j++){
+const spread=(j-(count-1)/2)*.15,ang=a+spread,speed=470;
+shots.push({x:player.x+Math.cos(ang)*16,y:player.y+Math.sin(ang)*16,vx:Math.cos(ang)*speed,vy:Math.sin(ang)*speed,r:4,damage:runStats.damage,life:1.7});
+}
+}
+function showLevelChoices(){
+state='levelup';held.clear();
+const levelPicks=[
+{icon:'⚔️',name:'Ağır mermi',desc:'Mermi hasarı +9.',apply:()=>runStats.damage+=9},
+{icon:'⚡',name:'Hızlı tetik',desc:'Ateş aralığı %14 kısalır.',apply:()=>runStats.fireDelay=Math.max(.18,runStats.fireDelay*.86)},
+{icon:'👟',name:'Çevik adım',desc:'Hareket hızı +22.',apply:()=>runStats.speed+=22},
+{icon:'❤️',name:'İlk yardım',desc:'Canını 40 yeniler.',apply:()=>player.hp=Math.min(player.maxHp,player.hp+40)},
+{icon:'🛡️',name:'Zırh',desc:'Aldığın hasar 2 azalır.',apply:()=>runStats.armor=Math.min(8,runStats.armor+2)},
+{icon:'🔫',name:'Çoklu atış',desc:'Aynı anda bir mermi daha atarsın.',apply:()=>runStats.projectiles=Math.min(5,runStats.projectiles+1)},
+{icon:'🧲',name:'Deneyim çekimi',desc:'Deneyim toplama alanı +55.',apply:()=>runStats.magnet+=55},
+{icon:'💚',name:'Sağlam beden',desc:'Maksimum can +25 ve iyileşme.',apply:()=>{player.maxHp+=25;player.hp=Math.min(player.maxHp,player.hp+25)}},
+{icon:'✨',name:'Enerji kalkanı',desc:'Bir sonraki zombi darbesini engeller.',apply:()=>runStats.shield++}
+];
+const shuffled=levelPicks.slice().sort(()=>Math.random()-.5).slice(0,3),box=q('zs-choice-list');box.innerHTML='';
+shuffled.forEach(p=>{
+const b=document.createElement('button');b.type='button';b.className='zs-choice';
+const icon=document.createElement('span');icon.className='zs-choice-icon';icon.textContent=p.icon;
+const name=document.createElement('b');name.textContent=p.name;const desc=document.createElement('span');desc.textContent=p.desc;
+b.append(icon,name,desc);b.onclick=()=>{p.apply();state='playing';q('zs-level-panel').hidden=true;toast('Güçlendirildi: '+p.name,1.5);updateHud()};box.appendChild(b);
+});
+q('zs-level-panel').hidden=false;
+}
+function gainXp(amount){
+xp+=amount;
+if(xp>=nextXp){xp-=nextXp;level++;nextXp=Math.floor(nextXp+5+level*2.3);showLevelChoices()}
+}
+function hurt(amount){
+if(player.hurtTimer>0)return;
+if(runStats.shield>0){runStats.shield--;player.hurtTimer=.45;toast('Kalkan darbe emdi!',1);return}
+player.hp-=Math.max(1,amount-runStats.armor);player.hurtTimer=.5;if(player.hp<=0)endRun();
+}
+function endRun(){
+if(state==='gameover')return;
+state='gameover';held.clear();meta.bestWave=Math.max(meta.bestWave,wave);saveMeta();updateHud();
+q('zs-end-summary').textContent='Dalga '+wave+' · '+kills+' zombi · Seviye '+level+' · Bu turda '+runGold+' altın kazandın. Yeni geliştirmeler satın alıp tekrar dene!';
+q('zs-end-panel').hidden=false;
+}
+function update(delta){
+if(state!=='playing')return;
+runElapsed+=delta;if(player.hurtTimer>0)player.hurtTimer-=delta;
+if(toastTimer>0){toastTimer-=delta;if(toastTimer<=0)q('zs-toast').textContent=''}
+if(runElapsed>=wave*23){wave++;spawnTimer=Math.min(spawnTimer,.3);toast('DALGA '+wave+' — daha fazla zombi!',2.4);if(wave%5===0)spawnMob(true);updateHud()}
+spawnTimer-=delta;const interval=Math.max(.32,1.08-wave*.045);
+if(spawnTimer<=0){spawnMob(false);spawnTimer=interval*(.72+Math.random()*.55)}
+let dx=(held.has('right')||held.has('d')?1:0)-(held.has('left')||held.has('a')?1:0);
+let dy=(held.has('down')||held.has('s')?1:0)-(held.has('up')||held.has('w')?1:0);
+if(dx&&dy){dx*=.7071;dy*=.7071}
+player.x=Math.max(player.r,Math.min(W-player.r,player.x+dx*runStats.speed*delta));
+player.y=Math.max(player.r,Math.min(H-player.r,player.y+dy*runStats.speed*delta));
+fireTimer-=delta;if(fireTimer<=0&&mobs.length){fire();fireTimer=runStats.fireDelay}
+for(let i=mobs.length-1;i>=0;i--){
+const m=mobs[i],d=dist(m,player);
+if(d>1){m.x+=(player.x-m.x)/d*m.speed*delta;m.y+=(player.y-m.y)/d*m.speed*delta}
+m.touch-=delta;if(d<player.r+m.r&&m.touch<=0){hurt(m.damage);m.touch=m.boss?1.1:.82;m.x+=(m.x-player.x)/Math.max(1,d)*12}
+if(state!=='playing')return;
+}
+for(let i=shots.length-1;i>=0;i--){
+const s=shots[i];s.x+=s.vx*delta;s.y+=s.vy*delta;s.life-=delta;let hit=-1;
+for(let j=0;j<mobs.length;j++){if(Math.hypot(mobs[j].x-s.x,mobs[j].y-s.y)<mobs[j].r+s.r){hit=j;break}}
+if(hit>=0){mobs[hit].hp-=s.damage;if(mobs[hit].hp<=0)killMob(hit);shots.splice(i,1)}
+else if(s.life<=0||s.x<-30||s.y<-30||s.x>W+30||s.y>H+30)shots.splice(i,1);
+}
+for(let i=orbs.length-1;i>=0;i--){
+const o=orbs[i],d=dist(o,player),magnet=runStats.magnet;
+if(d<magnet&&d>1){const pull=Math.min(280,120+(magnet-d)*2);o.x+=(player.x-o.x)/d*pull*delta;o.y+=(player.y-o.y)/d*pull*delta}
+o.life-=delta;if(d<player.r+o.r+7){orbs.splice(i,1);gainXp(o.value)}else if(o.life<=0)orbs.splice(i,1);
+if(state!=='playing')break;
+}
+uiTimer+=delta;if(uiTimer>.12){uiTimer=0;updateHud()}
+}
+function draw(){
+ctx.clearRect(0,0,W,H);ctx.fillStyle='#112b1d';ctx.fillRect(0,0,W,H);ctx.strokeStyle='#ffffff0b';ctx.lineWidth=1;
+for(let x=0;x<W;x+=45){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+for(let y=0;y<H;y+=45){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+for(let i=0;i<50;i++){const x=(i*167+23)%W,y=(i*113+39)%H;ctx.fillStyle=i%3===0?'#5b87502b':'#00000010';ctx.beginPath();ctx.ellipse(x,y,4+(i%4),2+(i%3),.4,0,Math.PI*2);ctx.fill()}
+for(const o of orbs){ctx.beginPath();ctx.fillStyle=o.value>1?'#ffe071':'#81ee8c';ctx.shadowColor=ctx.fillStyle;ctx.shadowBlur=12;ctx.arc(o.x,o.y,o.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0}
+for(const m of mobs){
+ctx.beginPath();ctx.fillStyle=m.boss?'#7c2530':'#4d9a62';ctx.arc(m.x,m.y,m.r,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=m.boss?'#ef7980':'#baf4a9';ctx.beginPath();ctx.arc(m.x-m.r*.3,m.y-m.r*.12,Math.max(2,m.r*.12),0,Math.PI*2);ctx.arc(m.x+m.r*.3,m.y-m.r*.12,Math.max(2,m.r*.12),0,Math.PI*2);ctx.fill();
+ctx.strokeStyle='#1c281c';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(m.x-m.r*.33,m.y+m.r*.35);ctx.lineTo(m.x+m.r*.33,m.y+m.r*.35);ctx.stroke();
+ctx.fillStyle='#401c22';ctx.fillRect(m.x-m.r,m.y-m.r-8,m.r*2,4);ctx.fillStyle=m.boss?'#f05d65':'#efbb68';ctx.fillRect(m.x-m.r,m.y-m.r-8,m.r*2*Math.max(0,m.hp/m.maxHp),4);
+}
+for(const s of shots){ctx.beginPath();ctx.fillStyle='#ffe58d';ctx.shadowColor='#ffd34a';ctx.shadowBlur=8;ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0}
+if(player){
+if(player.hurtTimer>0&&Math.floor(performance.now()/80)%2===0)ctx.globalAlpha=.45;
+ctx.beginPath();ctx.fillStyle='#e2ca8f';ctx.arc(player.x,player.y,player.r+3,0,Math.PI*2);ctx.fill();
+ctx.beginPath();ctx.fillStyle='#397ac3';ctx.arc(player.x,player.y,player.r,0,Math.PI*2);ctx.fill();
+ctx.fillStyle='#edf7ff';ctx.beginPath();ctx.arc(player.x+4,player.y-3,3,0,Math.PI*2);ctx.fill();
+const t=mobs.length?nearest():null;if(t){const a=Math.atan2(t.y-player.y,t.x-player.x);ctx.strokeStyle='#dce9f8';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(player.x,player.y);ctx.lineTo(player.x+Math.cos(a)*25,player.y+Math.sin(a)*25);ctx.stroke()}
+ctx.globalAlpha=1;
+}
+}
+function frame(now){if(!last)last=now;const delta=Math.min(.04,Math.max(0,(now-last)/1000));last=now;update(delta);draw();raf=requestAnimationFrame(frame)}
+function keydown(e){
+const tag=e.target&&e.target.tagName;if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
+const raw=e.key,key=raw.length===1?raw.toLowerCase():raw;
+const map={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',w:'w',a:'a',s:'s',d:'d'};
+if(map[raw]||map[key]){e.preventDefault();held.add(map[raw]||map[key])}
+if(key==='p'){if(state==='playing'){state='paused';held.clear();q('zs-pause-panel').hidden=false}else if(state==='paused'){state='playing';q('zs-pause-panel').hidden=true}}
+}
+function keyup(e){
+const raw=e.key,key=raw.length===1?raw.toLowerCase():raw;
+const map={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',w:'w',a:'a',s:'s',d:'d'};
+const k=map[raw]||map[key];if(k)held.delete(k);
+}
+function clearHeld(){held.clear()}
+q('zs-start-btn').onclick=startRun;q('zs-retry-btn').onclick=startRun;
+q('zs-home-btn').onclick=()=>pg('p0');q('zs-pause-home-btn').onclick=()=>pg('p0');
+q('zs-resume-btn').onclick=()=>{state='playing';q('zs-pause-panel').hidden=true};
+q('zs-pause-btn').onclick=()=>{
+if(state==='playing'){state='paused';held.clear();q('zs-pause-panel').hidden=false}
+else if(state==='paused'){state='playing';q('zs-pause-panel').hidden=true}
+};
+document.querySelectorAll('#g10 .zs-dir').forEach(b=>{
+const k=b.dataset.zsDir;
+b.onpointerdown=e=>{e.preventDefault();if(state==='playing')held.add(k);try{b.setPointerCapture(e.pointerId)}catch(err){}};
+const release=()=>held.delete(k);
+b.onpointerup=release;b.onpointercancel=release;b.onlostpointercapture=release;b.onpointerleave=release;
+});
+document.addEventListener('keydown',keydown);document.addEventListener('keyup',keyup);window.addEventListener('blur',clearHeld);
+shop();updateHud();draw();raf=requestAnimationFrame(frame);
+stopG=()=>{
+cancelAnimationFrame(raf);document.removeEventListener('keydown',keydown);document.removeEventListener('keyup',keyup);window.removeEventListener('blur',clearHeld);held.clear();
+document.querySelectorAll('#g10 .zs-dir').forEach(b=>{b.onpointerdown=null;b.onpointerup=null;b.onpointercancel=null;b.onlostpointercapture=null;b.onpointerleave=null});
+};
+}
+
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>pg(b.dataset.p));
 q("gs").oninput=e=>{const v=e.target.value.toLocaleLowerCase("tr-TR").trim();document.querySelectorAll("nav [data-p^=g]").forEach(b=>b.style.display=b.textContent.toLocaleLowerCase("tr-TR").includes(v)?"":"none")};
 
