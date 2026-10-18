@@ -180,6 +180,12 @@ main.okey-wide{max-width:1500px}
 .wkb .k{flex:1;max-width:44px;min-width:0;padding:12px 0;border:0;border-radius:5px;background:var(--card);color:var(--fg);font-weight:700;font-size:.95rem;cursor:pointer}
 .wkb .k.w{max-width:70px;font-size:.75rem;flex:1.6}
 .wkb .k.g{background:#2f8f2f;color:#fff}.wkb .k.y{background:#c79a1b;color:#fff}.wkb .k.x{background:var(--side);color:var(--mut);opacity:.6}
+
+.wd-controls{margin:10px 0 4px;width:100%}
+.wd-topic-row{display:flex;width:100%;min-width:0}
+.wd-topic-row #wd-theme{display:block;width:100%;min-width:0;max-width:100%;margin:0}
+.wd-lens{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;width:100%;margin-top:8px}
+.wd-lens .btn{display:block;width:100%;min-width:0;margin:0;text-align:center}
 </style>
 </head>
 <body>
@@ -263,7 +269,7 @@ h2{margin:0 0 4px}
 <section id="g9" hidden>
   <h2>🔤 Kelime Tahmin</h2>
   <p class="d">Konuyu ve harf sayısını seç, kelimeyi 6 hakta bul. Yeşil: doğru yer, sarı: kelimede var ama yeri yanlış, gri: kelimede yok. İ ve I aynı sayılır. </p>
-  <div style="margin:10px 0 4px"><select id="wd-theme" aria-label="Konu"></select> <span id="wd-len"></span></div>
+  <div class="wd-controls"><div class="wd-topic-row"><select id="wd-theme" aria-label="Konu"></select></div><div id="wd-len" class="wd-lens"></div></div>
   <div class="m"><span id="wd-msg"></span></div>
   <div id="wd-board" class="wboard"></div>
   <div id="wd-kb" class="wkb"></div>
