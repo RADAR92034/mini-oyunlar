@@ -1298,7 +1298,7 @@ shopIfNeeded();
 function startRun(){
 held.clear();mobs=[];shots=[];orbs=[];wave=1;kills=0;runElapsed=0;spawnTimer=.45;fireTimer=.1;toastTimer=0;level=1;xp=0;nextXp=8;runGold=0;
 const maxHp=100+meta.upgrades.hp*20;
-runStats={damage:24+meta.upgrades.damage*3,fireDelay:.58,speed:190+meta.upgrades.speed*7,magnet:72+meta.upgrades.magnet*18,projectiles:1,armor:0,shield:0};
+runStats={damage:24+meta.upgrades.damage*3,fireDelay:.58,speed:190+meta.upgrades.speed*7,magnet:320+meta.upgrades.magnet*24,projectiles:1,armor:0,shield:0};
 player={x:W/2,y:H/2,r:14,hp:maxHp,maxHp:maxHp,hurtTimer:0};
 state='playing';last=0;
 q('zs-start-panel').hidden=true;q('zs-level-panel').hidden=true;q('zs-pause-panel').hidden=true;q('zs-end-panel').hidden=true;
@@ -1318,7 +1318,7 @@ q('zs-run-note').textContent='Bu turda kazanılan altın: '+runGold;updateHud();
 if(m.boss)toast('Büyük zombi yenildi! +20 altın',2);
 }
 function dist(a,b){return Math.hypot(a.x-b.x,a.y-b.y)}
-function nearest(){let t=null,bd=Infinity;for(const m of mobs){const d=dist(player,m);if(d<bd){bd=d;t=m}}return t}
+function nearest(){let t=null,bd=280;for(const m of mobs){const d=dist(player,m);if(d<bd){bd=d;t=m}}return t}
 function fire(){
 const target=nearest();if(!target)return;
 const a=Math.atan2(target.y-player.y,target.x-player.x),count=runStats.projectiles;
