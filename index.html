@@ -269,7 +269,7 @@ h2{margin:0 0 4px}
 <section id="g9" hidden>
   <h2>🔤 Kelime Tahmin</h2>
   <p class="d">Konuyu ve harf sayısını seç, kelimeyi 6 hakta bul. Yeşil: doğru yer, sarı: kelimede var ama yeri yanlış, gri: kelimede yok. İ ve I aynı sayılır. </p>
-  <div class="wd-controls"><div class="wd-topic-row"><select id="wd-theme" aria-label="Konu"></select></div><div id="wd-len" class="wd-lens"></div></div>
+  <div class="wd-controls" style="display:block;width:100%;margin:10px 0 4px"><div class="wd-topic-row" style="display:block;width:100%"><select id="wd-theme" aria-label="Konu" style="display:block;width:100%;max-width:100%;margin:0"></select></div><div id="wd-len" class="wd-lens" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;width:100%;margin-top:8px"></div></div>
   <div class="m"><span id="wd-msg"></span></div>
   <div id="wd-board" class="wboard"></div>
   <div id="wd-kb" class="wkb"></div>
@@ -1036,7 +1036,7 @@ const p=[];names.forEach(n=>WORDS[n].split(' ').forEach(w=>{if(w.length===L&&[..
 return p}
 function lens(){
 const z=q('wd-len');z.innerHTML='';
-[5,6,7].forEach(k=>{const b=document.createElement('button');const count=(theme==='🎲 Karışık'?THEMES: [theme]).reduce((sum,n)=>sum+WORDS[n].split(' ').filter(w=>w.length===k).length,0);b.className='btn'+(k===L?'':' off');b.textContent=k+' harf';b.onclick=()=>{L=k;start()};z.appendChild(b)})}
+[5,6,7].forEach(k=>{const b=document.createElement('button');const count=(theme==='🎲 Karışık'?THEMES: [theme]).reduce((sum,n)=>sum+WORDS[n].split(' ').filter(w=>w.length===k).length,0);b.className='btn'+(k===L?'':' off');b.textContent=k+' harf';b.style.width='100%';b.style.minWidth='0';b.style.margin='0';b.style.display='block';b.onclick=()=>{L=k;start()};z.appendChild(b)})}
 function start(){
 let p=pool();if(!p.length){theme=THEMES[0];sel.value=theme;p=pool()}
 ans=p[Math.floor(Math.random()*p.length)];
