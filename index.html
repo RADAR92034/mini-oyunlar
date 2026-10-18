@@ -477,6 +477,9 @@ main.zombie-wide{
 @media(max-width:1100px){.ok-table{grid-template-columns:64px minmax(0,1fr) 64px;grid-template-areas:". sT ." "sL mid sR" "score score score" "melds melds melds" "msg msg msg" "rack rack rack"}.ok-table .ok-score-area{max-width:none}.ok-table .ok-scoreboard table{font-size:.76rem}.ok-table .ok-scoreboard td,.ok-table .ok-scoreboard th{padding:6px 8px}}
 @media(max-width:760px){.ok-table{grid-template-columns:minmax(0,1fr);grid-template-areas:"sT" "sL" "mid" "sR" "score" "melds" "msg" "rack";padding:8px;gap:8px}.ok-table .sT,.ok-table .sL,.ok-table .sR{width:100%}.ok-table .mid{min-height:160px;padding:7px}.ok-opened-groups{grid-template-columns:minmax(0,1fr)}.ok-table .ok-opened{max-height:240px}.ok-hand-area .slot .tile{font-size:clamp(.45rem,2.4cqw,.8rem)}.ok-playable-mark{width:7px;height:7px;flex-basis:7px;border-width:1.5px}.ok-scoreboard table{font-size:.7rem}.ok-report{padding:8px}.ok-report table{font-size:.7rem}}
 
+
+/* Okeyle bitiş için kısa kazanan animasyonu */
+.ok-okey-finish h2{animation:okey-winner-pop .65s ease-out 2}@keyframes okey-winner-pop{0%,100%{transform:scale(1);text-shadow:none}50%{transform:scale(1.035);text-shadow:0 0 18px #ffd54a,0 0 34px #f6ad2b}}
 </style>
 </head>
 <body>
@@ -812,7 +815,7 @@ q("rs3").onclick=start;start()}
 
 function okey101(){
   const COL=['#d32f2f','#c58a00','#1976d2','#222'],CN=['kırmızı','sarı','mavi','siyah'],box=q('ok');
-  let deck=[],hands=[[],[],[],[]],discards=[[],[],[],[]],indicator=null,ok=null,turn=0,phase='setup',over='',dead=false,timer=null,turnClock=null,turnDeadline=0,turnClockPlayer=-1,turnTimeoutHandled=false,rack=Array(30).fill(null),note='',drag=null,selectedSlot=null,opened=[false,false,false,false],openedType=[null,null,null,null],tableMelds=[[],[],[],[]],tableMeldKinds=[[],[],[],[]],openingPoints=[0,0,0,0],openedPairCounts=[0,0,0,0],handPenalties=[0,0,0,0],penaltyReasons=[[],[],[],[]],totalPenalties=[0,0,0,0],lastHandScores=[0,0,0,0],lastTakenTileId=null,lastDiscardedTileId=null,firstDiscardRequired=false,roundCount=5,roundNumber=1,matchStarted=false,matchOver=false,handReport=null,matchWinner=null,selectedRoundCount=5,pendingSaved=null,savedStateAvailable=false;
+  let deck=[],hands=[[],[],[],[]],discards=[[],[],[],[]],indicator=null,ok=null,turn=0,phase='setup',over='',dead=false,timer=null,turnClock=null,turnDeadline=0,turnClockPlayer=-1,turnTimeoutHandled=false,rack=Array(30).fill(null),note='',drag=null,selectedSlot=null,opened=[false,false,false,false],openedType=[null,null,null,null],tableMelds=[[],[],[],[]],tableMeldKinds=[[],[],[],[]],openingPoints=[0,0,0,0],openedPairCounts=[0,0,0,0],handPenalties=[0,0,0,0],penaltyReasons=[[],[],[],[]],totalPenalties=[0,0,0,0],lastHandScores=[0,0,0,0],lastTakenTileId=null,lastDiscardedTileId=null,firstDiscardRequired=false,startingPlayer=0,roundCount=5,roundNumber=1,matchStarted=false,matchOver=false,handReport=null,matchWinner=null,selectedRoundCount=5,pendingSaved=null,savedStateAvailable=false;
   const isWild=t=>!!t&&!t.fake&&t.c===ok.c&&t.n===ok.n;
   const fmtTiles=n=>`${n} taş`;
   const sortTiles=a=>a.slice().sort((x,y)=>x.c-y.c||x.n-y.n||Number(!!x.fake)-Number(!!y.fake));
@@ -1037,7 +1040,7 @@ function okey101(){
   function addPenalty(player,points,reason){const amount=Math.max(0,Math.round(points||0));if(!amount)return;handPenalties[player]+=amount;penaltyReasons[player].push({points:amount,reason:reason});saveGame();}
   function saveGame(){
     if(!matchStarted)return;
-    const state={version:3,matchStarted:matchStarted,matchOver:matchOver,roundCount:roundCount,roundNumber:roundNumber,matchWinner:matchWinner,selectedRoundCount:selectedRoundCount,deck:deck,hands:hands,discards:discards,indicator:indicator,ok:ok,turn:turn,phase:phase,over:over,rack:rack,note:note,selectedSlot:selectedSlot,opened:opened,openedType:openedType,tableMelds:tableMelds,tableMeldKinds:tableMeldKinds,openingPoints:openingPoints,openedPairCounts:openedPairCounts,handPenalties:handPenalties,penaltyReasons:penaltyReasons,totalPenalties:totalPenalties,lastHandScores:lastHandScores,lastTakenTileId:lastTakenTileId,lastDiscardedTileId:lastDiscardedTileId,firstDiscardRequired:firstDiscardRequired,turnClockPlayer:turnClockPlayer,turnDeadline:turnDeadline,handReport:handReport};
+    const state={version:3,matchStarted:matchStarted,matchOver:matchOver,roundCount:roundCount,roundNumber:roundNumber,matchWinner:matchWinner,selectedRoundCount:selectedRoundCount,deck:deck,hands:hands,discards:discards,indicator:indicator,ok:ok,turn:turn,phase:phase,over:over,rack:rack,note:note,selectedSlot:selectedSlot,opened:opened,openedType:openedType,tableMelds:tableMelds,tableMeldKinds:tableMeldKinds,openingPoints:openingPoints,openedPairCounts:openedPairCounts,handPenalties:handPenalties,penaltyReasons:penaltyReasons,totalPenalties:totalPenalties,lastHandScores:lastHandScores,lastTakenTileId:lastTakenTileId,lastDiscardedTileId:lastDiscardedTileId,firstDiscardRequired:firstDiscardRequired,startingPlayer:startingPlayer,turnClockPlayer:turnClockPlayer,turnDeadline:turnDeadline,handReport:handReport};
     try{localStorage.setItem('mini_101_match_v3',JSON.stringify(state));}catch(e){}
   }
   function loadSavedGame(){try{const raw=localStorage.getItem('mini_101_match_v3');if(!raw)return null;const state=JSON.parse(raw);if(!state||state.version!==3||!Array.isArray(state.hands)||!Array.isArray(state.rack))return null;return state;}catch(e){return null;}}
@@ -1076,15 +1079,16 @@ function okey101(){
   function resumeSavedMatch(){
     if(!pendingSaved)return;const s=pendingSaved;pendingSaved=null;savedStateAvailable=false;
     matchStarted=!!s.matchStarted;matchOver=!!s.matchOver;roundCount=Number(s.roundCount)||5;roundNumber=Number(s.roundNumber)||1;matchWinner=s.matchWinner??null;selectedRoundCount=Number(s.selectedRoundCount)||roundCount;
-    deck=s.deck||[];hands=s.hands||[[],[],[],[]];discards=s.discards||[[],[],[],[]];indicator=s.indicator||null;ok=s.ok||null;turn=Number.isFinite(s.turn)?s.turn:0;phase=s.phase||'action';over=s.over||'';dead=false;rack=s.rack||Array(30).fill(null);note=s.note||'';selectedSlot=s.selectedSlot??null;opened=s.opened||[false,false,false,false];openedType=s.openedType||[null,null,null,null];tableMelds=s.tableMelds||[[],[],[],[]];tableMeldKinds=s.tableMeldKinds||tableMelds.map(function(a){return a.map(function(){return 'normal';});});openingPoints=s.openingPoints||[0,0,0,0];openedPairCounts=s.openedPairCounts||[0,0,0,0];handPenalties=s.handPenalties||[0,0,0,0];penaltyReasons=s.penaltyReasons||[[],[],[],[]];totalPenalties=s.totalPenalties||[0,0,0,0];lastHandScores=s.lastHandScores||[0,0,0,0];lastTakenTileId=s.lastTakenTileId??null;lastDiscardedTileId=s.lastDiscardedTileId??null;firstDiscardRequired=!!s.firstDiscardRequired;handReport=s.handReport||null;dead=false;
+    deck=s.deck||[];hands=s.hands||[[],[],[],[]];discards=s.discards||[[],[],[],[]];indicator=s.indicator||null;ok=s.ok||null;turn=Number.isFinite(s.turn)?s.turn:0;phase=s.phase||'action';over=s.over||'';dead=false;rack=s.rack||Array(30).fill(null);note=s.note||'';selectedSlot=s.selectedSlot??null;opened=s.opened||[false,false,false,false];openedType=s.openedType||[null,null,null,null];tableMelds=s.tableMelds||[[],[],[],[]];tableMeldKinds=s.tableMeldKinds||tableMelds.map(function(a){return a.map(function(){return 'normal';});});openingPoints=s.openingPoints||[0,0,0,0];openedPairCounts=s.openedPairCounts||[0,0,0,0];handPenalties=s.handPenalties||[0,0,0,0];penaltyReasons=s.penaltyReasons||[[],[],[],[]];totalPenalties=s.totalPenalties||[0,0,0,0];lastHandScores=s.lastHandScores||[0,0,0,0];lastTakenTileId=s.lastTakenTileId??null;lastDiscardedTileId=s.lastDiscardedTileId??null;firstDiscardRequired=!!s.firstDiscardRequired;startingPlayer=Number.isInteger(s.startingPlayer)?s.startingPlayer:((roundNumber-1)%4);handReport=s.handReport||null;dead=false;
     meldCandidateCache.clear();if(phase==='fallback')phase='draw';render();
     if(turn>=0&&phase!=='roundOver'&&!matchOver){const oldDeadline=Number(s.turnDeadline)||0;startTurnClock(turn,oldDeadline>Date.now()?oldDeadline:Date.now()+30000);if(turn>0&&phase==='bot')timer=setTimeout(playBot,600+Math.floor(Math.random()*2800));if(turn===0&&oldDeadline&&oldDeadline<=Date.now())handleTurnTimeout(0);}
   }
   function beginMatch(count){clearGameTimers();selectedRoundCount=count;roundCount=count;roundNumber=1;matchStarted=true;matchOver=false;matchWinner=null;totalPenalties=[0,0,0,0];lastHandScores=[0,0,0,0];handReport=null;pendingSaved=null;savedStateAvailable=false;startHand();}
   function nextRound(){if(matchOver)return;roundNumber++;startHand();}
   function recordHandPenalty(player,hand,deckEnded,winner,endingWithOkey){
-    if(!deckEnded&&player===winner)return 0;if(!opened[player])return 202;
-    const sum=hand.reduce(function(total,t){return total+tileValue(t);},0),base=openedType[player]==='pairs'?sum*2:sum;
+    if(!deckEnded&&player===winner)return 0;
+    const sum=hand.reduce(function(total,t){return total+tileValue(t);},0);
+    const base=!opened[player]?202:(openedType[player]==='pairs'?sum*2:sum);
     return base*(endingWithOkey&&player!==winner?2:1);
   }
   function finish(winner,message,options){
@@ -1099,23 +1103,38 @@ function okey101(){
   }
   function endByPenalty(){const scores=[hand0(),hands[1],hands[2],hands[3]].map(function(h){return h.reduce(function(sum,t){return sum+tileValue(t);},0);});const winner=scores.indexOf(Math.min.apply(null,scores));finish(winner,'Deste bitti. El sonu cezaları hesaplandı.',{deckEnded:true});}
   function startHand(){
-    clearGameTimers();meldCandidateCache.clear();dead=false;deck=[];hands=[[],[],[],[]];discards=[[],[],[],[]];tableMelds=[[],[],[],[]];tableMeldKinds=[[],[],[],[]];opened=[false,false,false,false];openedType=[null,null,null,null];openingPoints=[0,0,0,0];openedPairCounts=[0,0,0,0];selectedSlot=null;note='';over='';handReport=null;handPenalties=[0,0,0,0];penaltyReasons=[[],[],[],[]];lastTakenTileId=null;lastDiscardedTileId=null;turn=0;phase='action';rack=Array(30).fill(null);firstDiscardRequired=true;
-    let id=1;for(let copy=0;copy<2;copy++)for(let c=0;c<4;c++)for(let n=1;n<=13;n++)deck.push({id:id++,c:c,n:n,fake:false});deck.push({id:id++,c:0,n:0,fake:true},{id:id++,c:0,n:0,fake:true});
+    clearGameTimers();meldCandidateCache.clear();dead=false;deck=[];hands=[[],[],[],[]];discards=[[],[],[],[]];tableMelds=[[],[],[],[]];tableMeldKinds=[[],[],[],[]];opened=[false,false,false,false];openedType=[null,null,null,null];openingPoints=[0,0,0,0];openedPairCounts=[0,0,0,0];selectedSlot=null;note='';over='';handReport=null;handPenalties=[0,0,0,0];penaltyReasons=[[],[],[],[]];lastTakenTileId=null;lastDiscardedTileId=null;firstDiscardRequired=true;
+    startingPlayer=(roundNumber-1)%4;turn=startingPlayer;rack=Array(30).fill(null);
+    let id=1;for(let copy=0;copy<2;copy++)for(let color=0;color<4;color++)for(let n=1;n<=13;n++)deck.push({id:id++,c:color,n:n,fake:false});
+    deck.push({id:id++,c:0,n:0,fake:true},{id:id++,c:0,n:0,fake:true});
     for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}
     const ix=deck.findIndex(function(t){return !t.fake;});indicator=deck.splice(ix,1)[0];ok={c:indicator.c,n:indicator.n===13?1:indicator.n+1};deck.filter(function(t){return t.fake;}).forEach(function(t){t.c=indicator.c;t.n=indicator.n;});
-    hands[0]=deck.splice(0,22);for(let p=1;p<4;p++)hands[p]=deck.splice(0,21);hands[0]=sortTiles(hands[0]);hands[0].forEach(function(t,i){rack[i]=t;});
-    phase='action';note='Sen başlıyorsun: taşların hazır. İlk hamlede taş çekmeden bir taş atmalısın.';startTurnClock(0);render();
+    for(let offset=0;offset<4;offset++){const p=(startingPlayer+offset)%4;hands[p]=sortTiles(deck.splice(0,p===startingPlayer?22:21));}
+    hands[0].forEach(function(t,i){rack[i]=t;});
+    if(startingPlayer===0){phase='action';note='Sen başlıyorsun: 22 taşın hazır. İlk hamlede taş çekmeden bir taş atmalısın.';startTurnClock(0);render();}
+    else{phase='bot';note='Bot '+startingPlayer+' başlıyor; 22 taşı var ve taş çekmeden atacak.';startTurnClock(startingPlayer);render();scheduleBotTurn();}
   }
-  
-  function removeMeldGroups(player,groups,groupType){
+    function removeMeldGroups(player,groups,groupType){
     const idSet=new Set(groups.flatMap(g=>g.tiles.map(t=>t.id)));
     if(player===0){rack=rack.map(t=>t&&idSet.has(t.id)?null:t);sync();}
     else{const left=hands[player].filter(t=>!idSet.has(t.id));hands[player].splice(0,hands[player].length,...left);}
     tableMelds[player].push(...groups.map(g=>g.tiles.slice()));tableMeldKinds[player].push(...groups.map(g=>groupType||g.type||'normal'));
   }
   function openPlayer(player){if(openedType[player])return false;const cards=player===0?hand0():hands[player],result=findOpeningMelds(cards);if(result.points<101)return false;removeMeldGroups(player,result.groups,'normal');opened[player]=true;openedType[player]='normal';openingPoints[player]=result.points;return true;}
-  function layAvailableMelds(player){if(openedType[player]!=='normal')return 0;const cards=player===0?hand0():hands[player],result=greedyMelds(cards);if(!result.groups.length)return 0;removeMeldGroups(player,result.groups,'normal');return result.groups.length;}
-  function layAvailablePairs(player){if(openedType[player]!=='pairs')return 0;const cards=player===0?hand0():hands[player],result=findPairGroups(cards);if(!result.groups.length)return 0;removeMeldGroups(player,result.groups,'pairs');openedPairCounts[player]+=result.groups.length;return result.groups.length;}
+  function layAvailableMelds(player){
+    if(openedType[player]!=='normal')return 0;
+    const cards=player===0?hand0():hands[player],result=greedyMelds(cards);if(!result.groups.length)return 0;
+    let groups=result.groups.slice(),used=groups.reduce(function(set,g){g.tiles.forEach(function(t){set.add(t.id);});return set;},new Set());
+    while(groups.length&&used.size>=cards.length){const last=groups.pop();last.tiles.forEach(function(t){used.delete(t.id);});}
+    if(!groups.length)return 0;removeMeldGroups(player,groups,'normal');return groups.length;
+  }
+  function layAvailablePairs(player){
+    if(openedType[player]!=='pairs')return 0;
+    const cards=player===0?hand0():hands[player],result=findPairGroups(cards);if(!result.groups.length)return 0;
+    let groups=result.groups.slice(),used=groups.reduce(function(set,g){g.tiles.forEach(function(t){set.add(t.id);});return set;},new Set());
+    while(groups.length&&used.size>=cards.length){const last=groups.pop();last.tiles.forEach(function(t){used.delete(t.id);});}
+    if(!groups.length)return 0;removeMeldGroups(player,groups,'pairs');openedPairCounts[player]+=groups.length;return groups.length;
+  }
   function processSelectedOnMeld(player,meldIndex){
     if(over||turn!==0||phase!=='action'||!opened[0])return;
     if(selectedSlot===null||!rack[selectedSlot]){setMessage('Önce ıstakadan işleyeceğin taşı seç. Sarı işaretli perler uygun taş bekliyor.');render();return;}
@@ -1238,8 +1257,8 @@ function okey101(){
   }
   function playBot(){
     if(dead||matchOver||phase!=='bot'||turn<1||turn>3)return;clearTimeout(timer);timer=null;
-    const p=turn,h=hands[p],pile=discards[(p+3)%4],top=pile[pile.length-1];let usedDiscard=false;
-    if(top&&maybeTakeDiscard(p)){
+    const p=turn,h=hands[p],pile=discards[(p+3)%4],top=pile[pile.length-1],openingDiscard=firstDiscardRequired&&p===startingPlayer;let usedDiscard=false;
+    if(!openingDiscard&&top&&maybeTakeDiscard(p)){
       if(!opened[p]){
         const preview=h.concat(top),opening=findOpeningUsingTile(preview,top.id),pairs=findPairOpening(preview,top.id);
         if(opening&&opening.points>=101){h.push(top);removeMeldGroups(p,opening.groups,'normal');opened[p]=true;openedType[p]='normal';openingPoints[p]=opening.points;usedDiscard=true;}
@@ -1252,12 +1271,13 @@ function okey101(){
       }
       if(usedDiscard){pile.pop();chargeUsedDiscard((p+3)%4,top);lastTakenTileId=top.id;}
     }
-    if(!usedDiscard){if(!deck.length){endByPenalty();return;}const t=deck.pop();h.push(t);lastTakenTileId=t.id;}
-    if(!opened[p])botOpenAsPlayer(p,h);if(openedType[p]==='normal')layAvailableMelds(p);else if(openedType[p]==='pairs')layAvailablePairs(p);
-    if(!h.length){finish(p,'🏆 Bot '+p+' eli tamamladı.');return;}
-    const ix=chooseBotDiscard(h,p),t=h.splice(ix,1)[0];if(findTableMeldForTile(t))addPenalty(p,101,'İşlek taş attı: 101 ceza puanı.');
-    discards[p].push(t);lastDiscardedTileId=t.id;if(!h.length){finish(p,'🏆 Bot '+p+' son taşını attı ve kazandı.',{endingWithOkey:isWild(t)});return;}
-    turn=p===3?0:p+1;if(turn===0){phase='draw';setMessage('Sıra sende. Desteden taş çek veya Bot 3’ün attığı uygun taşı al.');startTurnClock(0);render();}
+    if(!usedDiscard&&!openingDiscard){if(!deck.length){endByPenalty();return;}const drawn=deck.pop();h.push(drawn);lastTakenTileId=drawn.id;}
+    if(!openingDiscard){if(!opened[p])botOpenAsPlayer(p,h);if(openedType[p]==='normal')layAvailableMelds(p);else if(openedType[p]==='pairs')layAvailablePairs(p);if(!h.length){finish(p,'🏆 Bot '+p+' eli tamamladı.');return;}}
+    const ix=chooseBotDiscard(h,p),tile=h.splice(ix,1)[0];if(findTableMeldForTile(tile))addPenalty(p,101,'İşlek taş attı: 101 ceza puanı.');
+    discards[p].push(tile);lastDiscardedTileId=tile.id;if(openingDiscard)firstDiscardRequired=false;
+    if(!h.length){finish(p,'🏆 Bot '+p+' son taşını attı ve kazandı.',{endingWithOkey:isWild(tile)});return;}
+    turn=p===3?0:p+1;
+    if(turn===0){phase='draw';setMessage('Sıra sende. Desteden taş çek veya Bot 3’ün attığı uygun taşı al.');startTurnClock(0);render();}
     else{phase='bot';note='Bot '+turn+' düşünüyor…';startTurnClock(turn);render();scheduleBotTurn();}
     saveGame();
   }
@@ -1295,7 +1315,7 @@ function okey101(){
     }).join('')+'</tbody></table></div></div>';
   }
   function renderRoundResult(){
-    box.innerHTML='<div class="ok-result-screen"><h2>🎴 Raunt '+roundNumber+' / '+roundCount+'</h2><p>'+over+'</p>'+reportHTML()+scoreboardHTML()+'<div class="ok-setup-actions">'+(matchOver?'<button type="button" class="btn" id="ok-new-match">Yeni maç</button>':'<button type="button" class="btn" id="ok-next-round">Sonraki raunt</button>')+'</div></div>';
+    box.innerHTML='<div class="ok-result-screen'+(handReport&&handReport.endingWithOkey?' ok-okey-finish':'')+'"><h2>🎴 Raunt '+roundNumber+' / '+roundCount+'</h2><p>'+over+'</p>'+reportHTML()+scoreboardHTML()+'<div class="ok-setup-actions">'+(matchOver?'<button type="button" class="btn" id="ok-new-match">Yeni maç</button>':'<button type="button" class="btn" id="ok-next-round">Sonraki raunt</button>')+'</div></div>';
     const next=box.querySelector('#ok-next-round');if(next)next.onclick=nextRound;const fresh=box.querySelector('#ok-new-match');if(fresh)fresh.onclick=function(){matchStarted=false;matchOver=false;pendingSaved=null;selectedRoundCount=roundCount;renderSetup();};
   }
   function renderMatchResult(){
