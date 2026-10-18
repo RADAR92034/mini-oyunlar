@@ -225,38 +225,99 @@ main.home-wide{max-width:none!important;width:auto!important;flex:1 1 auto!impor
 @media(max-width:700px){main.home-wide{padding:12px!important}.home-hero{grid-template-columns:1fr;gap:10px;margin-bottom:22px}.home-welcome{padding:19px}.home-contact{padding:13px;gap:7px}.home-games{gap:8px}.home-game{gap:8px;padding:10px 8px}.home-game-icon{width:34px;height:34px;font-size:1.05rem}.home-game-copy b{font-size:.85rem}.home-game-copy small{font-size:.69rem}.home-play{font-size:.66rem}.home-suggest{padding:13px}}
 @media(max-width:400px){.home-games{grid-template-columns:1fr}.home-game-copy b{font-size:.92rem}.home-game-copy small{font-size:.76rem}}
 
-/* Zombi Hayatta Kalma */
-main.zombie-wide{max-width:1100px!important;width:100%!important}
-.zs-wrap{max-width:1040px;margin:0 auto;width:100%;color:var(--fg)}
-.zs-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin:2px 0 14px}
-.zs-heading h2{font-size:clamp(1.35rem,3vw,2rem);margin:0 0 5px}.zs-heading .d{max-width:720px;line-height:1.45}
+/* Zombi Hayatta Kalma - geniş harita, sol mağaza, mobil uyum */
+main.zombie-wide{max-width:none!important;width:100%!important;padding:16px!important;margin:0!important}
+.zs-wrap{width:100%;max-width:none;margin:0 auto;color:var(--fg)}
+.zs-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin:0 0 13px}
+.zs-heading h2{font-size:clamp(1.35rem,2.5vw,2rem);margin:0 0 5px}
+.zs-heading .d{max-width:800px;line-height:1.4}
 .zs-kicker{font-size:.68rem;letter-spacing:.15em;font-weight:900;color:#8fd49b;margin:0 0 7px}
-.zs-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:14px 0 10px}
-.zs-stat{padding:11px 13px;border:1px solid color-mix(in srgb,var(--mut) 24%,transparent);border-radius:10px;background:var(--side);min-width:0}
-.zs-stat small{display:block;color:var(--mut);font-size:.77rem}.zs-stat strong{display:block;font-size:1.25rem;margin-top:2px;font-variant-numeric:tabular-nums}
-.zs-bars{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}.zs-hp>span,.zs-xp>span{display:flex;justify-content:space-between;gap:8px;font-size:.8rem;color:var(--mut);margin-bottom:5px}
-.zs-bar{height:9px;background:var(--side);border-radius:99px;overflow:hidden}.zs-bar i{display:block;height:100%;width:100%;border-radius:99px;transition:width .12s}
-#zs-hp-fill{background:linear-gradient(90deg,#dc4444,#ff7777)}#zs-xp-fill{background:linear-gradient(90deg,#57b85f,#b2f06d)}
+.zs-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:12px 0 10px}
+.zs-stat{padding:10px 13px;border:1px solid color-mix(in srgb,var(--mut) 24%,transparent);border-radius:10px;background:var(--side);min-width:0}
+.zs-stat small{display:block;color:var(--mut);font-size:.77rem}
+.zs-stat strong{display:block;font-size:1.2rem;margin-top:2px;font-variant-numeric:tabular-nums}
+.zs-bars{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
+.zs-hp>span,.zs-xp>span{display:flex;justify-content:space-between;gap:8px;font-size:.8rem;color:var(--mut);margin-bottom:5px}
+.zs-bar{height:9px;background:var(--side);border-radius:99px;overflow:hidden}
+.zs-bar i{display:block;height:100%;width:100%;border-radius:99px;transition:width .12s}
+#zs-hp-fill{background:linear-gradient(90deg,#c52e3b,#ff7878)}
+#zs-xp-fill{background:linear-gradient(90deg,#4bbf63,#c9f76f)}
+.zs-layout{display:grid;grid-template-columns:minmax(225px,270px) minmax(0,1fr);gap:14px;align-items:start}
+.zs-shop-section{grid-column:1;grid-row:1;min-width:0;margin:0;padding:14px;border:1px solid color-mix(in srgb,var(--mut) 25%,transparent);border-radius:13px;background:var(--side);position:sticky;top:10px;max-height:calc(100vh - 20px);overflow:auto;overscroll-behavior:contain}
+.zs-shop-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:11px}
+.zs-shop-head h3{font-size:1.04rem;color:var(--fg);margin:0 0 4px}
+.zs-shop-head .d{font-size:.78rem;line-height:1.4}
+.zs-wallet{white-space:nowrap;padding:7px 8px;border:1px solid #d8aa4b55;border-radius:9px;color:#e7c66c;font-size:.8rem}
+.zs-shop-tabs{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin:9px 0 10px}
+.zs-shop-tabs button{margin:0;padding:9px 6px;background:transparent;border:1px solid color-mix(in srgb,var(--mut) 25%,transparent);border-radius:8px;color:var(--mut);font-size:.8rem;font-weight:800;cursor:pointer}
+.zs-shop-tabs button.active{background:var(--card);border-color:var(--acc);color:var(--fg)}
+.zs-shop{display:grid;grid-template-columns:1fr;gap:8px}
+.zs-upgrade{display:flex;flex-direction:column;gap:6px;padding:10px;border:1px solid color-mix(in srgb,var(--mut) 19%,transparent);border-radius:10px;background:var(--bg);min-width:0}
+.zs-upgrade b{font-size:.86rem;line-height:1.3}
+.zs-upgrade small{font-size:.74rem;color:var(--mut);line-height:1.4}
+.zs-upgrade .btn{margin:0;padding:8px 7px;font-size:.78rem;font-weight:800}
+.zs-upgrade .btn:disabled{opacity:.43;cursor:not-allowed}
+.zs-shop-note{margin:9px 0 0;color:var(--mut);font-size:.7rem;line-height:1.45}
+.zs-battle-column{grid-column:2;grid-row:1;min-width:0}
 .zs-stage{position:relative;width:100%;overflow:hidden;border:1px solid #ffffff1c;border-radius:14px;background:#102b1d;box-shadow:0 10px 26px #0003}
-#zs-canvas{display:block;width:100%;height:auto;aspect-ratio:5/3;background:#102b1d;touch-action:none}
-.zs-overlay{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;padding:14px;background:rgba(4,13,10,.78);backdrop-filter:blur(4px);overflow:auto}.zs-overlay[hidden]{display:none!important}
-.zs-modal{width:min(100%,470px);max-height:100%;overflow:auto;padding:23px 22px;border-radius:16px;border:1px solid #ffffff26;background:#112d20;color:#f3fff4;box-shadow:0 18px 55px #0008;text-align:center}
-.zs-modal-icon{font-size:2.5rem;margin-bottom:4px}.zs-modal h3{margin:4px 0 8px;color:#f3fff4;font-size:1.35rem}.zs-modal p{font-size:.9rem;line-height:1.5;color:#c2d8c5;margin:8px 0 16px}.zs-modal small{display:block;color:#b0c8b6;line-height:1.55;margin-top:11px}
+#zs-canvas{display:block;width:100%;height:auto;aspect-ratio:16/9;background:#102b1d;touch-action:none;cursor:crosshair}
+.zs-overlay{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;padding:14px;background:rgba(4,13,10,.78);backdrop-filter:blur(4px);overflow:auto}
+.zs-overlay[hidden]{display:none!important}
+.zs-modal{width:min(100%,480px);max-height:100%;overflow:auto;padding:23px 22px;border-radius:16px;border:1px solid #ffffff26;background:#112d20;color:#f3fff4;box-shadow:0 18px 55px #0008;text-align:center}
+.zs-modal-icon{font-size:2.5rem;margin-bottom:4px}
+.zs-modal h3{margin:4px 0 8px;color:#f3fff4;font-size:1.35rem}
+.zs-modal p{font-size:.9rem;line-height:1.5;color:#c2d8c5;margin:8px 0 16px}
+.zs-modal small{display:block;color:#b0c8b6;line-height:1.55;margin-top:11px}
 .zs-primary{background:#2f994d!important;color:white!important;font-weight:800;padding:11px 16px}
-.zs-choice-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;text-align:left}.zs-choice{display:flex;flex-direction:column;align-items:flex-start;gap:7px;min-height:125px;padding:12px 10px;border:1px solid #83c89466;border-radius:10px;background:#1a422b;color:#f4fff4;cursor:pointer;text-align:left}
-.zs-choice:hover{border-color:#92e6a5;background:#245536}.zs-choice b{font-size:.9rem;line-height:1.2}.zs-choice span{font-size:.76rem;line-height:1.4;color:#c2dcc8}.zs-choice .zs-choice-icon{font-size:1.5rem}
-.zs-toast{position:absolute;z-index:2;top:12px;left:50%;transform:translateX(-50%);font-size:.9rem;font-weight:900;letter-spacing:.03em;color:#fff3a5;text-shadow:0 2px 4px #000;pointer-events:none;text-align:center;width:90%}
-.zs-mobile-pad{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0 18px;padding:12px;border:1px solid color-mix(in srgb,var(--mut) 24%,transparent);border-radius:12px;background:var(--side)}
-.zs-pad-label{font-size:.85rem;font-weight:800;white-space:nowrap}.zs-pad-grid{display:grid;grid-template-columns:repeat(3,42px);grid-template-rows:repeat(2,38px);gap:4px}.zs-pad-grid .zs-dir{margin:0;padding:5px;touch-action:none;user-select:none;-webkit-user-select:none}.zs-mobile-pad>small{font-size:.72rem;color:var(--mut);text-align:right}
-.zs-shop-section{margin-top:21px;padding:17px;border:1px solid color-mix(in srgb,var(--mut) 22%,transparent);border-radius:13px;background:var(--side)}
-.zs-shop-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.zs-shop-head h3{font-size:1.05rem;color:var(--fg);margin:0 0 4px}.zs-shop-head .d{font-size:.82rem}
-.zs-wallet{white-space:nowrap;padding:8px 10px;border:1px solid #d8aa4b55;border-radius:9px;color:#e7c66c;font-size:.83rem}
-.zs-shop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.zs-upgrade{display:flex;flex-direction:column;gap:7px;padding:12px;border:1px solid color-mix(in srgb,var(--mut) 19%,transparent);border-radius:10px;background:var(--bg);min-width:0}
-.zs-upgrade b{font-size:.87rem}.zs-upgrade small{font-size:.76rem;color:var(--mut);line-height:1.4;flex:1}.zs-upgrade .btn{margin:0;padding:8px 7px;font-size:.76rem;font-weight:800}.zs-upgrade .btn:disabled{opacity:.4;cursor:not-allowed}
-.zs-footnote{margin:10px 0 0;color:var(--mut);font-size:.72rem}.zs-records{display:flex;gap:10px 20px;flex-wrap:wrap;color:var(--mut);font-size:.78rem;margin:12px 0 4px}.zs-records b{color:var(--fg)}
-@media(max-width:760px){.zs-stats{gap:6px}.zs-stat{padding:9px 8px}.zs-stat strong{font-size:1.05rem}.zs-stat small{font-size:.7rem}.zs-shop{grid-template-columns:repeat(2,minmax(0,1fr))}.zs-modal{padding:18px 13px}.zs-choice-list{grid-template-columns:1fr}.zs-choice{min-height:0;display:grid;grid-template-columns:35px 1fr;column-gap:9px;padding:9px}.zs-choice .zs-choice-icon{grid-row:span 2}.zs-choice span:not(.zs-choice-icon){grid-column:2}.zs-mobile-pad{gap:8px}.zs-pad-grid{grid-template-columns:repeat(3,38px);grid-template-rows:repeat(2,36px)}.zs-mobile-pad>small{max-width:85px}}
-@media(max-width:430px){.zs-heading{gap:6px}.zs-heading #zs-pause-btn{font-size:.72rem;padding:8px}.zs-bars{grid-template-columns:1fr;gap:7px}.zs-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.zs-mobile-pad{align-items:flex-start;flex-wrap:wrap}.zs-pad-label{align-self:center}.zs-mobile-pad>small{align-self:center;flex:1}}
-
+.zs-choice-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;text-align:left}
+.zs-choice{display:flex;flex-direction:column;align-items:flex-start;gap:7px;min-height:125px;padding:12px 10px;border:1px solid #83c89466;border-radius:10px;background:#1a422b;color:#f4fff4;cursor:pointer;text-align:left}
+.zs-choice:hover{border-color:#92e6a5;background:#245536}
+.zs-choice b{font-size:.9rem;line-height:1.2}
+.zs-choice span{font-size:.76rem;line-height:1.4;color:#c2dcc8}
+.zs-choice .zs-choice-icon{font-size:1.5rem}
+.zs-toast{position:absolute;z-index:2;top:13px;left:50%;transform:translateX(-50%);font-size:clamp(.78rem,1.4vw,.95rem);font-weight:900;letter-spacing:.03em;color:#fff3a5;text-shadow:0 2px 4px #000;pointer-events:none;text-align:center;width:90%}
+.zs-boss-bar{position:absolute;z-index:2;left:14%;right:14%;top:42px;padding:8px 12px;border:1px solid #ff9a9a88;border-radius:10px;background:#260e18d9;color:white;text-align:center;pointer-events:none}
+.zs-boss-bar[hidden]{display:none!important}
+.zs-boss-bar b{display:block;font-size:.82rem;letter-spacing:.1em;margin-bottom:5px}
+.zs-boss-meter{height:8px;border-radius:99px;background:#562029;overflow:hidden}
+.zs-boss-meter i{display:block;height:100%;background:linear-gradient(90deg,#c92d3f,#ff656e);width:100%}
+.zs-run-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin:9px 0 0;color:var(--mut);font-size:.77rem}
+.zs-run-foot b{color:var(--fg)}
+.zs-run-foot .btn{margin:0;font-size:.76rem;padding:7px 10px}
+.zs-records{display:flex;gap:8px 17px;flex-wrap:wrap;color:var(--mut);font-size:.76rem;margin:11px 0 3px}
+.zs-records b{color:var(--fg)}
+.zs-touch-note{display:none;color:var(--mut);font-size:.72rem}
+@media(max-width:900px){
+ main.zombie-wide{padding:12px!important}
+ .zs-layout{grid-template-columns:minmax(190px,235px) minmax(0,1fr);gap:10px}
+ .zs-shop-section{padding:10px}
+ .zs-stats{gap:6px}
+ .zs-stat{padding:8px 9px}
+ .zs-stat strong{font-size:1.04rem}
+ .zs-stat small{font-size:.7rem}
+}
+@media(max-width:650px){
+ .zs-layout{grid-template-columns:1fr}
+ .zs-shop-section{grid-column:1;grid-row:2;position:static;max-height:none;overflow:visible}
+ .zs-battle-column{grid-column:1;grid-row:1}
+ .zs-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .zs-bars{gap:8px}
+ .zs-shop{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .zs-modal{padding:18px 13px}
+ .zs-choice-list{grid-template-columns:1fr}
+ .zs-choice{min-height:0;display:grid;grid-template-columns:35px 1fr;column-gap:9px;padding:9px}
+ .zs-choice .zs-choice-icon{grid-row:span 2}
+ .zs-choice span:not(.zs-choice-icon){grid-column:2}
+ .zs-touch-note{display:block}
+}
+@media(max-width:420px){
+ .zs-heading{gap:6px}
+ .zs-heading #zs-pause-btn{font-size:.72rem;padding:8px}
+ .zs-bars{grid-template-columns:1fr;gap:7px}
+ .zs-shop{grid-template-columns:1fr}
+ .zs-boss-bar{left:7%;right:7%;top:37px}
+ .zs-run-foot{font-size:.72rem}
+}
 </style>
 </head>
 <body>
@@ -383,22 +444,64 @@ h2{margin:0 0 4px}
 
 <section id="g10" hidden>
 <div class="zs-wrap">
-<div class="zs-heading"><div><p class="zs-kicker">HAYATTA KAL · GÜÇLEN · TEKRAR DENE</p><h2>🧟 Zombi Hayatta Kalma</h2><p class="d">Zombi dalgalarına dayan, deneyim topla, seviye atla ve kalıcı yükseltmeler satın al.</p></div><button class="btn off" id="zs-pause-btn" type="button">⏸ Duraklat</button></div>
-<div class="zs-stats">
-<div class="zs-stat"><small>🌊 Dalga</small><strong id="zs-wave">1</strong></div><div class="zs-stat"><small>☠️ Yenilen zombi</small><strong id="zs-kills">0</strong></div><div class="zs-stat"><small>⭐ Seviye</small><strong id="zs-level">1</strong></div><div class="zs-stat"><small>🪙 Altın</small><strong id="zs-gold">0</strong></div></div>
-<div class="zs-bars"><div class="zs-hp"><span>❤️ Can <b id="zs-hp-text">100 / 100</b></span><div class="zs-bar"><i id="zs-hp-fill"></i></div></div><div class="zs-xp"><span>✨ Deneyim <b id="zs-xp-text">0 / 8</b></span><div class="zs-bar"><i id="zs-xp-fill"></i></div></div></div>
-<div class="zs-stage">
-<canvas id="zs-canvas" width="900" height="540" aria-label="Zombi Hayatta Kalma oyun alanı"></canvas>
-<div class="zs-overlay" id="zs-start-panel"><div class="zs-modal"><div class="zs-modal-icon">🧟</div><h3>Geceye hazır mısın?</h3><p>Yakındaki zombilere otomatik ateş edersin. Hareket edip saldırılardan kaç, deneyim topla ve tur boyunca güçlen. Kazandığın altınlar sonraki turlar için saklanır.</p><button class="btn zs-primary" id="zs-start-btn" type="button">▶ Hayatta kalmaya başla</button><small>Bilgisayar: WASD / ok tuşları · P: duraklat<br>Telefon: ekrandaki yön tuşları</small></div></div>
-<div class="zs-overlay" id="zs-level-panel" hidden><div class="zs-modal"><p class="zs-kicker">SEVİYE ATLADIN</p><h3>Bir güçlendirme seç</h3><p>Seçimin bu turun sonuna kadar seninle.</p><div id="zs-choice-list" class="zs-choice-list"></div></div></div>
-<div class="zs-overlay" id="zs-pause-panel" hidden><div class="zs-modal"><div class="zs-modal-icon">⏸️</div><h3>Oyun duraklatıldı</h3><p>Hazır olunca kaldığın yerden devam et.</p><button class="btn zs-primary" id="zs-resume-btn" type="button">Devam et</button><button class="btn off" id="zs-pause-home-btn" type="button">Ana Menü</button></div></div>
-<div class="zs-overlay" id="zs-end-panel" hidden><div class="zs-modal"><div class="zs-modal-icon">🏁</div><h3>Bu turun sonu!</h3><p id="zs-end-summary">Güzel mücadele.</p><button class="btn zs-primary" id="zs-retry-btn" type="button">↻ Tekrar dene</button><button class="btn off" id="zs-home-btn" type="button">Ana Menü</button></div></div>
-<div class="zs-toast" id="zs-toast" aria-live="polite"></div></div>
-<div class="zs-mobile-pad" aria-label="Hareket kontrolleri"><span class="zs-pad-label">Hareket</span><div class="zs-pad-grid"><span></span><button class="btn off zs-dir" data-zs-dir="up" type="button" aria-label="Yukarı">▲</button><span></span><button class="btn off zs-dir" data-zs-dir="left" type="button" aria-label="Sola">◀</button><button class="btn off zs-dir" data-zs-dir="down" type="button" aria-label="Aşağı">▼</button><button class="btn off zs-dir" data-zs-dir="right" type="button" aria-label="Sağa">▶</button></div><small>Silahın otomatik ateş eder.</small></div>
-<div class="zs-shop-section"><div class="zs-shop-head"><div><h3>🛠️ Kalıcı geliştirmeler</h3><p class="d">Buradaki yükseltmeler turlar arasında korunur.</p></div><div class="zs-wallet">🪙 <b id="zs-shop-gold">0</b> altın</div></div><div id="zs-shop" class="zs-shop"></div><p class="zs-footnote">Kayıt bu tarayıcıda tutulur. Tarayıcı verileri silinirse kayıt da silinebilir.</p></div>
-<div class="zs-records"><span>🏆 En iyi dalga: <b id="zs-best-wave">0</b></span><span>💀 Toplam zombi: <b id="zs-total-kills">0</b></span><span id="zs-run-note">Her tur farklı gelişebilir.</span></div>
-</div></section>
-
+  <div class="zs-heading">
+    <div>
+      <p class="zs-kicker">DALGALAR · BOSS SAVAŞI · KALICI GELİŞİM</p>
+      <h2>🪖 Zombi Hayatta Kalma</h2>
+      <p class="d">Büyük haritada hareket et, zombileri temizle, her dalganın boss'unu yen ve altınlarınla cephaneliğini güçlendir.</p>
+    </div>
+    <button class="btn off" id="zs-pause-btn" type="button">⏸ Duraklat</button>
+  </div>
+  <div class="zs-layout">
+    <aside class="zs-shop-section">
+      <div class="zs-shop-head">
+        <div><h3>🛒 Saha mağazası</h3><p class="d">Altınların kalıcıdır. Silah ve geliştirme satın al.</p></div>
+        <div class="zs-wallet">🪙 <b id="zs-shop-gold">0</b></div>
+      </div>
+      <div class="zs-shop-tabs" role="tablist" aria-label="Mağaza kategorileri">
+        <button type="button" class="active" id="zs-tab-upgrades" role="tab" aria-selected="true">⬆ Geliştirmeler</button>
+        <button type="button" id="zs-tab-weapons" role="tab" aria-selected="false">🔫 Silahlar</button>
+      </div>
+      <div id="zs-shop" class="zs-shop"></div>
+      <p class="zs-shop-note">Satın almalar bu tarayıcıda saklanır. Silahlar arasında buradan geçiş yapabilirsin.</p>
+    </aside>
+    <div class="zs-battle-column">
+      <div class="zs-stats">
+        <div class="zs-stat"><small>🌊 Dalga / aşama</small><strong id="zs-wave">1 · Hazırlık</strong></div>
+        <div class="zs-stat"><small>☠️ Yenilen düşman</small><strong id="zs-kills">0</strong></div>
+        <div class="zs-stat"><small>⭐ Seviye</small><strong id="zs-level">1</strong></div>
+        <div class="zs-stat"><small>🪙 Altın</small><strong id="zs-gold">0</strong></div>
+      </div>
+      <div class="zs-bars">
+        <div class="zs-hp"><span>❤️ Can <b id="zs-hp-text">100 / 100</b></span><div class="zs-bar"><i id="zs-hp-fill"></i></div></div>
+        <div class="zs-xp"><span>✨ Deneyim <b id="zs-xp-text">0 / 8</b></span><div class="zs-bar"><i id="zs-xp-fill"></i></div></div>
+      </div>
+      <div class="zs-stage">
+        <canvas id="zs-canvas" width="1280" height="720" aria-label="Askerin hareket ettiği geniş zombi hayatta kalma haritası"></canvas>
+        <div class="zs-boss-bar" id="zs-boss-bar" hidden><b>☠️ DALGA SONU BOSS</b><div class="zs-boss-meter"><i id="zs-boss-fill"></i></div></div>
+        <div class="zs-overlay" id="zs-start-panel">
+          <div class="zs-modal">
+            <div class="zs-modal-icon">🪖</div><h3>Göreve hazır mısın, asker?</h3>
+            <p>WASD veya ok tuşlarıyla hareket et. Silahın hedefe doğru dönerek otomatik ateş eder. Her dalganın sonunda bir boss çıkar; onu yenmeden sonraki dalga başlamaz. Altınla kalıcı can, kalkan, ateş hızı ve yeni silahlar satın al.</p>
+            <button class="btn zs-primary" id="zs-start-btn" type="button">▶ Göreve başla</button>
+            <small>Bilgisayar: WASD / ok tuşları · P: duraklat<br>Telefon/tablet: oyun alanında basılı tutup sürükleyerek hareket et</small>
+          </div>
+        </div>
+        <div class="zs-overlay" id="zs-level-panel" hidden><div class="zs-modal"><p class="zs-kicker">SEVİYE ATLADIN</p><h3>Bir saha avantajı seç</h3><p>Seçimin bu tur boyunca etkili olur.</p><div id="zs-choice-list" class="zs-choice-list"></div></div></div>
+        <div class="zs-overlay" id="zs-pause-panel" hidden><div class="zs-modal"><div class="zs-modal-icon">⏸️</div><h3>Görev duraklatıldı</h3><p>Hazır olduğunda savaşa dön.</p><button class="btn zs-primary" id="zs-resume-btn" type="button">Devam et</button><button class="btn off" id="zs-pause-home-btn" type="button">Ana Menü</button></div></div>
+        <div class="zs-overlay" id="zs-end-panel" hidden><div class="zs-modal"><div class="zs-modal-icon">🏁</div><h3>Asker, görev sona erdi!</h3><p id="zs-end-summary">Bir dahaki sefere daha uzun dayan.</p><button class="btn zs-primary" id="zs-retry-btn" type="button">↻ Tekrar dene</button><button class="btn off" id="zs-home-btn" type="button">Ana Menü</button></div></div>
+        <div class="zs-toast" id="zs-toast" aria-live="polite"></div>
+      </div>
+      <div class="zs-run-foot">
+        <span>🔫 Donanım: <b id="zs-equipped">Tabanca</b> · 🛡️ Kalkan: <b id="zs-shield">0</b></span>
+        <span id="zs-run-note">Her dalganın sonunda boss var.</span>
+      </div>
+      <p class="zs-touch-note">Mobilde karakteri hareket ettirmek için oyun alanına parmağınla basılı tutup sürükle.</p>
+      <div class="zs-records"><span>🏆 En iyi dalga: <b id="zs-best-wave">0</b></span><span>💀 Toplam düşman: <b id="zs-total-kills">0</b></span><span>🗺️ Büyük harita · Kamera karakteri takip eder</span></div>
+    </div>
+  </div>
+</div>
+</section>
 </main>
 <script>
 const T=[["beyaz","Beyaz","#ffffff"],["siyah","Siyah","#000000"],["mavi","Mavi","#1c3d73"],["yesil","Yeşil","#1e5a3a"]];
@@ -1234,226 +1337,437 @@ start()}
 
 
 function zombieSurvival(){
-const canvas=q('zs-canvas'),ctx=canvas.getContext('2d'),W=900,H=540;
-let state='menu',raf=0,last=0,held=new Set(),player=null,mobs=[],shots=[],orbs=[];
-let wave=1,kills=0,runElapsed=0,spawnTimer=.9,fireTimer=.2,toastTimer=0,uiTimer=0;
-let level=1,xp=0,nextXp=8,runGold=0,runStats=null;
+const canvas=q('zs-canvas'),ctx=canvas.getContext('2d');
+const VW=canvas.width,VH=canvas.height,WORLD_W=3400,WORLD_H=2600;
+let state='menu',raf=0,last=0,held=new Set(),player=null,mobs=[],shots=[],enemyShots=[],orbs=[];
+let camera={x:0,y:0},wave=1,kills=0,level=1,xp=0,nextXp=9;
+let waveQuota=14,waveSpawned=0,spawnTimer=.25,phase='horde',breakTimer=0,runGold=0;
+let runStats=null,fireTimer=.2,uiTimer=0,toastTimer=0,aimTarget=null,shopTab='upgrades';
+let touchStart=null,touchMove=null,screenShake=0;
 const META_KEY='mini_zs_meta_v1';
-function defaultMeta(){return {gold:0,bestWave:0,totalKills:0,upgrades:{damage:0,hp:0,speed:0,magnet:0}}}
+const weaponDefs=[
+{id:'pistol',icon:'🔫',name:'Service pistol',cost:0,desc:'Reliable starter sidearm.',damage:24,delay:.53,speed:760,range:760,pellets:1,spread:.025,color:'#ffe08a'},
+{id:'smg',icon:'🔫',name:'SMG-9 rapid',cost:110,desc:'Very fast burst of light bullets.',damage:11,delay:.15,speed:680,range:610,pellets:1,spread:.09,color:'#8df5ff'},
+{id:'rifle',icon:'🪖',name:'AR assault rifle',cost:190,desc:'Balanced power, accuracy and range.',damage:28,delay:.30,speed:900,range:900,pellets:1,spread:.035,color:'#ffcf70'},
+{id:'shotgun',icon:'💥',name:'Combat shotgun',cost:240,desc:'Five pellets at close range.',damage:13,delay:.78,speed:560,range:460,pellets:5,spread:.30,color:'#ffa56d'},
+{id:'sniper',icon:'🎯',name:'Longshot rifle',cost:320,desc:'Slow, accurate and devastating.',damage:92,delay:1.08,speed:1350,range:1250,pellets:1,spread:.012,color:'#c6e5ff'}
+];
+const weaponMap=Object.fromEntries(weaponDefs.map(w=>[w.id,w]));
+function defaultMeta(){return {gold:0,bestWave:0,totalKills:0,upgrades:{damage:0,hp:0,speed:0,magnet:0,fireRate:0,shield:0,armor:0},weapons:['pistol'],equipped:'pistol'}}
 function loadMeta(){
 const m=defaultMeta();
 try{
 const saved=JSON.parse(localStorage.getItem(META_KEY)||'null');
 if(saved&&typeof saved==='object'){
-m.gold=Math.max(0,Math.floor(Number(saved.gold)||0));
-m.bestWave=Math.max(0,Math.floor(Number(saved.bestWave)||0));
-m.totalKills=Math.max(0,Math.floor(Number(saved.totalKills)||0));
-['damage','hp','speed','magnet'].forEach(k=>m.upgrades[k]=Math.max(0,Math.min(99,Math.floor(Number(saved.upgrades&&saved.upgrades[k])||0))));
+m.gold=Math.max(0,Math.floor(Number(saved.gold)||0));m.bestWave=Math.max(0,Math.floor(Number(saved.bestWave)||0));m.totalKills=Math.max(0,Math.floor(Number(saved.totalKills)||0));
+['damage','hp','speed','magnet','fireRate','shield','armor'].forEach(k=>m.upgrades[k]=Math.max(0,Math.min(20,Math.floor(Number(saved.upgrades&&saved.upgrades[k])||0))));
+if(Array.isArray(saved.weapons))m.weapons=Array.from(new Set(['pistol',...saved.weapons.filter(k=>weaponMap[k])]));
+if(weaponMap[saved.equipped]&&m.weapons.includes(saved.equipped))m.equipped=saved.equipped;
 }
 }catch(e){}
 return m;
 }
 let meta=loadMeta(),shopGoldAt=-1;
-function saveMeta(){try{localStorage.setItem(META_KEY,JSON.stringify(meta))}catch(e){}}
-const upgradeDefs=[
-{key:'damage',icon:'⚔️',name:'Silah hasarı',desc:'Her mermi daha fazla hasar verir.',base:30},
-{key:'hp',icon:'❤️',name:'Maksimum can',desc:'Her tur daha fazla canla başlarsın.',base:25},
-{key:'speed',icon:'👟',name:'Hareket hızı',desc:'Zombilerden daha hızlı kaçarsın.',base:25},
-{key:'magnet',icon:'🧲',name:'XP mıknatısı',desc:'Deneyim parçalarını uzaktan toplarsın.',base:20}
-];
+function saveMeta(){try{localStorage.setItem(META_KEY,JSON.stringify(meta))}catch(e){toast('Tarayıcı kaydı yapılamadı.',2.5)}}
+function currentWeapon(){return weaponMap[meta.equipped]||weaponMap.pistol}
+function upgradeDefinitions(){return [
+{key:'hp',icon:'❤️',name:'Maksimum can',desc:'+25 maksimum can ve her görev başında iyileşme.',base:55,max:20},
+{key:'shield',icon:'🛡️',name:'Enerji kalkanı',desc:'Her görev başında +1 kalkan yükü.',base:75,max:8},
+{key:'fireRate',icon:'⚡',name:'Ateş hızı',desc:'Her kademe silahın ateş aralığını %8 azaltır.',base:65,max:10},
+{key:'damage',icon:'💥',name:'Mermi gücü',desc:'Tüm silahlara +4 temel hasar.',base:60,max:15},
+{key:'armor',icon:'🦺',name:'Asker zırhı',desc:'Gelen darbelerin hasarını 1 azaltır.',base:80,max:8},
+{key:'speed',icon:'👟',name:'Hareket hızı',desc:'Askerin hareket hızı +12.',base:45,max:12},
+{key:'magnet',icon:'🧲',name:'XP çekim alanı',desc:'Deneyim parçalarını daha uzaktan toplar.',base:40,max:15}
+]}
 function shop(){
-const el=q('zs-shop');el.innerHTML='';
-upgradeDefs.forEach(d=>{
-const lvl=meta.upgrades[d.key],cost=d.base*(lvl+1);
-const card=document.createElement('div');card.className='zs-upgrade';
-const title=document.createElement('b');title.textContent=d.icon+' '+d.name+' · Lv.'+lvl;
+const el=q('zs-shop');if(!el)return;el.innerHTML='';
+q('zs-tab-upgrades').classList.toggle('active',shopTab==='upgrades');q('zs-tab-weapons').classList.toggle('active',shopTab==='weapons');
+q('zs-tab-upgrades').setAttribute('aria-selected',String(shopTab==='upgrades'));q('zs-tab-weapons').setAttribute('aria-selected',String(shopTab==='weapons'));
+if(shopTab==='upgrades'){
+upgradeDefinitions().forEach(d=>{
+const lvl=meta.upgrades[d.key],cost=d.base*(lvl+1),card=document.createElement('div');card.className='zs-upgrade';
+const title=document.createElement('b');title.textContent=d.icon+' '+d.name+' · Lv.'+lvl+'/'+d.max;
 const desc=document.createElement('small');desc.textContent=d.desc;
-const btn=document.createElement('button');btn.type='button';btn.className='btn'+(meta.gold<cost?' off':'');btn.textContent='Geliştir · '+cost+' altın';btn.disabled=meta.gold<cost;
+const btn=document.createElement('button');btn.type='button';btn.className='btn'+(meta.gold<cost||lvl>=d.max?' off':'');btn.disabled=meta.gold<cost||lvl>=d.max;btn.textContent=lvl>=d.max?'Maksimum seviye':'Satın al · '+cost+' 🪙';
 btn.onclick=()=>{
-if(meta.gold<cost)return;
-meta.gold-=cost;meta.upgrades[d.key]++;saveMeta();shopGoldAt=-1;updateHud();
-toast('Kalıcı geliştirme alındı: '+d.name,2.2);
+if(meta.gold<cost||meta.upgrades[d.key]>=d.max)return;
+meta.gold-=cost;meta.upgrades[d.key]++;saveMeta();shopGoldAt=-1;shop();updateHud();toast(d.name+' geliştirildi!',1.8)
 };
 card.append(title,desc,btn);el.appendChild(card);
 });
+}else{
+weaponDefs.forEach(w=>{
+const owned=meta.weapons.includes(w.id),equipped=meta.equipped===w.id;
+const card=document.createElement('div');card.className='zs-upgrade';
+const title=document.createElement('b');title.textContent=w.icon+' '+w.name+(equipped?' · TAKILI':owned?' · AÇILDI':'');
+const desc=document.createElement('small');desc.textContent=w.desc+' Hasar: '+(w.damage+meta.upgrades.damage*4)+' · Ateş aralığı: '+(Math.max(.1,w.delay*Math.pow(.92,meta.upgrades.fireRate))).toFixed(2)+' sn';
+const btn=document.createElement('button');btn.type='button';btn.className='btn'+(!owned&&meta.gold<w.cost?' off':'');btn.disabled=equipped||(!owned&&meta.gold<w.cost);
+btn.textContent=equipped?'Kuşanıldı ✓':owned?'Silahı kuşan':'Satın al · '+w.cost+' 🪙';
+btn.onclick=()=>{
+if(!owned){
+if(meta.gold<w.cost)return;
+meta.gold-=w.cost;meta.weapons.push(w.id);meta.equipped=w.id;saveMeta();toast(w.name+' satın alındı ve kuşanıldı!',2)
+}else{meta.equipped=w.id;saveMeta();toast(w.name+' kuşanıldı.',1.7)}
+shopGoldAt=-1;shop();updateHud()
+};
+card.append(title,desc,btn);el.appendChild(card);
+});
+}
+q('zs-shop-gold').textContent=meta.gold.toLocaleString('tr-TR');
+}
+function setShopTab(tab){shopTab=tab;shopGoldAt=-1;shop()}
+function shopIfNeeded(){if(shopGoldAt!==meta.gold){shopGoldAt=meta.gold;shop()}}
+function toast(message,duration){toastTimer=duration||1.8;q('zs-toast').textContent=message}
+function phaseLabel(){if(phase==='horde')return 'Temizlik';if(phase==='boss')return 'BOSS!';if(phase==='break')return 'Dalga temizlendi';return 'Hazırlık'}
+function updateHud(){
+q('zs-wave').textContent=wave+' · '+phaseLabel();
+q('zs-kills').textContent=kills.toLocaleString('tr-TR');
+q('zs-level').textContent=level;
+q('zs-gold').textContent=meta.gold.toLocaleString('tr-TR');
 q('zs-shop-gold').textContent=meta.gold.toLocaleString('tr-TR');
 q('zs-best-wave').textContent=meta.bestWave;
 q('zs-total-kills').textContent=meta.totalKills.toLocaleString('tr-TR');
-q('zs-gold').textContent=meta.gold.toLocaleString('tr-TR');
-}
-function shopIfNeeded(){if(shopGoldAt!==meta.gold){shopGoldAt=meta.gold;shop()}}
-function toast(text,duration){toastTimer=duration||1.8;q('zs-toast').textContent=text}
-function updateHud(){
+q('zs-equipped').textContent=currentWeapon().name;
+q('zs-shield').textContent=player?player.shield+'/'+player.shieldMax:String(meta.upgrades.shield);
 if(player){
-q('zs-wave').textContent=wave;q('zs-kills').textContent=kills;q('zs-level').textContent=level;
-q('zs-gold').textContent=meta.gold.toLocaleString('tr-TR');
 q('zs-hp-text').textContent=Math.max(0,Math.ceil(player.hp))+' / '+player.maxHp;
 q('zs-hp-fill').style.width=(Math.max(0,player.hp)/player.maxHp*100)+'%';
-q('zs-xp-text').textContent=xp+' / '+nextXp;q('zs-xp-fill').style.width=Math.min(100,xp/nextXp*100)+'%';
+q('zs-xp-text').textContent=xp+' / '+nextXp;
+q('zs-xp-fill').style.width=Math.min(100,xp/nextXp*100)+'%';
 }
-q('zs-shop-gold').textContent=meta.gold.toLocaleString('tr-TR');
-q('zs-best-wave').textContent=meta.bestWave;q('zs-total-kills').textContent=meta.totalKills.toLocaleString('tr-TR');
+const boss=mobs.find(m=>m.type==='boss');
+q('zs-boss-bar').hidden=!boss;
+if(boss){q('zs-boss-fill').style.width=Math.max(0,boss.hp/boss.maxHp*100)+'%'}
 shopIfNeeded();
 }
-function startRun(){
-held.clear();mobs=[];shots=[];orbs=[];wave=1;kills=0;runElapsed=0;spawnTimer=.45;fireTimer=.1;toastTimer=0;level=1;xp=0;nextXp=8;runGold=0;
-const maxHp=100+meta.upgrades.hp*20;
-runStats={damage:24+meta.upgrades.damage*3,fireDelay:.58,speed:190+meta.upgrades.speed*7,magnet:320+meta.upgrades.magnet*24,projectiles:1,armor:0,shield:0};
-player={x:W/2,y:H/2,r:14,hp:maxHp,maxHp:maxHp,hurtTimer:0};
-state='playing';last=0;
-q('zs-start-panel').hidden=true;q('zs-level-panel').hidden=true;q('zs-pause-panel').hidden=true;q('zs-end-panel').hidden=true;
-q('zs-run-note').textContent='Bu turda kazanılan altın: 0';updateHud();toast('İlk dalga geliyor!',2);
+function startWave(){
+phase='horde';waveQuota=12+wave*3;waveSpawned=0;spawnTimer=.1;fireTimer=.2;mobs=[];enemyShots=[];orbs=[];q('zs-boss-bar').hidden=true;
+q('zs-run-note').textContent='Dalga '+wave+': '+waveQuota+' düşman ve sonunda bir boss.';
+toast('DALGA '+wave+' — '+waveQuota+' düşmanı temizle!',2.2);updateHud();
 }
-function spawnMob(boss){
-let side=Math.floor(Math.random()*4),x,y,margin=30;
-if(side===0){x=Math.random()*W;y=-margin}else if(side===1){x=W+margin;y=Math.random()*H}else if(side===2){x=Math.random()*W;y=H+margin}else{x=-margin;y=Math.random()*H}
-const b=!!boss,hp=b?65+wave*8:2+Math.floor(wave*.32);
-mobs.push({x,y,r:b?24:10+Math.random()*2,hp,maxHp:hp,speed:b?28:42+Math.min(40,wave*1.6),damage:b?22:8,boss:b,touch:Math.random()*.3});
+function startRun(){
+held.clear();touchMove=null;mobs=[];shots=[];enemyShots=[];orbs=[];wave=1;kills=0;level=1;xp=0;nextXp=9;runGold=0;waveSpawned=0;phase='horde';breakTimer=0;runStats=null;runElapsed=0;screenShake=0;
+const maxHp=100+meta.upgrades.hp*25,weapon=currentWeapon();
+runStats={damage:weapon.damage+meta.upgrades.damage*4,fireDelay:Math.max(.1,weapon.delay*Math.pow(.92,meta.upgrades.fireRate)),speed:175+meta.upgrades.speed*12,magnet:145+meta.upgrades.magnet*28,projectiles:1,armor:meta.upgrades.armor,shieldRegen:0,weapon:weapon};
+player={x:WORLD_W/2,y:WORLD_H/2,r:16,hp:maxHp,maxHp:maxHp,hurtTimer:0,shield:meta.upgrades.shield,shieldMax:meta.upgrades.shield,shieldRegenTimer:22,aimAngle:-Math.PI/2,bodyAngle:-Math.PI/2,moveAngle:-Math.PI/2};
+camera.x=Math.max(0,Math.min(WORLD_W-VW,player.x-VW/2));camera.y=Math.max(0,Math.min(WORLD_H-VH,player.y-VH/2));
+state='playing';last=0;uiTimer=0;toastTimer=0;q('zs-start-panel').hidden=true;q('zs-level-panel').hidden=true;q('zs-pause-panel').hidden=true;q('zs-end-panel').hidden=true;
+q('zs-run-note').textContent='İlk görev başladı.';startWave();updateHud();
+}
+function spawnPoint(){
+const a=Math.random()*Math.PI*2,d=Math.max(VW,VH)*(.53+Math.random()*.25);
+const x=Math.max(45,Math.min(WORLD_W-45,player.x+Math.cos(a)*d));
+const y=Math.max(45,Math.min(WORLD_H-45,player.y+Math.sin(a)*d));
+return{x:x,y:y};
+}
+function spawnEnemy(forceType){
+const p=spawnPoint(),r=Math.random();let type=forceType;
+if(!type){if(r<.42)type='walker';else if(r<.69)type='runner';else if(r<.88)type='spitter';else type='brute'}
+let spec;
+if(type==='walker')spec={r:15,hp:35+wave*5,speed:54+Math.min(64,wave*2.2),damage:9+Math.floor(wave*.8),color:'#4a9d64',reward:3+Math.floor(wave*.45),xp:1};
+else if(type==='runner')spec={r:11,hp:24+wave*3,speed:105+Math.min(85,wave*2.5),damage:8+Math.floor(wave*.65),color:'#cf884a',reward:4+Math.floor(wave*.4),xp:1};
+else if(type==='spitter')spec={r:15,hp:48+wave*7,speed:36+Math.min(40,wave*1.2),damage:10+Math.floor(wave*.7),color:'#9b70bf',reward:5+Math.floor(wave*.45),xp:2};
+else if(type==='brute')spec={r:22,hp:105+wave*18,speed:35+Math.min(35,wave),damage:18+Math.floor(wave*1.3),color:'#596789',reward:7+Math.floor(wave*.6),xp:2};
+else spec={r:32,hp:300+wave*105,speed:34+Math.min(24,wave*.6),damage:24+wave*2,color:'#802b38',reward:35+wave*12,xp:10};
+mobs.push({x:p.x,y:p.y,type:type,r:spec.r,hp:spec.hp,maxHp:spec.hp,speed:spec.speed,damage:spec.damage,color:spec.color,reward:spec.reward,xp:spec.xp,boss:type==='boss',attackTimer:.8+Math.random(),flash:0,phase:Math.random()*6});
 }
 function killMob(i){
-const m=mobs[i];if(!m)return;mobs.splice(i,1);kills++;meta.totalKills++;
-runGold+=m.boss?20:2+Math.floor(wave/2);meta.gold+=m.boss?20:2+Math.floor(wave/2);saveMeta();
-orbs.push({x:m.x,y:m.y,r:m.boss?10:6,value:m.boss?5:1,life:20});
-q('zs-run-note').textContent='Bu turda kazanılan altın: '+runGold;updateHud();
-if(m.boss)toast('Büyük zombi yenildi! +20 altın',2);
+const m=mobs[i];if(!m)return;
+mobs.splice(i,1);kills++;meta.totalKills++;
+const reward=m.reward;runGold+=reward;meta.gold+=reward;saveMeta();
+orbs.push({x:m.x,y:m.y,r:m.boss?12:7,value:m.xp,life:24});
+screenShake=Math.max(screenShake,m.boss?12:2);
+if(m.boss){
+meta.bestWave=Math.max(meta.bestWave,wave);saveMeta();phase='break';breakTimer=2.7;enemyShots=[];
+meta.gold+=wave*9;runGold+=wave*9;saveMeta();
+q('zs-run-note').textContent='Boss yenildi! '+runGold+' altın kazandın. Yeni dalga başlıyor…';
+toast('BOSS YENİLDİ! +'+(m.reward+wave*9)+' altın',2.7);
+}else q('zs-run-note').textContent='Bu turda kazanılan altın: '+runGold;
+updateHud();
 }
-function dist(a,b){return Math.hypot(a.x-b.x,a.y-b.y)}
-function nearest(){let t=null,bd=280;for(const m of mobs){const d=dist(player,m);if(d<bd){bd=d;t=m}}return t}
+function distance(a,b){return Math.hypot(a.x-b.x,a.y-b.y)}
+function angleDiff(a,b){return Math.atan2(Math.sin(a-b),Math.cos(a-b))}
+function nearestTarget(){
+let target=null,best=runStats?runStats.weapon.range:800;
+for(const m of mobs){const d=distance(player,m);if(d<best){best=d;target=m}}
+return target;
+}
 function fire(){
-const target=nearest();if(!target)return;
-const a=Math.atan2(target.y-player.y,target.x-player.x),count=runStats.projectiles;
-for(let j=0;j<count;j++){
-const spread=(j-(count-1)/2)*.15,ang=a+spread,speed=470;
-shots.push({x:player.x+Math.cos(ang)*16,y:player.y+Math.sin(ang)*16,vx:Math.cos(ang)*speed,vy:Math.sin(ang)*speed,r:4,damage:runStats.damage,life:1.7});
+const target=aimTarget;if(!target)return;
+const targetAngle=Math.atan2(target.y-player.y,target.x-player.x);
+if(Math.abs(angleDiff(targetAngle,player.aimAngle))>.46)return;
+const w=runStats.weapon,base=player.aimAngle,shotsN=w.pellets;
+for(let k=0;k<shotsN;k++){
+const a=base+(Math.random()-.5)*w.spread;
+const speed=w.speed;
+shots.push({x:player.x+Math.cos(a)*25,y:player.y+Math.sin(a)*25,vx:Math.cos(a)*speed,vy:Math.sin(a)*speed,r:w.id==='sniper'?4.5:3.7,damage:runStats.damage,life:w.range/speed,color:w.color,kind:w.id});
+}
+}
+function enemyFire(m){
+const targetAngle=Math.atan2(player.y-m.y,player.x-m.x);
+if(m.type==='boss'){
+for(let k=-1;k<=1;k++){const a=targetAngle+k*.24,speed=260+Math.min(100,wave*3);enemyShots.push({x:m.x+Math.cos(a)*m.r,y:m.y+Math.sin(a)*m.r,vx:Math.cos(a)*speed,vy:Math.sin(a)*speed,r:8,damage:m.damage*.75,life:3,color:'#fb5967'})}
+}else{
+const a=targetAngle,speed=215+Math.min(80,wave*2);
+enemyShots.push({x:m.x+Math.cos(a)*m.r,y:m.y+Math.sin(a)*m.r,vx:Math.cos(a)*speed,vy:Math.sin(a)*speed,r:6,damage:m.damage,life:3,color:'#b0fa85'});
 }
 }
 function showLevelChoices(){
-state='levelup';held.clear();
+state='levelup';held.clear();touchMove=null;
 const levelPicks=[
-{icon:'⚔️',name:'Ağır mermi',desc:'Mermi hasarı +9.',apply:()=>runStats.damage+=9},
-{icon:'⚡',name:'Hızlı tetik',desc:'Ateş aralığı %14 kısalır.',apply:()=>runStats.fireDelay=Math.max(.18,runStats.fireDelay*.86)},
-{icon:'👟',name:'Çevik adım',desc:'Hareket hızı +22.',apply:()=>runStats.speed+=22},
-{icon:'❤️',name:'İlk yardım',desc:'Canını 40 yeniler.',apply:()=>player.hp=Math.min(player.maxHp,player.hp+40)},
-{icon:'🛡️',name:'Zırh',desc:'Aldığın hasar 2 azalır.',apply:()=>runStats.armor=Math.min(8,runStats.armor+2)},
-{icon:'🔫',name:'Çoklu atış',desc:'Aynı anda bir mermi daha atarsın.',apply:()=>runStats.projectiles=Math.min(5,runStats.projectiles+1)},
-{icon:'🧲',name:'Deneyim çekimi',desc:'Deneyim toplama alanı +55.',apply:()=>runStats.magnet+=55},
-{icon:'💚',name:'Sağlam beden',desc:'Maksimum can +25 ve iyileşme.',apply:()=>{player.maxHp+=25;player.hp=Math.min(player.maxHp,player.hp+25)}},
-{icon:'✨',name:'Enerji kalkanı',desc:'Bir sonraki zombi darbesini engeller.',apply:()=>runStats.shield++}
+{icon:'💥',name:'Yıkıcı mermi',desc:'Bu tur +12 silah hasarı.',apply:()=>runStats.damage+=12},
+{icon:'👟',name:'Taktik koşu',desc:'Bu tur hareket hızı +28.',apply:()=>runStats.speed+=28},
+{icon:'❤️',name:'Saha sağlık çantası',desc:'Canını 45 yeniler.',apply:()=>player.hp=Math.min(player.maxHp,player.hp+45)},
+{icon:'🦺',name:'Geçici zırh',desc:'Bu tur alınan hasar 3 azalır.',apply:()=>runStats.armor+=3},
+{icon:'🔫',name:'Çift atış',desc:'Aynı anda iki ek mermi gönderirsin.',apply:()=>runStats.projectiles=Math.min(4,runStats.projectiles+1)},
+{icon:'🧲',name:'Deneyim alanı',desc:'Bu tur XP çekimi +100.',apply:()=>runStats.magnet+=100},
+{icon:'🛡️',name:'Acil kalkan',desc:'Bir ek kalkan yükü kazanırsın.',apply:()=>{player.shield++;player.shieldMax++}},
+{icon:'💚',name:'Sağlam beden',desc:'Maksimum can +25 ve 25 can iyileşmesi.',apply:()=>{player.maxHp+=25;player.hp=Math.min(player.maxHp,player.hp+25)}}
 ];
-const shuffled=levelPicks.slice().sort(()=>Math.random()-.5).slice(0,3),box=q('zs-choice-list');box.innerHTML='';
-shuffled.forEach(p=>{
+const options=levelPicks.slice().sort(()=>Math.random()-.5).slice(0,3),box=q('zs-choice-list');box.innerHTML='';
+options.forEach(p=>{
 const b=document.createElement('button');b.type='button';b.className='zs-choice';
 const icon=document.createElement('span');icon.className='zs-choice-icon';icon.textContent=p.icon;
 const name=document.createElement('b');name.textContent=p.name;const desc=document.createElement('span');desc.textContent=p.desc;
-b.append(icon,name,desc);b.onclick=()=>{p.apply();state='playing';q('zs-level-panel').hidden=true;toast('Güçlendirildi: '+p.name,1.5);updateHud()};box.appendChild(b);
+b.append(icon,name,desc);b.onclick=()=>{p.apply();state='playing';q('zs-level-panel').hidden=true;toast('Güçlendirildi: '+p.name,1.6);updateHud()};box.appendChild(b);
 });
 q('zs-level-panel').hidden=false;
 }
 function gainXp(amount){
 xp+=amount;
-if(xp>=nextXp){xp-=nextXp;level++;nextXp=Math.floor(nextXp+5+level*2.3);showLevelChoices()}
+if(xp>=nextXp&&state==='playing'){
+xp-=nextXp;level++;nextXp=Math.floor(nextXp+7+level*2.6);showLevelChoices();
+}
 }
 function hurt(amount){
 if(player.hurtTimer>0)return;
-if(runStats.shield>0){runStats.shield--;player.hurtTimer=.45;toast('Kalkan darbe emdi!',1);return}
-player.hp-=Math.max(1,amount-runStats.armor);player.hurtTimer=.5;if(player.hp<=0)endRun();
+if(player.shield>0){player.shield--;player.hurtTimer=.38;toast('Kalkan darbeyi emdi!',.8);updateHud();return}
+player.hp-=Math.max(1,amount-runStats.armor);player.hurtTimer=.65;screenShake=Math.max(screenShake,6);
+if(player.hp<=0)endRun();
 }
 function endRun(){
 if(state==='gameover')return;
-state='gameover';held.clear();meta.bestWave=Math.max(meta.bestWave,wave);saveMeta();updateHud();
-q('zs-end-summary').textContent='Dalga '+wave+' · '+kills+' zombi · Seviye '+level+' · Bu turda '+runGold+' altın kazandın. Yeni geliştirmeler satın alıp tekrar dene!';
+state='gameover';held.clear();touchMove=null;meta.bestWave=Math.max(meta.bestWave,wave);saveMeta();updateHud();
+q('zs-end-summary').textContent='Dalga '+wave+' · '+kills+' düşman · Seviye '+level+' · Bu turda '+runGold+' altın. Mağazadan can, zırh, kalkan, ateş hızı veya yeni silah alıp tekrar dene.';
 q('zs-end-panel').hidden=false;
 }
 function update(delta){
 if(state!=='playing')return;
-runElapsed+=delta;if(player.hurtTimer>0)player.hurtTimer-=delta;
+if(player.hurtTimer>0)player.hurtTimer-=delta;
+if(screenShake>0)screenShake=Math.max(0,screenShake-delta*22);
 if(toastTimer>0){toastTimer-=delta;if(toastTimer<=0)q('zs-toast').textContent=''}
-if(runElapsed>=wave*23){wave++;spawnTimer=Math.min(spawnTimer,.3);toast('DALGA '+wave+' — daha fazla zombi!',2.4);if(wave%5===0)spawnMob(true);updateHud()}
-spawnTimer-=delta;const interval=Math.max(.32,1.08-wave*.045);
-if(spawnTimer<=0){spawnMob(false);spawnTimer=interval*(.72+Math.random()*.55)}
-let dx=(held.has('right')||held.has('d')?1:0)-(held.has('left')||held.has('a')?1:0);
-let dy=(held.has('down')||held.has('s')?1:0)-(held.has('up')||held.has('w')?1:0);
-if(dx&&dy){dx*=.7071;dy*=.7071}
-player.x=Math.max(player.r,Math.min(W-player.r,player.x+dx*runStats.speed*delta));
-player.y=Math.max(player.r,Math.min(H-player.r,player.y+dy*runStats.speed*delta));
-fireTimer-=delta;if(fireTimer<=0&&mobs.length){fire();fireTimer=runStats.fireDelay}
+if(phase==='break'){
+breakTimer-=delta;
+if(breakTimer<=0){wave++;startWave()}
+uiTimer+=delta;if(uiTimer>.15){uiTimer=0;updateHud()}
+return;
+}
+if(player.shield<player.shieldMax){
+player.shieldRegenTimer-=delta;
+if(player.shieldRegenTimer<=0){player.shield++;player.shieldRegenTimer=24;toast('Kalkan yeniden doldu.',1)}
+}else player.shieldRegenTimer=24;
+if(phase==='horde'){
+spawnTimer-=delta;
+const interval=Math.max(.38,.86-wave*.018);
+if(waveSpawned<waveQuota&&spawnTimer<=0){spawnEnemy();waveSpawned++;spawnTimer=interval*(.70+Math.random()*.60)}
+}
+let dx=(held.has('right')||held.has('d')||held.has('ArrowRight')?1:0)-(held.has('left')||held.has('a')||held.has('ArrowLeft')?1:0);
+let dy=(held.has('down')||held.has('s')||held.has('ArrowDown')?1:0)-(held.has('up')||held.has('w')||held.has('ArrowUp')?1:0);
+if(touchMove){
+const tx=touchMove.dx,ty=touchMove.dy,len=Math.hypot(tx,ty);
+if(len>10){dx=tx/Math.max(28,len);dy=ty/Math.max(28,len);dx=Math.max(-1,Math.min(1,dx));dy=Math.max(-1,Math.min(1,dy))}
+}
+const mag=Math.hypot(dx,dy);
+if(mag>1){dx/=mag;dy/=mag}
+if(mag>.05){
+const a=Math.atan2(dy,dx),turn=angleDiff(a,player.bodyAngle);
+player.bodyAngle+=Math.max(-delta*5,Math.min(delta*5,turn));
+player.x+=dx*runStats.speed*delta;player.y+=dy*runStats.speed*delta;
+}
+player.x=Math.max(player.r,Math.min(WORLD_W-player.r,player.x));
+player.y=Math.max(player.r,Math.min(WORLD_H-player.r,player.y));
+aimTarget=nearestTarget();
+if(aimTarget){
+const wanted=Math.atan2(aimTarget.y-player.y,aimTarget.x-player.x),turn=angleDiff(wanted,player.aimAngle);
+const maxTurn=delta*2.8;
+player.aimAngle+=Math.max(-maxTurn,Math.min(maxTurn,turn));
+}
+fireTimer-=delta;
+if(aimTarget&&fireTimer<=0){fire();fireTimer=runStats.fireDelay}
+const nowBoss=phase==='boss';
 for(let i=mobs.length-1;i>=0;i--){
-const m=mobs[i],d=dist(m,player);
-if(d>1){m.x+=(player.x-m.x)/d*m.speed*delta;m.y+=(player.y-m.y)/d*m.speed*delta}
-m.touch-=delta;if(d<player.r+m.r&&m.touch<=0){hurt(m.damage);m.touch=m.boss?1.1:.82;m.x+=(m.x-player.x)/Math.max(1,d)*12}
+const m=mobs[i],d=distance(m,player);
+if(m.type==='spitter'&&d<610&&d>230){m.attackTimer-=delta;if(m.attackTimer<=0){enemyFire(m);m.attackTimer=Math.max(.9,2.5-wave*.035)}}
+if(m.type==='boss'){m.attackTimer-=delta;if(m.attackTimer<=0){enemyFire(m);m.attackTimer=Math.max(.65,1.65-wave*.025)}}
+if(d>1){
+const chase=m.type==='spitter'&&d<260?-1:1;
+if(chase===1){m.x+=(player.x-m.x)/d*m.speed*delta;m.y+=(player.y-m.y)/d*m.speed*delta}
+else{m.x-=(player.x-m.x)/d*m.speed*.45*delta;m.y-=(player.y-m.y)/d*m.speed*.45*delta}
+}
+if(m.flash>0)m.flash-=delta;
+if(d<player.r+m.r&&m.attackTimer<=0){
+hurt(m.damage);m.attackTimer=m.type==='boss'?1.05:m.type==='runner'?.62: .85;
 if(state!=='playing')return;
+}
 }
 for(let i=shots.length-1;i>=0;i--){
 const s=shots[i];s.x+=s.vx*delta;s.y+=s.vy*delta;s.life-=delta;let hit=-1;
-for(let j=0;j<mobs.length;j++){if(Math.hypot(mobs[j].x-s.x,mobs[j].y-s.y)<mobs[j].r+s.r){hit=j;break}}
-if(hit>=0){mobs[hit].hp-=s.damage;if(mobs[hit].hp<=0)killMob(hit);shots.splice(i,1)}
-else if(s.life<=0||s.x<-30||s.y<-30||s.x>W+30||s.y>H+30)shots.splice(i,1);
+for(let j=mobs.length-1;j>=0;j--){if(Math.hypot(mobs[j].x-s.x,mobs[j].y-s.y)<mobs[j].r+s.r){hit=j;break}}
+if(hit>=0){
+mobs[hit].hp-=s.damage;mobs[hit].flash=.09;
+if(mobs[hit].hp<=0)killMob(hit);
+shots.splice(i,1);
+}else if(s.life<=0||s.x<0||s.y<0||s.x>WORLD_W||s.y>WORLD_H)shots.splice(i,1);
+}
+for(let i=enemyShots.length-1;i>=0;i--){
+const s=enemyShots[i];s.x+=s.vx*delta;s.y+=s.vy*delta;s.life-=delta;
+if(Math.hypot(player.x-s.x,player.y-s.y)<player.r+s.r){
+hurt(s.damage);enemyShots.splice(i,1);if(state!=='playing')return
+}else if(s.life<=0||s.x<0||s.y<0||s.x>WORLD_W||s.y>WORLD_H)enemyShots.splice(i,1);
 }
 for(let i=orbs.length-1;i>=0;i--){
-const o=orbs[i],d=dist(o,player),magnet=runStats.magnet;
-if(d<magnet&&d>1){const pull=Math.min(280,120+(magnet-d)*2);o.x+=(player.x-o.x)/d*pull*delta;o.y+=(player.y-o.y)/d*pull*delta}
-o.life-=delta;if(d<player.r+o.r+7){orbs.splice(i,1);gainXp(o.value)}else if(o.life<=0)orbs.splice(i,1);
+const o=orbs[i],d=distance(o,player);
+if(d<runStats.magnet&&d>1){const pull=Math.min(480,150+(runStats.magnet-d)*2.2);o.x+=(player.x-o.x)/d*pull*delta;o.y+=(player.y-o.y)/d*pull*delta}
+o.life-=delta;
+if(d<player.r+o.r+8){orbs.splice(i,1);gainXp(o.value)}
+else if(o.life<=0)orbs.splice(i,1);
 if(state!=='playing')break;
 }
+if(phase==='horde'&&waveSpawned>=waveQuota&&mobs.length===0){
+phase='boss';spawnEnemy('boss');toast('DALGA '+wave+' BOSS’U! Büyük düşmanı yen!',3);updateHud();
+}
+const targetX=Math.max(0,Math.min(WORLD_W-VW,player.x-VW/2));
+const targetY=Math.max(0,Math.min(WORLD_H-VH,player.y-VH/2));
+camera.x+=(targetX-camera.x)*Math.min(1,delta*5.5);
+camera.y+=(targetY-camera.y)*Math.min(1,delta*5.5);
 uiTimer+=delta;if(uiTimer>.12){uiTimer=0;updateHud()}
 }
+function drawSoldier(){
+ctx.save();ctx.translate(player.x,player.y);ctx.rotate(player.bodyAngle+Math.PI/2);
+ctx.fillStyle='#00000055';ctx.beginPath();ctx.ellipse(1,5,18,23,0,0,Math.PI*2);ctx.fill();
+// backpack
+ctx.fillStyle='#273d31';ctx.strokeStyle='#9baf87';ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(-11,-1,22,18,5);ctx.fill();ctx.stroke();
+// combat boots and legs
+ctx.fillStyle='#232c28';ctx.beginPath();ctx.roundRect(-9,10,7,13,3);ctx.roundRect(2,10,7,13,3);ctx.fill();
+ctx.fillStyle='#53634b';ctx.beginPath();ctx.roundRect(-7,1,5,13,2);ctx.roundRect(2,1,5,13,2);ctx.fill();
+// body armor
+ctx.fillStyle=player.hurtTimer>0?'#f3b6ad':'#627d52';ctx.strokeStyle='#c7d3a7';ctx.lineWidth=2;ctx.beginPath();ctx.roundRect(-12,-12,24,25,7);ctx.fill();ctx.stroke();
+// chest vest and utility pouches
+ctx.fillStyle='#344a37';ctx.beginPath();ctx.roundRect(-8,-9,16,18,4);ctx.fill();
+ctx.fillStyle='#b8a66b';ctx.fillRect(-7,-5,4,5);ctx.fillRect(3,-5,4,5);ctx.fillRect(-7,3,4,4);ctx.fillRect(3,3,4,4);
+ctx.strokeStyle='#17291e';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-5,-10);ctx.lineTo(5,8);ctx.moveTo(5,-10);ctx.lineTo(-5,8);ctx.stroke();
+// arms and gloves
+ctx.fillStyle='#718760';ctx.beginPath();ctx.ellipse(-12,-6,5,7,-.2,0,Math.PI*2);ctx.ellipse(12,-6,5,7,.2,0,Math.PI*2);ctx.fill();
+ctx.fillStyle='#c4a77a';ctx.beginPath();ctx.arc(-12,-2,3.2,0,Math.PI*2);ctx.arc(12,-2,3.2,0,Math.PI*2);ctx.fill();
+// helmet, face and goggles
+ctx.fillStyle='#a88d62';ctx.beginPath();ctx.ellipse(0,-14,7.5,7,0,0,Math.PI*2);ctx.fill();
+ctx.fillStyle='#3e583b';ctx.beginPath();ctx.ellipse(0,-17,10,8.5,0,Math.PI,Math.PI*2);ctx.fill();ctx.fillRect(-10,-17,20,3);
+ctx.fillStyle='#161e18';ctx.fillRect(-5,-15,3.5,2.5);ctx.fillRect(1.5,-15,3.5,2.5);
+ctx.restore();
+// the rifle aims independently from the soldier's body and turns gradually
+ctx.save();ctx.translate(player.x,player.y);ctx.rotate(player.aimAngle);
+ctx.fillStyle='#00000055';ctx.beginPath();ctx.ellipse(11,5,22,6,0,0,Math.PI*2);ctx.fill();
+ctx.fillStyle='#202b2b';ctx.strokeStyle='#b1bca5';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(0,-4,27,8,2);ctx.fill();ctx.stroke();
+ctx.fillStyle='#65766a';ctx.fillRect(12,-6,7,3);ctx.fillStyle='#a7b8a2';ctx.fillRect(17,-2,10,1.6);
+ctx.fillStyle='#30302a';ctx.fillRect(4,3,5,7);ctx.fillStyle='#b3a078';ctx.beginPath();ctx.ellipse(6,1,4,3,0,0,Math.PI*2);ctx.fill();
+ctx.restore();
+}
+function drawEnemy(m){
+ctx.save();ctx.translate(m.x,m.y);
+if(m.type==='runner'){ctx.rotate(Math.sin(m.phase+performance.now()*.012)*.15)}
+ctx.globalAlpha=m.flash>0?.7:1;
+ctx.fillStyle='#00000050';ctx.beginPath();ctx.ellipse(2,m.r*.65,m.r*1.1,m.r*.78,0,0,Math.PI*2);ctx.fill();
+ctx.fillStyle=m.flash>0?'#fff':m.color;ctx.strokeStyle=m.boss?'#ffb5b9':'#1b3327';ctx.lineWidth=m.boss?4:2;
+if(m.type==='brute'||m.type==='boss'){
+ctx.beginPath();ctx.roundRect(-m.r*.82,-m.r*.8,m.r*1.64,m.r*1.75,7);ctx.fill();ctx.stroke();
+ctx.fillStyle='#252c38';ctx.fillRect(-m.r*.65,-m.r*.2,m.r*1.3,m.r*.65);
+ctx.fillStyle='#f2db8b';ctx.fillRect(-m.r*.42,-m.r*.42,m.r*.22,m.r*.13);ctx.fillRect(m.r*.2,-m.r*.42,m.r*.22,m.r*.13);
+ctx.fillStyle='#f5f5ed';ctx.fillRect(-m.r*.45,m.r*.15,m.r*.9,Math.max(2,m.r*.12));
+}else{
+ctx.beginPath();ctx.ellipse(0,0,m.r*.82,m.r*1.02,m.type==='runner'?.2:0,0,Math.PI*2);ctx.fill();ctx.stroke();
+ctx.fillStyle='#c9d8b6';ctx.beginPath();ctx.arc(-m.r*.28,-m.r*.18,Math.max(2,m.r*.14),0,Math.PI*2);ctx.arc(m.r*.28,-m.r*.18,Math.max(2,m.r*.14),0,Math.PI*2);ctx.fill();
+ctx.strokeStyle='#263125';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-m.r*.25,m.r*.3);ctx.lineTo(m.r*.25,m.r*.3);ctx.stroke();
+if(m.type==='spitter'){ctx.fillStyle='#c1ff7e';ctx.beginPath();ctx.arc(0,m.r*.45,Math.max(3,m.r*.22),0,Math.PI*2);ctx.fill()}
+}
+if(m.hp<m.maxHp||m.boss){
+const bw=m.boss?m.r*3:Math.max(22,m.r*2.2),bh=m.boss?6:3.5;
+ctx.fillStyle='#311b22';ctx.fillRect(-bw/2,-m.r-11,bw,bh);ctx.fillStyle=m.boss?'#ff5868':'#e3c16b';ctx.fillRect(-bw/2,-m.r-11,bw*Math.max(0,m.hp/m.maxHp),bh);
+}
+ctx.restore();
+}
 function draw(){
-ctx.clearRect(0,0,W,H);ctx.fillStyle='#112b1d';ctx.fillRect(0,0,W,H);ctx.strokeStyle='#ffffff0b';ctx.lineWidth=1;
-for(let x=0;x<W;x+=45){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
-for(let y=0;y<H;y+=45){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
-for(let i=0;i<50;i++){const x=(i*167+23)%W,y=(i*113+39)%H;ctx.fillStyle=i%3===0?'#5b87502b':'#00000010';ctx.beginPath();ctx.ellipse(x,y,4+(i%4),2+(i%3),.4,0,Math.PI*2);ctx.fill()}
-for(const o of orbs){ctx.beginPath();ctx.fillStyle=o.value>1?'#ffe071':'#81ee8c';ctx.shadowColor=ctx.fillStyle;ctx.shadowBlur=12;ctx.arc(o.x,o.y,o.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0}
-for(const m of mobs){
-ctx.beginPath();ctx.fillStyle=m.boss?'#7c2530':'#4d9a62';ctx.arc(m.x,m.y,m.r,0,Math.PI*2);ctx.fill();
-ctx.fillStyle=m.boss?'#ef7980':'#baf4a9';ctx.beginPath();ctx.arc(m.x-m.r*.3,m.y-m.r*.12,Math.max(2,m.r*.12),0,Math.PI*2);ctx.arc(m.x+m.r*.3,m.y-m.r*.12,Math.max(2,m.r*.12),0,Math.PI*2);ctx.fill();
-ctx.strokeStyle='#1c281c';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(m.x-m.r*.33,m.y+m.r*.35);ctx.lineTo(m.x+m.r*.33,m.y+m.r*.35);ctx.stroke();
-ctx.fillStyle='#401c22';ctx.fillRect(m.x-m.r,m.y-m.r-8,m.r*2,4);ctx.fillStyle=m.boss?'#f05d65':'#efbb68';ctx.fillRect(m.x-m.r,m.y-m.r-8,m.r*2*Math.max(0,m.hp/m.maxHp),4);
+ctx.clearRect(0,0,VW,VH);ctx.fillStyle='#14271d';ctx.fillRect(0,0,VW,VH);
+ctx.save();
+let shakeX=0,shakeY=0;if(screenShake>0){shakeX=(Math.random()-.5)*screenShake;shakeY=(Math.random()-.5)*screenShake}
+ctx.translate(-camera.x+shakeX,-camera.y+shakeY);
+ctx.fillStyle='#1b3223';ctx.fillRect(camera.x,camera.y,VW,VH);
+const gx=Math.floor(camera.x/80)*80,gy=Math.floor(camera.y/80)*80;
+ctx.strokeStyle='#d7f1ca0d';ctx.lineWidth=1;
+for(let x=gx;x<camera.x+VW+80;x+=80){ctx.beginPath();ctx.moveTo(x,camera.y);ctx.lineTo(x,camera.y+VH);ctx.stroke()}
+for(let y=gy;y<camera.y+VH+80;y+=80){ctx.beginPath();ctx.moveTo(camera.x,y);ctx.lineTo(camera.x+VW,y);ctx.stroke()}
+for(let i=0;i<100;i++){
+const x=(i*347+73)%(WORLD_W-80)+40,y=(i*233+91)%(WORLD_H-80)+40;
+if(x<camera.x-35||x>camera.x+VW+35||y<camera.y-35||y>camera.y+VH+35)continue;
+ctx.fillStyle=i%4===0?'#5f89502c':'#00000015';
+ctx.beginPath();ctx.ellipse(x,y,5+(i%6)*2,3+(i%4),.4,0,Math.PI*2);ctx.fill();
+if(i%9===0){ctx.fillStyle='#486b3c';ctx.beginPath();ctx.arc(x+13,y-8,9,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#7c9e5c';ctx.stroke()}
 }
-for(const s of shots){ctx.beginPath();ctx.fillStyle='#ffe58d';ctx.shadowColor='#ffd34a';ctx.shadowBlur=8;ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0}
-if(player){
-if(player.hurtTimer>0&&Math.floor(performance.now()/80)%2===0)ctx.globalAlpha=.45;
-ctx.beginPath();ctx.fillStyle='#e2ca8f';ctx.arc(player.x,player.y,player.r+3,0,Math.PI*2);ctx.fill();
-ctx.beginPath();ctx.fillStyle='#397ac3';ctx.arc(player.x,player.y,player.r,0,Math.PI*2);ctx.fill();
-ctx.fillStyle='#edf7ff';ctx.beginPath();ctx.arc(player.x+4,player.y-3,3,0,Math.PI*2);ctx.fill();
-const t=mobs.length?nearest():null;if(t){const a=Math.atan2(t.y-player.y,t.x-player.x);ctx.strokeStyle='#dce9f8';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(player.x,player.y);ctx.lineTo(player.x+Math.cos(a)*25,player.y+Math.sin(a)*25);ctx.stroke()}
-ctx.globalAlpha=1;
+ctx.strokeStyle='#99aa7c';ctx.lineWidth=7;ctx.strokeRect(0,0,WORLD_W,WORLD_H);
+for(const o of orbs){
+ctx.beginPath();ctx.fillStyle=o.value>2?'#ffe071':'#81ee8c';ctx.shadowColor=ctx.fillStyle;ctx.shadowBlur=12;ctx.arc(o.x,o.y,o.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0
 }
+for(const m of mobs)drawEnemy(m);
+for(const s of shots){
+ctx.beginPath();ctx.strokeStyle=s.color;ctx.lineWidth=s.kind==='sniper'?4:2;ctx.shadowColor=s.color;ctx.shadowBlur=9;ctx.moveTo(s.x-s.vx*.02,s.y-s.vy*.02);ctx.lineTo(s.x,s.y);ctx.stroke();ctx.shadowBlur=0;
 }
-function frame(now){if(!last)last=now;const delta=Math.min(.04,Math.max(0,(now-last)/1000));last=now;update(delta);draw();raf=requestAnimationFrame(frame)}
+for(const s of enemyShots){
+ctx.beginPath();ctx.fillStyle=s.color;ctx.shadowColor=s.color;ctx.shadowBlur=12;ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
+}
+if(player)drawSoldier();
+ctx.restore();
+}
+function frame(now){
+if(!last)last=now;const delta=Math.min(.035,Math.max(0,(now-last)/1000));last=now;update(delta);draw();raf=requestAnimationFrame(frame);
+}
 function keydown(e){
 const tag=e.target&&e.target.tagName;if(tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT')return;
 const raw=e.key,key=raw.length===1?raw.toLowerCase():raw;
 const map={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',w:'w',a:'a',s:'s',d:'d'};
 if(map[raw]||map[key]){e.preventDefault();held.add(map[raw]||map[key])}
-if(key==='p'){if(state==='playing'){state='paused';held.clear();q('zs-pause-panel').hidden=false}else if(state==='paused'){state='playing';q('zs-pause-panel').hidden=true}}
+if(key==='p'){
+if(state==='playing'){state='paused';held.clear();touchMove=null;q('zs-pause-panel').hidden=false}
+else if(state==='paused'){state='playing';q('zs-pause-panel').hidden=true;last=0}
 }
-function keyup(e){
-const raw=e.key,key=raw.length===1?raw.toLowerCase():raw;
-const map={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',w:'w',a:'a',s:'s',d:'d'};
-const k=map[raw]||map[key];if(k)held.delete(k);
 }
-function clearHeld(){held.clear()}
+function keyup(e){const raw=e.key,key=raw.length===1?raw.toLowerCase():raw;const map={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',w:'w',a:'a',s:'s',d:'d'};const k=map[raw]||map[key];if(k)held.delete(k)}
+function clearHeld(){held.clear();touchMove=null}
+q('zs-tab-upgrades').onclick=()=>setShopTab('upgrades');
+q('zs-tab-weapons').onclick=()=>setShopTab('weapons');
 q('zs-start-btn').onclick=startRun;q('zs-retry-btn').onclick=startRun;
 q('zs-home-btn').onclick=()=>pg('p0');q('zs-pause-home-btn').onclick=()=>pg('p0');
-q('zs-resume-btn').onclick=()=>{state='playing';q('zs-pause-panel').hidden=true};
+q('zs-resume-btn').onclick=()=>{state='playing';last=0;q('zs-pause-panel').hidden=true};
 q('zs-pause-btn').onclick=()=>{
-if(state==='playing'){state='paused';held.clear();q('zs-pause-panel').hidden=false}
-else if(state==='paused'){state='playing';q('zs-pause-panel').hidden=true}
+if(state==='playing'){state='paused';held.clear();touchMove=null;q('zs-pause-panel').hidden=false}
+else if(state==='paused'){state='playing';last=0;q('zs-pause-panel').hidden=true}
 };
-document.querySelectorAll('#g10 .zs-dir').forEach(b=>{
-const k=b.dataset.zsDir;
-b.onpointerdown=e=>{e.preventDefault();if(state==='playing')held.add(k);try{b.setPointerCapture(e.pointerId)}catch(err){}};
-const release=()=>held.delete(k);
-b.onpointerup=release;b.onpointercancel=release;b.onlostpointercapture=release;b.onpointerleave=release;
+canvas.addEventListener('pointerdown',e=>{
+if(e.pointerType!=='touch'||state!=='playing')return;
+e.preventDefault();touchStart={id:e.pointerId,x:e.clientX,y:e.clientY};touchMove={dx:0,dy:0};
+try{canvas.setPointerCapture(e.pointerId)}catch(err){}
 });
+canvas.addEventListener('pointermove',e=>{
+if(!touchStart||e.pointerId!==touchStart.id)return;
+e.preventDefault();touchMove={dx:e.clientX-touchStart.x,dy:e.clientY-touchStart.y};
+});
+function endTouch(e){if(touchStart&&(!e||e.pointerId===touchStart.id)){touchStart=null;touchMove=null}}
+canvas.addEventListener('pointerup',endTouch);canvas.addEventListener('pointercancel',endTouch);canvas.addEventListener('lostpointercapture',endTouch);
 document.addEventListener('keydown',keydown);document.addEventListener('keyup',keyup);window.addEventListener('blur',clearHeld);
 shop();updateHud();draw();raf=requestAnimationFrame(frame);
 stopG=()=>{
-cancelAnimationFrame(raf);document.removeEventListener('keydown',keydown);document.removeEventListener('keyup',keyup);window.removeEventListener('blur',clearHeld);held.clear();
-document.querySelectorAll('#g10 .zs-dir').forEach(b=>{b.onpointerdown=null;b.onpointerup=null;b.onpointercancel=null;b.onlostpointercapture=null;b.onpointerleave=null});
+cancelAnimationFrame(raf);document.removeEventListener('keydown',keydown);document.removeEventListener('keyup',keyup);window.removeEventListener('blur',clearHeld);held.clear();touchStart=null;touchMove=null;
+canvas.removeEventListener('pointerdown',()=>{});canvas.removeEventListener('pointermove',()=>{});canvas.removeEventListener('pointerup',endTouch);canvas.removeEventListener('pointercancel',endTouch);canvas.removeEventListener('lostpointercapture',endTouch);
 };
 }
-
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>pg(b.dataset.p));
 q("gs").oninput=e=>{const v=e.target.value.toLocaleLowerCase("tr-TR").trim();document.querySelectorAll("nav [data-p^=g]").forEach(b=>b.style.display=b.textContent.toLocaleLowerCase("tr-TR").includes(v)?"":"none")};
 
