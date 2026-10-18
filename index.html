@@ -266,17 +266,15 @@ function pg(id){
 stopG();stopG=()=>{};
 const mainEl=document.querySelector("main");
 mainEl.classList.toggle("okey-wide",id==="g4");
-else{
-  mainEl.style.maxWidth="";
-  mainEl.style.width="";
-  mainEl.style.margin="";
-  mainEl.style.padding="";
-  mainEl.style.flex="";
-  mainEl.style.minWidth="";
-}
 document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);
 document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.p===id));
-if(id==="g1")snake();if(id==="g2")memory();if(id==="g3")xox();if(id==="g4")okey101();if(id==="g5")blackjack();if(id==="g6")game2048();}
+if(id==="g1")snake();
+if(id==="g2")memory();
+if(id==="g3")xox();
+if(id==="g4")okey101();
+if(id==="g5")blackjack();
+if(id==="g6")game2048();
+}
 function snake(){
 const x=q("cv").getContext("2d"),N=18,S=20,m=q("m1");
 let s,d,f,sc,run;
