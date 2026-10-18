@@ -374,9 +374,30 @@ dc.textContent="Link kopyalandı, yapıştır ✓";setTimeout(()=>dc.textContent
 const sh=document.getElementById("sh");
 if(sh)sh.onclick=()=>navigator.share({title:"Mini Oyunlar",text:TXT,url:LINK}).catch(()=>{});
 let stopG=()=>{};
+const PAGE_PATHS=Object.freeze({
+p0:"/",p1:"/ayarlar",p2:"/paylas",
+g1:"/yilan",g2:"/hafiza",g3:"/xox",g4:"/101-okey",
+g5:"/21-blackjack",g6:"/2048",g8:"/mayin-tarlasi",g9:"/kelime-tahmin"
+});
+const PATH_PAGES=Object.fromEntries(Object.entries(PAGE_PATHS).map(([id,path])=>[path,id]));
+const PAGE_TITLES={
+p0:"Mini Oyunlar",p1:"Ayarlar | Mini Oyunlar",p2:"Paylaş | Mini Oyunlar",
+g1:"Yılan | Mini Oyunlar",g2:"Hafıza | Mini Oyunlar",g3:"XOX | Mini Oyunlar",
+g4:"101 Okey | Mini Oyunlar",g5:"21 Blackjack | Mini Oyunlar",
+g6:"2048 | Mini Oyunlar",g8:"Mayın Tarlası | Mini Oyunlar",g9:"Kelime Tahmin | Mini Oyunlar"
+};
+function pageFromPath(){
+const path=location.pathname.replace(/\/+$/,"")||"/";
+return PATH_PAGES[path]||"p0";
+}
 const q=id=>document.getElementById(id);
 const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
-function pg(id){
+function pg(id,updateAddress=true){
+if(updateAddress&&PAGE_PATHS[id]){
+const path=PAGE_PATHS[id];
+if(location.pathname!==path)history.pushState({page:id},"",path);
+}
+document.title=PAGE_TITLES[id]||"Mini Oyunlar";
 stopG();stopG=()=>{};
 const mainEl=document.querySelector("main");
 mainEl.classList.toggle("okey-wide",id==="g4");
@@ -1176,7 +1197,11 @@ q("home-suggest-send").onclick=()=>{
     status.textContent="Instagram profili açıldı. Öneri metnini kopyalayıp DM ile gönder: "+message;
   }
 };
-pg("p0");
+window.addEventListener("popstate",()=>pg(pageFromPath(),false));
+const initialPath=location.pathname.replace(/\/+$/,"")||"/";
+const initialPage=PATH_PAGES[initialPath]||"p0";
+if(location.pathname!==PAGE_PATHS[initialPage])history.replaceState({page:initialPage},"",PAGE_PATHS[initialPage]);
+pg(initialPage,false);
 
 
 
