@@ -224,10 +224,43 @@ main.home-wide{max-width:none!important;width:auto!important;flex:1 1 auto!impor
 @media(max-width:900px){.home-hero{grid-template-columns:minmax(0,1fr) 230px;gap:12px}}
 @media(max-width:700px){main.home-wide{padding:12px!important}.home-hero{grid-template-columns:1fr;gap:10px;margin-bottom:22px}.home-welcome{padding:19px}.home-contact{padding:13px;gap:7px}.home-games{gap:8px}.home-game{gap:8px;padding:10px 8px}.home-game-icon{width:34px;height:34px;font-size:1.05rem}.home-game-copy b{font-size:.85rem}.home-game-copy small{font-size:.69rem}.home-play{font-size:.66rem}.home-suggest{padding:13px}}
 @media(max-width:400px){.home-games{grid-template-columns:1fr}.home-game-copy b{font-size:.92rem}.home-game-copy small{font-size:.76rem}}
+
+/* Zombi Hayatta Kalma */
+main.zombie-wide{max-width:1100px!important;width:100%!important}
+.zs-wrap{max-width:1040px;margin:0 auto;width:100%;color:var(--fg)}
+.zs-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin:2px 0 14px}
+.zs-heading h2{font-size:clamp(1.35rem,3vw,2rem);margin:0 0 5px}.zs-heading .d{max-width:720px;line-height:1.45}
+.zs-kicker{font-size:.68rem;letter-spacing:.15em;font-weight:900;color:#8fd49b;margin:0 0 7px}
+.zs-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:14px 0 10px}
+.zs-stat{padding:11px 13px;border:1px solid color-mix(in srgb,var(--mut) 24%,transparent);border-radius:10px;background:var(--side);min-width:0}
+.zs-stat small{display:block;color:var(--mut);font-size:.77rem}.zs-stat strong{display:block;font-size:1.25rem;margin-top:2px;font-variant-numeric:tabular-nums}
+.zs-bars{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}.zs-hp>span,.zs-xp>span{display:flex;justify-content:space-between;gap:8px;font-size:.8rem;color:var(--mut);margin-bottom:5px}
+.zs-bar{height:9px;background:var(--side);border-radius:99px;overflow:hidden}.zs-bar i{display:block;height:100%;width:100%;border-radius:99px;transition:width .12s}
+#zs-hp-fill{background:linear-gradient(90deg,#dc4444,#ff7777)}#zs-xp-fill{background:linear-gradient(90deg,#57b85f,#b2f06d)}
+.zs-stage{position:relative;width:100%;overflow:hidden;border:1px solid #ffffff1c;border-radius:14px;background:#102b1d;box-shadow:0 10px 26px #0003}
+#zs-canvas{display:block;width:100%;height:auto;aspect-ratio:5/3;background:#102b1d;touch-action:none}
+.zs-overlay{position:absolute;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;padding:14px;background:rgba(4,13,10,.78);backdrop-filter:blur(4px);overflow:auto}.zs-overlay[hidden]{display:none!important}
+.zs-modal{width:min(100%,470px);max-height:100%;overflow:auto;padding:23px 22px;border-radius:16px;border:1px solid #ffffff26;background:#112d20;color:#f3fff4;box-shadow:0 18px 55px #0008;text-align:center}
+.zs-modal-icon{font-size:2.5rem;margin-bottom:4px}.zs-modal h3{margin:4px 0 8px;color:#f3fff4;font-size:1.35rem}.zs-modal p{font-size:.9rem;line-height:1.5;color:#c2d8c5;margin:8px 0 16px}.zs-modal small{display:block;color:#b0c8b6;line-height:1.55;margin-top:11px}
+.zs-primary{background:#2f994d!important;color:white!important;font-weight:800;padding:11px 16px}
+.zs-choice-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;text-align:left}.zs-choice{display:flex;flex-direction:column;align-items:flex-start;gap:7px;min-height:125px;padding:12px 10px;border:1px solid #83c89466;border-radius:10px;background:#1a422b;color:#f4fff4;cursor:pointer;text-align:left}
+.zs-choice:hover{border-color:#92e6a5;background:#245536}.zs-choice b{font-size:.9rem;line-height:1.2}.zs-choice span{font-size:.76rem;line-height:1.4;color:#c2dcc8}.zs-choice .zs-choice-icon{font-size:1.5rem}
+.zs-toast{position:absolute;z-index:2;top:12px;left:50%;transform:translateX(-50%);font-size:.9rem;font-weight:900;letter-spacing:.03em;color:#fff3a5;text-shadow:0 2px 4px #000;pointer-events:none;text-align:center;width:90%}
+.zs-mobile-pad{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0 18px;padding:12px;border:1px solid color-mix(in srgb,var(--mut) 24%,transparent);border-radius:12px;background:var(--side)}
+.zs-pad-label{font-size:.85rem;font-weight:800;white-space:nowrap}.zs-pad-grid{display:grid;grid-template-columns:repeat(3,42px);grid-template-rows:repeat(2,38px);gap:4px}.zs-pad-grid .zs-dir{margin:0;padding:5px;touch-action:none;user-select:none;-webkit-user-select:none}.zs-mobile-pad>small{font-size:.72rem;color:var(--mut);text-align:right}
+.zs-shop-section{margin-top:21px;padding:17px;border:1px solid color-mix(in srgb,var(--mut) 22%,transparent);border-radius:13px;background:var(--side)}
+.zs-shop-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.zs-shop-head h3{font-size:1.05rem;color:var(--fg);margin:0 0 4px}.zs-shop-head .d{font-size:.82rem}
+.zs-wallet{white-space:nowrap;padding:8px 10px;border:1px solid #d8aa4b55;border-radius:9px;color:#e7c66c;font-size:.83rem}
+.zs-shop{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.zs-upgrade{display:flex;flex-direction:column;gap:7px;padding:12px;border:1px solid color-mix(in srgb,var(--mut) 19%,transparent);border-radius:10px;background:var(--bg);min-width:0}
+.zs-upgrade b{font-size:.87rem}.zs-upgrade small{font-size:.76rem;color:var(--mut);line-height:1.4;flex:1}.zs-upgrade .btn{margin:0;padding:8px 7px;font-size:.76rem;font-weight:800}.zs-upgrade .btn:disabled{opacity:.4;cursor:not-allowed}
+.zs-footnote{margin:10px 0 0;color:var(--mut);font-size:.72rem}.zs-records{display:flex;gap:10px 20px;flex-wrap:wrap;color:var(--mut);font-size:.78rem;margin:12px 0 4px}.zs-records b{color:var(--fg)}
+@media(max-width:760px){.zs-stats{gap:6px}.zs-stat{padding:9px 8px}.zs-stat strong{font-size:1.05rem}.zs-stat small{font-size:.7rem}.zs-shop{grid-template-columns:repeat(2,minmax(0,1fr))}.zs-modal{padding:18px 13px}.zs-choice-list{grid-template-columns:1fr}.zs-choice{min-height:0;display:grid;grid-template-columns:35px 1fr;column-gap:9px;padding:9px}.zs-choice .zs-choice-icon{grid-row:span 2}.zs-choice span:not(.zs-choice-icon){grid-column:2}.zs-mobile-pad{gap:8px}.zs-pad-grid{grid-template-columns:repeat(3,38px);grid-template-rows:repeat(2,36px)}.zs-mobile-pad>small{max-width:85px}}
+@media(max-width:430px){.zs-heading{gap:6px}.zs-heading #zs-pause-btn{font-size:.72rem;padding:8px}.zs-bars{grid-template-columns:1fr;gap:7px}.zs-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.zs-mobile-pad{align-items:flex-start;flex-wrap:wrap}.zs-pad-label{align-self:center}.zs-mobile-pad>small{align-self:center;flex:1}}
+
 </style>
 </head>
 <body>
-<nav><button id="n0" class="on" data-p="p0">🏠 Ana Menü</button><button id="n1" data-p="p1">⚙️ Ayarlar</button><button id="n2" data-p="p2">👥 Arkadaşını davet et</button><h1 style="margin-top:18px">🎮 Mini Oyunlar</h1><input id="gs" placeholder="Oyun ara…" aria-label="Oyun ara"><button data-p="g1">🐍 Yılan</button><button data-p="g2">🃏 Hafıza</button><button data-p="g3">❌ XOX</button><button data-p="g4">🎴 101 Okey</button><button data-p="g5">🃏 21 Blackjack</button><button data-p="g6">🔢 2048</button><button data-p="g8">💣 Mayın Tarlası</button><button data-p="g9">🔤 Kelime Tahmin</button></nav>
+<nav><button id="n0" class="on" data-p="p0">🏠 Ana Menü</button><button id="n1" data-p="p1">⚙️ Ayarlar</button><button id="n2" data-p="p2">👥 Arkadaşını davet et</button><h1 style="margin-top:18px">🎮 Mini Oyunlar</h1><input id="gs" placeholder="Oyun ara…" aria-label="Oyun ara"><button data-p="g1">🐍 Yılan</button><button data-p="g2">🃏 Hafıza</button><button data-p="g3">❌ XOX</button><button data-p="g4">🎴 101 Okey</button><button data-p="g5">🃏 21 Blackjack</button><button data-p="g6">🔢 2048</button><button data-p="g8">💣 Mayın Tarlası</button><button data-p="g9">🔤 Kelime Tahmin</button><button data-p="g10">🧟 Zombi Hayatta Kalma</button></nav>
 <main>
 <section id="p0">
   <div class="home-hero">
@@ -251,6 +284,7 @@ main.home-wide{max-width:none!important;width:auto!important;flex:1 1 auto!impor
     <button type="button" class="home-game" data-home-go="g6"><span class="home-game-icon">🔢</span><span class="home-game-copy"><b>2048</b><small>Aynı sayıları birleştir.</small></span><span class="home-play">Oyna ↗</span></button>
     <button type="button" class="home-game" data-home-go="g8"><span class="home-game-icon">💣</span><span class="home-game-copy"><b>Mayın Tarlası</b><small>Mayınlara basmadan alanı aç.</small></span><span class="home-play">Oyna ↗</span></button>
     <button type="button" class="home-game" data-home-go="g9"><span class="home-game-icon">🔤</span><span class="home-game-copy"><b>Kelime Tahmin</b><small>Gizli kelimeyi altı hakta bul.</small></span><span class="home-play">Oyna ↗</span></button>
+    <button type="button" class="home-game" data-home-go="g10"><span class="home-game-icon">🧟</span><span class="home-game-copy"><b>Zombi Hayatta Kalma</b><small>Dalgaları aş, güçlen ve hayatta kal.</small></span><span class="home-play">Oyna ↗</span></button>
   </div>
   <div class="home-suggest">
     <div class="home-suggest-intro"><span class="home-suggest-mark">💡</span><div><h3>Oyun önerin var mı?</h3><p class="d">Eklenmesini istediğin oyunu yaz. Öneri metnini kopyalayalım ve Instagram'dan gönderebil.</p></div></div>
@@ -346,6 +380,25 @@ h2{margin:0 0 4px}
   <div style="text-align:center;margin-top:10px"><button class="btn" id="wd-new">Yeni kelime</button></div>
 </section>
 
+
+<section id="g10" hidden>
+<div class="zs-wrap">
+<div class="zs-heading"><div><p class="zs-kicker">HAYATTA KAL · GÜÇLEN · TEKRAR DENE</p><h2>🧟 Zombi Hayatta Kalma</h2><p class="d">Zombi dalgalarına dayan, deneyim topla, seviye atla ve kalıcı yükseltmeler satın al.</p></div><button class="btn off" id="zs-pause-btn" type="button">⏸ Duraklat</button></div>
+<div class="zs-stats">
+<div class="zs-stat"><small>🌊 Dalga</small><strong id="zs-wave">1</strong></div><div class="zs-stat"><small>☠️ Yenilen zombi</small><strong id="zs-kills">0</strong></div><div class="zs-stat"><small>⭐ Seviye</small><strong id="zs-level">1</strong></div><div class="zs-stat"><small>🪙 Altın</small><strong id="zs-gold">0</strong></div></div>
+<div class="zs-bars"><div class="zs-hp"><span>❤️ Can <b id="zs-hp-text">100 / 100</b></span><div class="zs-bar"><i id="zs-hp-fill"></i></div></div><div class="zs-xp"><span>✨ Deneyim <b id="zs-xp-text">0 / 8</b></span><div class="zs-bar"><i id="zs-xp-fill"></i></div></div></div>
+<div class="zs-stage">
+<canvas id="zs-canvas" width="900" height="540" aria-label="Zombi Hayatta Kalma oyun alanı"></canvas>
+<div class="zs-overlay" id="zs-start-panel"><div class="zs-modal"><div class="zs-modal-icon">🧟</div><h3>Geceye hazır mısın?</h3><p>Yakındaki zombilere otomatik ateş edersin. Hareket edip saldırılardan kaç, deneyim topla ve tur boyunca güçlen. Kazandığın altınlar sonraki turlar için saklanır.</p><button class="btn zs-primary" id="zs-start-btn" type="button">▶ Hayatta kalmaya başla</button><small>Bilgisayar: WASD / ok tuşları · P: duraklat<br>Telefon: ekrandaki yön tuşları</small></div></div>
+<div class="zs-overlay" id="zs-level-panel" hidden><div class="zs-modal"><p class="zs-kicker">SEVİYE ATLADIN</p><h3>Bir güçlendirme seç</h3><p>Seçimin bu turun sonuna kadar seninle.</p><div id="zs-choice-list" class="zs-choice-list"></div></div></div>
+<div class="zs-overlay" id="zs-pause-panel" hidden><div class="zs-modal"><div class="zs-modal-icon">⏸️</div><h3>Oyun duraklatıldı</h3><p>Hazır olunca kaldığın yerden devam et.</p><button class="btn zs-primary" id="zs-resume-btn" type="button">Devam et</button><button class="btn off" id="zs-pause-home-btn" type="button">Ana Menü</button></div></div>
+<div class="zs-overlay" id="zs-end-panel" hidden><div class="zs-modal"><div class="zs-modal-icon">🏁</div><h3>Bu turun sonu!</h3><p id="zs-end-summary">Güzel mücadele.</p><button class="btn zs-primary" id="zs-retry-btn" type="button">↻ Tekrar dene</button><button class="btn off" id="zs-home-btn" type="button">Ana Menü</button></div></div>
+<div class="zs-toast" id="zs-toast" aria-live="polite"></div></div>
+<div class="zs-mobile-pad" aria-label="Hareket kontrolleri"><span class="zs-pad-label">Hareket</span><div class="zs-pad-grid"><span></span><button class="btn off zs-dir" data-zs-dir="up" type="button" aria-label="Yukarı">▲</button><span></span><button class="btn off zs-dir" data-zs-dir="left" type="button" aria-label="Sola">◀</button><button class="btn off zs-dir" data-zs-dir="down" type="button" aria-label="Aşağı">▼</button><button class="btn off zs-dir" data-zs-dir="right" type="button" aria-label="Sağa">▶</button></div><small>Silahın otomatik ateş eder.</small></div>
+<div class="zs-shop-section"><div class="zs-shop-head"><div><h3>🛠️ Kalıcı geliştirmeler</h3><p class="d">Buradaki yükseltmeler turlar arasında korunur.</p></div><div class="zs-wallet">🪙 <b id="zs-shop-gold">0</b> altın</div></div><div id="zs-shop" class="zs-shop"></div><p class="zs-footnote">Kayıt bu tarayıcıda tutulur. Tarayıcı verileri silinirse kayıt da silinebilir.</p></div>
+<div class="zs-records"><span>🏆 En iyi dalga: <b id="zs-best-wave">0</b></span><span>💀 Toplam zombi: <b id="zs-total-kills">0</b></span><span id="zs-run-note">Her tur farklı gelişebilir.</span></div>
+</div></section>
+
 </main>
 <script>
 const T=[["beyaz","Beyaz","#ffffff"],["siyah","Siyah","#000000"],["mavi","Mavi","#1c3d73"],["yesil","Yeşil","#1e5a3a"]];
@@ -377,14 +430,14 @@ let stopG=()=>{};
 const PAGE_PATHS=Object.freeze({
 p0:"/",p1:"/ayarlar",p2:"/paylas",
 g1:"/yilan",g2:"/hafiza",g3:"/xox",g4:"/101-okey",
-g5:"/21-blackjack",g6:"/2048",g8:"/mayin-tarlasi",g9:"/kelime-tahmin"
+g5:"/21-blackjack",g6:"/2048",g8:"/mayin-tarlasi",g9:"/kelime-tahmin",g10:"/zombi-hayatta-kalma"
 });
 const PATH_PAGES=Object.fromEntries(Object.entries(PAGE_PATHS).map(([id,path])=>[path,id]));
 const PAGE_TITLES={
 p0:"Mini Oyunlar",p1:"Ayarlar | Mini Oyunlar",p2:"Paylaş | Mini Oyunlar",
 g1:"Yılan | Mini Oyunlar",g2:"Hafıza | Mini Oyunlar",g3:"XOX | Mini Oyunlar",
 g4:"101 Okey | Mini Oyunlar",g5:"21 Blackjack | Mini Oyunlar",
-g6:"2048 | Mini Oyunlar",g8:"Mayın Tarlası | Mini Oyunlar",g9:"Kelime Tahmin | Mini Oyunlar"
+g6:"2048 | Mini Oyunlar",g8:"Mayın Tarlası | Mini Oyunlar",g9:"Kelime Tahmin | Mini Oyunlar",g10:"Zombi Hayatta Kalma | Mini Oyunlar"
 };
 function pageFromPath(){
 const path=location.pathname.replace(/\/+$/,"")||"/";
@@ -402,6 +455,7 @@ stopG();stopG=()=>{};
 const mainEl=document.querySelector("main");
 mainEl.classList.toggle("okey-wide",id==="g4");
 mainEl.classList.toggle("home-wide",id==="p0");
+mainEl.classList.toggle("zombie-wide",id==="g10");
 document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);
 document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.p===id));
 if(id==="g1")snake();
