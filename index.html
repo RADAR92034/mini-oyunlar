@@ -1469,19 +1469,20 @@ else if(type==='runner')spec={r:11,hp:24+wave*3,speed:105+Math.min(85,wave*2.5),
 else if(type==='spitter')spec={r:15,hp:48+wave*7,speed:36+Math.min(40,wave*1.2),damage:10+Math.floor(wave*.7),color:'#9b70bf',reward:5+Math.floor(wave*.45),xp:2};
 else if(type==='brute')spec={r:22,hp:105+wave*18,speed:35+Math.min(35,wave),damage:18+Math.floor(wave*1.3),color:'#596789',reward:7+Math.floor(wave*.6),xp:2};
 else spec={r:32,hp:300+wave*105,speed:34+Math.min(24,wave*.6),damage:24+wave*2,color:'#802b38',reward:35+wave*12,xp:10};
-mobs.push({x:p.x,y:p.y,type:type,r:spec.r,hp:spec.hp,maxHp:spec.hp,speed:spec.speed,damage:spec.damage,color:spec.color,reward:spec.reward,xp:spec.xp,boss:type==='boss',attackTimer:.8+Math.random(),flash:0,phase:Math.random()*6});
+mobs.push({x:p.x,y:p.y,type:type,r:spec.r,hp:spec.hp,maxHp:spec.hp,speed:spec.speed,damage:spec.damage,color:spec.color,reward:spec.reward,xp:spec.xp,boss:type==='boss',attackTimer:.8+Math.random(),touchTimer:.2+Math.random()*.25,flash:0,phase:Math.random()*6});
 }
 function killMob(i){
 const m=mobs[i];if(!m)return;
 mobs.splice(i,1);kills++;meta.totalKills++;
 const reward=m.reward;runGold+=reward;meta.gold+=reward;saveMeta();
-orbs.push({x:m.x,y:m.y,r:m.boss?12:7,value:m.xp,life:24});
+if(!m.boss)orbs.push({x:m.x,y:m.y,r:7,value:m.xp,life:24});
 screenShake=Math.max(screenShake,m.boss?12:2);
 if(m.boss){
 meta.bestWave=Math.max(meta.bestWave,wave);saveMeta();phase='break';breakTimer=2.7;enemyShots=[];
 meta.gold+=wave*9;runGold+=wave*9;saveMeta();
 q('zs-run-note').textContent='Boss yenildi! '+runGold+' altın kazandın. Yeni dalga başlıyor…';
 toast('BOSS YENİLDİ! +'+(m.reward+wave*9)+' altın',2.7);
+gainXp(m.xp);
 }else q('zs-run-note').textContent='Bu turda kazanılan altın: '+runGold;
 updateHud();
 }
@@ -1597,16 +1598,17 @@ if(aimTarget&&fireTimer<=0){fire();fireTimer=runStats.fireDelay}
 const nowBoss=phase==='boss';
 for(let i=mobs.length-1;i>=0;i--){
 const m=mobs[i],d=distance(m,player);
-if(m.type==='spitter'&&d<610&&d>230){m.attackTimer-=delta;if(m.attackTimer<=0){enemyFire(m);m.attackTimer=Math.max(.9,2.5-wave*.035)}}
-if(m.type==='boss'){m.attackTimer-=delta;if(m.attackTimer<=0){enemyFire(m);m.attackTimer=Math.max(.65,1.65-wave*.025)}}
+m.attackTimer-=delta;m.touchTimer-=delta;
+if(m.type==='spitter'&&d<610&&m.attackTimer<=0){if(d>230)enemyFire(m);m.attackTimer=Math.max(.9,2.5-wave*.035)}
+if(m.type==='boss'&&m.attackTimer<=0){enemyFire(m);m.attackTimer=Math.max(.65,1.65-wave*.025)}
 if(d>1){
 const chase=m.type==='spitter'&&d<260?-1:1;
 if(chase===1){m.x+=(player.x-m.x)/d*m.speed*delta;m.y+=(player.y-m.y)/d*m.speed*delta}
 else{m.x-=(player.x-m.x)/d*m.speed*.45*delta;m.y-=(player.y-m.y)/d*m.speed*.45*delta}
 }
 if(m.flash>0)m.flash-=delta;
-if(d<player.r+m.r&&m.attackTimer<=0){
-hurt(m.damage);m.attackTimer=m.type==='boss'?1.05:m.type==='runner'?.62: .85;
+if(d<player.r+m.r&&m.touchTimer<=0){
+hurt(m.damage);m.touchTimer=m.type==='boss'?.82:m.type==='runner'?.48:m.type==='brute'?.70:.68;
 if(state!=='playing')return;
 }
 }
@@ -1750,22 +1752,23 @@ q('zs-pause-btn').onclick=()=>{
 if(state==='playing'){state='paused';held.clear();touchMove=null;q('zs-pause-panel').hidden=false}
 else if(state==='paused'){state='playing';last=0;q('zs-pause-panel').hidden=true}
 };
-canvas.addEventListener('pointerdown',e=>{
+function onCanvasPointerDown(e){
 if(e.pointerType!=='touch'||state!=='playing')return;
 e.preventDefault();touchStart={id:e.pointerId,x:e.clientX,y:e.clientY};touchMove={dx:0,dy:0};
 try{canvas.setPointerCapture(e.pointerId)}catch(err){}
-});
-canvas.addEventListener('pointermove',e=>{
+}
+function onCanvasPointerMove(e){
 if(!touchStart||e.pointerId!==touchStart.id)return;
 e.preventDefault();touchMove={dx:e.clientX-touchStart.x,dy:e.clientY-touchStart.y};
-});
+}
 function endTouch(e){if(touchStart&&(!e||e.pointerId===touchStart.id)){touchStart=null;touchMove=null}}
+canvas.addEventListener('pointerdown',onCanvasPointerDown);canvas.addEventListener('pointermove',onCanvasPointerMove);
 canvas.addEventListener('pointerup',endTouch);canvas.addEventListener('pointercancel',endTouch);canvas.addEventListener('lostpointercapture',endTouch);
 document.addEventListener('keydown',keydown);document.addEventListener('keyup',keyup);window.addEventListener('blur',clearHeld);
 shop();updateHud();draw();raf=requestAnimationFrame(frame);
 stopG=()=>{
 cancelAnimationFrame(raf);document.removeEventListener('keydown',keydown);document.removeEventListener('keyup',keyup);window.removeEventListener('blur',clearHeld);held.clear();touchStart=null;touchMove=null;
-canvas.removeEventListener('pointerdown',()=>{});canvas.removeEventListener('pointermove',()=>{});canvas.removeEventListener('pointerup',endTouch);canvas.removeEventListener('pointercancel',endTouch);canvas.removeEventListener('lostpointercapture',endTouch);
+canvas.removeEventListener('pointerdown',onCanvasPointerDown);canvas.removeEventListener('pointermove',onCanvasPointerMove);canvas.removeEventListener('pointerup',endTouch);canvas.removeEventListener('pointercancel',endTouch);canvas.removeEventListener('lostpointercapture',endTouch);
 };
 }
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>pg(b.dataset.p));
