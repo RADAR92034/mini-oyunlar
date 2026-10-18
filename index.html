@@ -190,21 +190,48 @@ main.solitaire-wide .sol .card{width:var(--cw);max-width:100%}
 }
 
 
-/* Solitaire geniş masa: mavi boş alanı azalt, kartları tüm sağ alana yay */
+/* Solitaire: ana alanı gerçek ekran genişliğine yay; yedi sütunu eşit büyüt */
+body.solitaire-active{overflow-x:hidden}
 body.solitaire-active>nav{flex:0 0 210px!important;width:210px!important}
-body.solitaire-active>main{max-width:none!important;width:calc(100vw - 250px)!important;min-width:0!important;margin:0!important;padding:16px 20px!important;flex:1 1 calc(100vw - 250px)!important}
-body.solitaire-active>main>#g7{width:100%;max-width:none;margin:0}
-body.solitaire-active .sol{--cw:clamp(72px,10vw,180px);--ch:calc(var(--cw)*1.42);--g:clamp(6px,.8vw,14px);width:100%;max-width:none;margin:8px 0 0;overflow:visible}
-body.solitaire-active #sol-board{width:100%;min-width:0;grid-template-columns:repeat(7,minmax(0,1fr));justify-content:stretch;gap:calc(var(--g)*2) var(--g);padding:14px 12px 30px}
-body.solitaire-active .sol .slot{width:100%;min-width:0}
-body.solitaire-active .sol .card{width:100%;max-width:none}
-@media(max-width:640px){
+body.solitaire-active>main,
+body.solitaire-active>main.solitaire-wide{
+  box-sizing:border-box!important;
+  display:block!important;
+  position:relative!important;
+  flex:1 1 0!important;
+  width:calc(100vw - 210px)!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:16px 20px!important;
+  align-self:stretch!important;
+}
+body.solitaire-active>main>#g7{display:block;width:100%;max-width:none;margin:0}
+body.solitaire-active>main>#g7>h2,
+body.solitaire-active>main>#g7>p,
+body.solitaire-active>main>#g7>.m,
+body.solitaire-active>main>#g7>div:not(.sol){max-width:none}
+body.solitaire-active .sol{
+  --cw:clamp(105px,10.8vw,190px);
+  --ch:calc(var(--cw)*1.42);
+  --g:clamp(8px,.9vw,15px);
+  display:block;width:100%;max-width:none;margin:8px 0 0;overflow:visible;
+}
+body.solitaire-active #sol-board{
+  display:grid;box-sizing:border-box;width:100%;max-width:none;min-width:0;
+  grid-template-columns:repeat(7,minmax(0,1fr));
+  justify-content:stretch;align-items:start;
+  gap:calc(var(--g)*2) var(--g);padding:14px 12px 30px;
+}
+body.solitaire-active #sol-board>.slot{box-sizing:border-box;width:100%;min-width:0}
+body.solitaire-active .sol .card{box-sizing:border-box;width:100%;max-width:none}
+@media(max-width:700px){
   body.solitaire-active>nav{flex:0 0 auto!important;width:100%!important}
-  body.solitaire-active>main{width:100%!important;max-width:none!important;flex:1 1 auto!important;padding:12px!important}
+  body.solitaire-active>main,
+  body.solitaire-active>main.solitaire-wide{width:100%!important;max-width:none!important;flex:1 1 auto!important;padding:12px!important}
   body.solitaire-active .sol{--cw:clamp(32px,9vw,58px);--ch:calc(var(--cw)*1.42);overflow:visible}
   body.solitaire-active #sol-board{padding:8px 5px 18px;gap:8px 4px}
 }
-
 </style>
 </head>
 <body>
