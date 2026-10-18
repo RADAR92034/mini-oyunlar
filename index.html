@@ -318,6 +318,139 @@ main.zombie-wide{max-width:none!important;width:100%!important;padding:16px!impo
  .zs-boss-bar{left:7%;right:7%;top:37px}
  .zs-run-foot{font-size:.72rem}
 }
+
+/* Zombi arayüzü taşma/çakışma düzeltmesi */
+main.zombie-wide{
+  flex:1 1 0!important;
+  width:auto!important;
+  min-width:0!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:16px!important;
+  overflow-x:clip;
+}
+.zs-wrap,.zs-heading,.zs-layout,.zs-shop-section,.zs-battle-column,.zs-stage{
+  min-width:0;
+  box-sizing:border-box;
+}
+.zs-heading{
+  display:flex!important;
+  flex-flow:row wrap!important;
+  align-items:flex-start!important;
+  justify-content:space-between!important;
+  gap:10px 16px!important;
+  width:100%;
+}
+.zs-heading>div{
+  flex:1 1 300px;
+  min-width:0;
+}
+.zs-heading h2{
+  max-width:100%;
+  overflow-wrap:anywhere;
+  line-height:1.2;
+}
+.zs-heading .d{
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+.zs-heading #zs-pause-btn{
+  position:static!important;
+  flex:0 0 auto;
+  align-self:flex-start;
+  margin:0 0 0 auto!important;
+  z-index:1;
+  white-space:nowrap;
+}
+.zs-layout{
+  display:grid!important;
+  grid-template-columns:minmax(230px,275px) minmax(0,1fr)!important;
+  align-items:start!important;
+  gap:14px!important;
+  width:100%;
+}
+.zs-shop-section{
+  grid-column:1;
+  grid-row:1;
+  position:sticky;
+  top:10px;
+  width:100%;
+  max-width:100%;
+  max-height:calc(100vh - 20px);
+  overflow:auto;
+}
+.zs-battle-column{
+  grid-column:2;
+  grid-row:1;
+  width:100%;
+  max-width:100%;
+}
+.zs-stats{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;
+  width:100%;
+}
+.zs-stat{min-width:0;overflow:hidden}
+.zs-stat small,.zs-stat strong{overflow-wrap:anywhere}
+.zs-bars{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:10px!important;
+  width:100%;
+}
+.zs-hp,.zs-xp{min-width:0}
+.zs-hp>span,.zs-xp>span{flex-wrap:wrap}
+.zs-stage{
+  display:block;
+  isolation:isolate;
+  width:100%;
+  aspect-ratio:16/9;
+}
+#zs-canvas{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  aspect-ratio:16/9;
+  object-fit:contain;
+}
+.zs-overlay{
+  position:absolute!important;
+  inset:0!important;
+  z-index:5!important;
+}
+.zs-boss-bar{z-index:3}
+.zs-toast{z-index:4}
+.zs-run-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:7px 12px}
+.zs-run-foot>span{min-width:0;overflow-wrap:anywhere}
+@media(max-width:1050px){
+  main.zombie-wide{padding:12px!important}
+  .zs-layout{grid-template-columns:minmax(205px,240px) minmax(0,1fr)!important;gap:10px!important}
+  .zs-shop-section{padding:10px}
+}
+@media(max-width:820px){
+  .zs-layout{grid-template-columns:minmax(0,1fr)!important}
+  .zs-shop-section{
+    grid-column:1!important;
+    grid-row:2!important;
+    position:static!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+  .zs-battle-column{grid-column:1!important;grid-row:1!important}
+  .zs-shop{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:560px){
+  main.zombie-wide{padding:10px!important}
+  .zs-heading>div{flex-basis:100%}
+  .zs-heading #zs-pause-btn{margin-left:0!important}
+  .zs-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .zs-bars{grid-template-columns:minmax(0,1fr)!important}
+  .zs-shop{grid-template-columns:minmax(0,1fr)!important}
+  .zs-stage{border-radius:8px}
+  .zs-modal{max-width:100%;padding:16px 12px}
+}
+
 </style>
 </head>
 <body>
