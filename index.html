@@ -483,7 +483,7 @@ main.zombie-wide{
 </style>
 </head>
 <body>
-<nav><button id="n0" class="on" data-p="p0">🏠 Ana Menü</button><button id="n1" data-p="p1">⚙️ Ayarlar</button><button id="n2" data-p="p2">👥 Arkadaşını davet et</button><h1 style="margin-top:18px">🎮 Mini Oyunlar</h1><input id="gs" placeholder="Oyun ara…" aria-label="Oyun ara"><button data-p="g1">🐍 Yılan</button><button data-p="g2">🃏 Hafıza</button><button data-p="g3">❌ XOX</button><button data-p="g4">🎴 101 Okey</button><button data-p="g5">🃏 21 Blackjack</button><button data-p="g6">🔢 2048</button><button data-p="g8">💣 Mayın Tarlası</button><button data-p="g9">🔤 Kelime Tahmin</button><button data-p="g10">🧟 Zombi Hayatta Kalma</button></nav>
+<nav><button id="n0" class="on" data-p="p0">🏠 Ana Menü</button><button id="n1" data-p="p1">⚙️ Ayarlar</button><button id="n2" data-p="p2">👥 Arkadaşını davet et</button><h1 style="margin-top:18px">🎮 Mini Oyunlar</h1><input id="gs" placeholder="Oyun ara…" aria-label="Oyun ara"><button data-p="g1">🐍 Yılan</button><button data-p="g2">🃏 Hafıza</button><button data-p="g3">❌ XOX</button><button data-p="g4">🎴 101 Okey</button><button data-p="g5">🃏 21 Blackjack</button><button data-p="g6">🔢 2048</button><button data-p="g8">💣 Mayın Tarlası</button><button data-p="g9">🔤 Kelime Tahmin</button><button data-p="g10">🧟 Zombi Hayatta Kalma</button><button data-p="g11">🏎️ Mini Araba Yarışı</button></nav>
 <main>
 <section id="p0">
   <div class="home-hero">
@@ -508,6 +508,7 @@ main.zombie-wide{
     <button type="button" class="home-game" data-home-go="g8"><span class="home-game-icon">💣</span><span class="home-game-copy"><b>Mayın Tarlası</b><small>Mayınlara basmadan alanı aç.</small></span><span class="home-play">Oyna ↗</span></button>
     <button type="button" class="home-game" data-home-go="g9"><span class="home-game-icon">🔤</span><span class="home-game-copy"><b>Kelime Tahmin</b><small>Gizli kelimeyi altı hakta bul.</small></span><span class="home-play">Oyna ↗</span></button>
     <button type="button" class="home-game" data-home-go="g10"><span class="home-game-icon">🧟</span><span class="home-game-copy"><b>Zombi Hayatta Kalma</b><small>Dalgaları aş, güçlen ve hayatta kal.</small></span><span class="home-play">Oyna ↗</span></button>
+    <button type="button" class="home-game" data-home-go="g11"><span class="home-game-icon">🏎️</span><span class="home-game-copy"><b>Mini Araba Yarışı</b><small>Otomatik yarış, ödüller ve garaj yatırımları.</small></span><span class="home-play">Oyna ↗</span></button>
   </div>
   <div class="home-suggest">
     <div class="home-suggest-intro"><span class="home-suggest-mark">💡</span><div><h3>Oyun önerin var mı?</h3><p class="d">Eklenmesini istediğin oyunu yaz. Öneri metnini kopyalayalım ve Instagram'dan gönderebil.</p></div></div>
@@ -664,6 +665,12 @@ h2{margin:0 0 4px}
   </div>
 </div>
 </section>
+<section id="g11" hidden>
+  <h2>🏎️ Mini Araba Yarışı</h2>
+  <p class="d">Araçlar otomatik yarışır; derecene göre kredi kazan, garajına yatırım yap ve sonraki yarışlarda güçlen. İlerlemen bu tarayıcıda saklanır.</p>
+  <iframe id="car-race-frame" title="Mini Araba Yarışı" data-src="/mini-araba-yarisi.html" src="about:blank" loading="lazy" style="display:block;width:100%;height:1450px;border:0;border-radius:14px;background:#0a1010" referrerpolicy="same-origin"></iframe>
+</section>
+
 </main>
 <script>
 const T=[["beyaz","Beyaz","#ffffff"],["siyah","Siyah","#000000"],["mavi","Mavi","#1c3d73"],["yesil","Yeşil","#1e5a3a"]];
@@ -695,14 +702,14 @@ let stopG=()=>{};
 const PAGE_PATHS=Object.freeze({
 p0:"/",p1:"/ayarlar",p2:"/paylas",
 g1:"/yilan",g2:"/hafiza",g3:"/xox",g4:"/101-okey",
-g5:"/21-blackjack",g6:"/2048",g8:"/mayin-tarlasi",g9:"/kelime-tahmin",g10:"/zombi-hayatta-kalma"
+g5:"/21-blackjack",g6:"/2048",g8:"/mayin-tarlasi",g9:"/kelime-tahmin",g10:"/zombi-hayatta-kalma",g11:"/mini-araba-yarisi"
 });
 const PATH_PAGES=Object.fromEntries(Object.entries(PAGE_PATHS).map(([id,path])=>[path,id]));
 const PAGE_TITLES={
 p0:"Mini Oyunlar",p1:"Ayarlar | Mini Oyunlar",p2:"Paylaş | Mini Oyunlar",
 g1:"Yılan | Mini Oyunlar",g2:"Hafıza | Mini Oyunlar",g3:"XOX | Mini Oyunlar",
 g4:"101 Okey | Mini Oyunlar",g5:"21 Blackjack | Mini Oyunlar",
-g6:"2048 | Mini Oyunlar",g8:"Mayın Tarlası | Mini Oyunlar",g9:"Kelime Tahmin | Mini Oyunlar",g10:"Zombi Hayatta Kalma | Mini Oyunlar"
+g6:"2048 | Mini Oyunlar",g8:"Mayın Tarlası | Mini Oyunlar",g9:"Kelime Tahmin | Mini Oyunlar",g10:"Zombi Hayatta Kalma | Mini Oyunlar",g11:"Mini Araba Yarışı | Mini Oyunlar"
 };
 function pageFromPath(){
 const path=location.pathname.replace(/\/+$/,"")||"/";
@@ -732,6 +739,8 @@ if(id==="g6")game2048();
 if(id==="g8")mayin();
 if(id==="g9")kelimeTahmin();
 if(id==="g10")zombieSurvival();
+const raceFrame=q("car-race-frame");
+if(raceFrame){if(id==="g11"){if(raceFrame.dataset.loaded!=="1"){raceFrame.src=raceFrame.dataset.src;raceFrame.dataset.loaded="1";}}else if(raceFrame.dataset.loaded==="1"){raceFrame.src="about:blank";raceFrame.dataset.loaded="0";}}
 }
 function snake(){
 const canvas=q("cv"),x=canvas.getContext("2d"),N=18,S=36,m=q("m1");
