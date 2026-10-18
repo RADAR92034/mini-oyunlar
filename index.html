@@ -152,10 +152,17 @@ main.okey-wide{max-width:1500px}
 @media(max-width:1050px){main.okey-wide{max-width:100%}.ok-game-layout{grid-template-columns:minmax(0,1fr) minmax(220px,31%)}.ok-meld-target .tile{width:24px;height:34px;font-size:.72rem}}
 @media(max-width:760px){.ok-game-layout{grid-template-columns:minmax(0,1fr)}.ok-opened{grid-row:1;max-height:260px}.ok-hand-area{grid-row:2}.ok-meld-row{display:flex}.ok-meld-actions .btn{font-size:.74rem}.ok-meld-target .tile{width:25px;height:35px}}
 
+
+/* 2048 oyunu */
+.b2k{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));grid-template-rows:repeat(var(--n,4),minmax(0,1fr));gap:8px;width:min(100%,380px);aspect-ratio:1;padding:8px;background:var(--side);border-radius:12px;touch-action:none;user-select:none;container-type:inline-size}
+.b2k .c{min-width:0;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:8px;font-weight:800;line-height:1;background:rgba(255,255,255,.08)}
+.b2k .c.pop{animation:p2k .15s}
+@keyframes p2k{from{transform:scale(.4)}to{transform:scale(1)}}
+.btn.off{background:var(--card);color:var(--fg)}
 </style>
 </head>
 <body>
-<nav><button id="n1" class="on" data-p="p1">⚙️ Ayarlar</button><button id="n2" data-p="p2">👥 Arkadaşını davet et</button><h1 style="margin-top:18px">🎮 Mini Oyunlar</h1><input id="gs" placeholder="Oyun ara…" aria-label="Oyun ara"><button data-p="g1">🐍 Yılan</button><button data-p="g2">🃏 Hafıza</button><button data-p="g3">❌ XOX</button><button data-p="g4">🎴 101 Okey</button><button data-p="g5">🃏 21 Blackjack</button></nav>
+<nav><button id="n1" class="on" data-p="p1">⚙️ Ayarlar</button><button id="n2" data-p="p2">👥 Arkadaşını davet et</button><h1 style="margin-top:18px">🎮 Mini Oyunlar</h1><input id="gs" placeholder="Oyun ara…" aria-label="Oyun ara"><button data-p="g1">🐍 Yılan</button><button data-p="g2">🃏 Hafıza</button><button data-p="g3">❌ XOX</button><button data-p="g4">🎴 101 Okey</button><button data-p="g5">🃏 21 Blackjack</button><button data-p="g6">🔢 2048</button></nav>
 <main><section id="p1">
 <h2>⚙️ Ayarlar</h2>
 <p class="d">Sitenin görünümünü buradan değiştir.</p>
@@ -201,6 +208,33 @@ main.okey-wide{max-width:1500px}
   </div>
 </section>
 
+<section id="g6"> bloğunu, .b2k CSS kurallarını ve game2048() fonksiyonunu al.
+- Siteye eklerken menüye data-p="g6" butonu ekle; sayfa açılınca game2048() çağrılsın, sayfa değişince stopG() çağrılsın.
+- Fonksiyon q(id)=document.getElementById(id) ve stopG değişkenine ihtiyaç duyar (aşağıda tanımlı).
+- Renkler CSS değişkenleriyle gelir (--bg, --side, --card, --fg, --mut, --acc); sitenin temasına uyar.
+-->
+<style>
+:root{--bg:#0b1d3a;--side:#10294f;--card:#1c3d73;--fg:#e6efff;--mut:#93acd1;--acc:#3b82f6;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,sans-serif;padding:20px}
+main{max-width:420px;margin:auto}
+h2{margin:0 0 4px}
+.d{color:var(--mut);margin:0;font-size:.9rem}
+.m{min-height:1.4em;margin:8px 0;font-weight:600}
+.btn{padding:9px 14px;border:0;border-radius:6px;background:var(--acc);color:#fff;cursor:pointer;margin:2px;font-size:.9rem}
+.b2k{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));grid-template-rows:repeat(var(--n,4),minmax(0,1fr));gap:8px;width:min(100%,380px);aspect-ratio:1;padding:8px;background:var(--side);border-radius:12px;touch-action:none;user-select:none;container-type:inline-size}
+.b2k .c{min-width:0;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:8px;font-weight:800;line-height:1;background:rgba(255,255,255,.08)}
+.b2k .c.pop{animation:p2k .15s}
+@keyframes p2k{from{transform:scale(.4)}to{transform:scale(1)}}
+.btn.off{background:var(--card);color:var(--fg)}
+</style>
+</head>
+<body>
+<main>
+<section id="g6"><h2>🔢 2048</h2><p class="d">Ok tuşları, WASD ya da parmakla kaydır. Aynı sayıları birleştir. Oyun 2048’de bitmez, sonsuza kadar devam eder.</p>
+<div class="m"><span id="s2048">Skor: 0</span> · <span id="bs2048">En iyi: 0</span> · <span id="x2048"></span></div>
+<div id="z2048" style="margin:8px 0"></div><div id="b2048" class="b2k"></div>
+<div style="margin-top:12px"><button class="btn" id="u2048">↶ Geri al</button><button class="btn" id="n2048">Yeni oyun</button></div></section>
 </main>
 <script>
 const T=[["beyaz","Beyaz","#ffffff"],["siyah","Siyah","#000000"],["mavi","Mavi","#1c3d73"],["yesil","Yeşil","#1e5a3a"]];
@@ -236,7 +270,7 @@ stopG();stopG=()=>{};
 document.querySelector("main").classList.toggle("okey-wide",id==="g4");
 document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);
 document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.p===id));
-if(id==="g1")snake();if(id==="g2")memory();if(id==="g3")xox();if(id==="g4")okey101();if(id==="g5")blackjack()}
+if(id==="g1")snake();if(id==="g2")memory();if(id==="g3")xox();if(id==="g4")okey101();if(id==="g5")blackjack();if(id==="g6")game2048()}
 function snake(){
 const x=q("cv").getContext("2d"),N=18,S=20,m=q("m1");
 let s,d,f,sc,run;
@@ -808,6 +842,62 @@ function blackjack(){
   // A new page visit starts a fresh hand state but keeps the local virtual balance.
   player=[];dealer=[];render();
 }
+
+function game2048(){
+let N=4;
+const bd=q('b2048');
+let g,score,hist=[],best=0,nt=null;
+const key=()=>N===4?'b2048':'b2048_'+N;
+const PAL={2:'#eee4da',4:'#ede0c8',8:'#f2b179',16:'#f59563',32:'#f67c5f',64:'#f65e3b',128:'#edcf72',256:'#edcc61',512:'#edc850',1024:'#edc53f',2048:'#edc22e'};
+const col=v=>PAL[v]||`hsl(${(Math.log2(v)*37)%360},60%,45%)`;
+const fz=v=>v<100?.5:v<1000?.4:v<10000?.32:.25;
+function add(){const e=[];g.forEach((r,i)=>r.forEach((v,j)=>{if(!v)e.push([i,j])}));if(!e.length)return;const p=e[Math.floor(Math.random()*e.length)];g[p[0]][p[1]]=Math.random()<.9?2:4;nt=p}
+function slide(line){
+const a=line.filter(Boolean),out=[];let gain=0;
+for(let i=0;i<a.length;i++){if(a[i]===a[i+1]){out.push(a[i]*2);gain+=a[i]*2;i++}else out.push(a[i])}
+while(out.length<N)out.push(0);
+return{out,gain}}
+function canMove(){
+for(let i=0;i<N;i++)for(let j=0;j<N;j++){if(!g[i][j])return true;if(j<N-1&&g[i][j]===g[i][j+1])return true;if(i<N-1&&g[i][j]===g[i+1][j])return true}
+return false}
+function sizes(){
+const z=q('z2048');z.innerHTML='';
+[4,5,6].forEach(k=>{const b=document.createElement('button');b.className='btn'+(k===N?'':' off');b.textContent=k+'×'+k;b.onclick=()=>{N=k;start()};z.appendChild(b)})}
+function draw(){
+if(score>best){best=score;try{localStorage.setItem(key(),best)}catch(e){}}
+q('s2048').textContent='Skor: '+score;q('bs2048').textContent='En iyi: '+best;
+const mx=Math.max(...g.flat());
+q('x2048').textContent=canMove()?'En büyük taş: '+mx:'Hamle kalmadı! Geri al ya da yeni oyun başlat.';
+bd.style.setProperty('--n',N);bd.style.gap=(N>5?5:8)+'px';
+bd.innerHTML=g.map((r,i)=>r.map((v,j)=>{
+return `<div class='c${nt&&nt[0]===i&&nt[1]===j?' pop':''}' style='${v?`background:${col(v)};color:${v<=4?'#776e65':'#fff'};font-size:calc(100cqw/${N}*${fz(v)})`:''}'>${v||''}</div>`}).join('')).join('');
+nt=null}
+function move(d){
+const old=JSON.stringify(g),prev={g:g.map(r=>r.slice()),score};
+let gain=0;
+for(let k=0;k<N;k++){
+const line=[];
+for(let m=0;m<N;m++)line.push(d<2?g[k][m]:g[m][k]);
+if(d%2)line.reverse();
+const r=slide(line);gain+=r.gain;
+if(d%2)r.out.reverse();
+for(let m=0;m<N;m++){if(d<2)g[k][m]=r.out[m];else g[m][k]=r.out[m]}}
+if(JSON.stringify(g)===old)return;
+hist.push(prev);if(hist.length>50)hist.shift();
+score+=gain;add();draw()}
+function start(){
+try{best=+localStorage.getItem(key())||0}catch(e){best=0}
+g=Array.from({length:N},()=>Array(N).fill(0));score=0;hist=[];add();add();sizes();draw()}
+function undo(){const p=hist.pop();if(!p)return;g=p.g;score=p.score;draw()}
+const K={ArrowLeft:0,ArrowRight:1,ArrowUp:2,ArrowDown:3,a:0,d:1,w:2,s:3};
+const kh=e=>{if(e.target.tagName==='INPUT'||e.ctrlKey||e.metaKey)return;const k=e.key.length===1?e.key.toLowerCase():e.key;if(k in K){e.preventDefault();move(K[k])}else if(k==='z'){undo()}};
+document.addEventListener('keydown',kh);
+let sx=0,sy=0;
+bd.onpointerdown=e=>{sx=e.clientX;sy=e.clientY};
+bd.onpointerup=e=>{const dx=e.clientX-sx,dy=e.clientY-sy;if(Math.max(Math.abs(dx),Math.abs(dy))<24)return;if(Math.abs(dx)>Math.abs(dy))move(dx>0?1:0);else move(dy>0?3:2)};
+q('u2048').onclick=undo;q('n2048').onclick=start;
+stopG=()=>{document.removeEventListener('keydown',kh);bd.onpointerdown=bd.onpointerup=null};
+start()}
 
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>pg(b.dataset.p));
 q("gs").oninput=e=>{const v=e.target.value.toLocaleLowerCase("tr-TR").trim();document.querySelectorAll("nav [data-p^=g]").forEach(b=>b.style.display=b.textContent.toLocaleLowerCase("tr-TR").includes(v)?"":"none")};
