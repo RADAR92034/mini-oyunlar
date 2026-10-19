@@ -15,7 +15,7 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,sans-se
 nav{width:210px;background:var(--side);padding:16px 10px;flex-shrink:0}
 nav h1{font-size:1.1rem;margin:0 8px 14px;color:var(--acc)}
 nav button{display:flex;gap:8px;align-items:center;width:100%;text-align:left;padding:10px;border:0;border-radius:6px;background:var(--card);color:var(--fg);font-size:.95rem;cursor:pointer}
-main{flex:1;padding:20px;max-width:820px;margin:auto;width:100%}
+main{flex:1;padding:20px;max-width:820px;margin:0 auto;width:100%}
 h2{margin:0 0 4px}
 h3{margin:22px 0 10px;font-size:1rem;color:var(--mut)}
 .d{color:var(--mut);margin:0;font-size:.9rem}
@@ -155,7 +155,7 @@ main.okey-wide{max-width:1500px}
 
 
 /* 2048 oyunu */
-.b2k{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));grid-template-rows:repeat(var(--n,4),minmax(0,1fr));gap:8px;width:min(100%,380px);aspect-ratio:1;padding:8px;background:var(--side);border-radius:12px;touch-action:none;user-select:none;container-type:inline-size}
+.b2k{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));grid-template-rows:repeat(var(--n,4),minmax(0,1fr));gap:8px;width:min(100%,560px);aspect-ratio:1;padding:8px;background:var(--side);border-radius:12px;touch-action:none;user-select:none;container-type:inline-size}
 .b2k .c{min-width:0;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:8px;font-weight:800;line-height:1;background:rgba(255,255,255,.08)}
 .b2k .c.pop{animation:p2k .15s}
 @keyframes p2k{from{transform:scale(.4)}to{transform:scale(1)}}
@@ -163,7 +163,7 @@ main.okey-wide{max-width:1500px}
 
 
 /* MAYIN CSS */
-.mboard{display:grid;grid-template-columns:repeat(var(--n,8),minmax(0,1fr));gap:2px;width:min(100%,480px);padding:6px;background:var(--side);border-radius:10px;container-type:inline-size;user-select:none;-webkit-user-select:none;touch-action:manipulation;margin-top:10px}
+.mboard{display:grid;grid-template-columns:repeat(var(--n,8),minmax(0,1fr));gap:2px;width:min(100%,600px);padding:6px;background:var(--side);border-radius:10px;container-type:inline-size;user-select:none;-webkit-user-select:none;touch-action:manipulation;margin-top:10px}
 .mboard .cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:4px;background:var(--card);font-weight:800;line-height:1;cursor:pointer;font-size:calc(100cqw / var(--n,8) * .55);overflow:hidden}
 .mboard .cell.o{background:rgba(255,255,255,.07);cursor:default}
 .mboard .cell.x{background:#c62828}
@@ -320,6 +320,10 @@ main.zombie-wide{max-width:none!important;width:100%!important;padding:16px!impo
  .zs-run-foot{font-size:.72rem}
 }
 
+
+/* Mini Araba Yarışı kapsayıcısı — oyun kendi CSS'ini iframe içinde kullanır */
+main.race-wide{flex:1 1 0!important;width:auto!important;min-width:0!important;max-width:none!important;margin:0!important;padding:16px!important}
+@media(max-width:640px){main.race-wide{padding:10px!important}#car-race-frame{height:1600px!important}}
 /* Zombi arayüzü taşma/çakışma düzeltmesi */
 main.zombie-wide{
   flex:1 1 0!important;
@@ -480,6 +484,14 @@ main.zombie-wide{
 
 /* Okeyle bitiş için kısa kazanan animasyonu */
 .ok-okey-finish h2{animation:okey-winner-pop .65s ease-out 2}@keyframes okey-winner-pop{0%,100%{transform:scale(1);text-shadow:none}50%{transform:scale(1.035);text-shadow:0 0 18px #ffd54a,0 0 34px #f6ad2b}}
+
+/* Düzeltmeler: blackjack animasyonu, XOX boyutu, zombi mobil pencere */
+@keyframes bj-slide{from{opacity:0;transform:translate(140px,-110px) rotate(18deg) scale(.7)}to{opacity:1;transform:none}}
+@keyframes bj-flip{from{transform:rotateY(90deg)}to{transform:rotateY(0)}}
+.bj-card.bj-anim{animation:bj-slide .6s cubic-bezier(.2,.8,.2,1) both}
+.bj-card.bj-flip{animation:bj-flip .5s ease-out both}
+#gr3 .cell{font-size:clamp(2.4rem,9vw,4.4rem)}
+@media(max-width:560px){.zs-modal{padding:12px 10px}.zs-modal-icon{font-size:1.6rem}.zs-modal h3{font-size:1rem;margin:2px 0 4px}.zs-modal p{font-size:.78rem;line-height:1.35;margin:5px 0 8px}.zs-modal small{display:none}.zs-modal .btn{padding:9px 14px}.zs-overlay{padding:8px}}
 </style>
 </head>
 <body>
@@ -508,7 +520,7 @@ main.zombie-wide{
     <button type="button" class="home-game" data-home-go="g8"><span class="home-game-icon">💣</span><span class="home-game-copy"><b>Mayın Tarlası</b><small>Mayınlara basmadan alanı aç.</small></span><span class="home-play">Oyna ↗</span></button>
     <button type="button" class="home-game" data-home-go="g9"><span class="home-game-icon">🔤</span><span class="home-game-copy"><b>Kelime Tahmin</b><small>Gizli kelimeyi altı hakta bul.</small></span><span class="home-play">Oyna ↗</span></button>
     <button type="button" class="home-game" data-home-go="g10"><span class="home-game-icon">🧟</span><span class="home-game-copy"><b>Zombi Hayatta Kalma</b><small>Dalgaları aş, güçlen ve hayatta kal.</small></span><span class="home-play">Oyna ↗</span></button>
-    <button type="button" class="home-game" data-home-go="g11"><span class="home-game-icon">🏎️</span><span class="home-game-copy"><b>Mini Araba Yarışı</b><small>Otomatik yarış, ödüller ve garaj yatırımları.</small></span><span class="home-play">Oyna ↗</span></button>
+    <button type="button" class="home-game" data-home-go="g11"><span class="home-game-icon">🏎️</span><span class="home-game-copy"><b>Mini Araba Yarışı</b><small>Otomatik yarışlar, ödüller ve garaj yatırımları.</small></span><span class="home-play">Oyna ↗</span></button>
   </div>
   <div class="home-suggest">
     <div class="home-suggest-intro"><span class="home-suggest-mark">💡</span><div><h3>Oyun önerin var mı?</h3><p class="d">Eklenmesini istediğin oyunu yaz. Öneri metnini kopyalayalım ve Instagram'dan gönderebil.</p></div></div>
@@ -523,7 +535,7 @@ main.zombie-wide{
 <p class="d">Sitenin görünümünü buradan değiştir.</p>
 <h3>Tema</h3>
 <div class="th" id="th"></div></section><section id="p2" hidden><h2>👥 Arkadaşını davet et</h2><p class="d">Siteyi arkadaşına gönder.</p><div class="iv" id="iv" style="margin-top:14px;max-width:380px"></div></section>
-<section id="g1" hidden><h2>🐍 Yılan</h2><p class="d">Ok tuşları, WASD ya da düğmeler. Başlamak için Space tuşuna bas veya ekrandaki düğmeye tıkla.</p><div id="m1" class="m"></div><div id="snake-stage" style="position:relative;width:min(650px,100%);max-width:100%"><canvas id="cv" width="648" height="648" style="display:block;width:100%;height:auto;border-radius:12px"></canvas><div id="snake-start-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.62);border-radius:8px;padding:16px;box-sizing:border-box"><div style="display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;color:#fff"><strong id="snake-start-title">🐍 Hazır mısın?</strong><span id="snake-start-hint">Space tuşuna bas veya düğmeye tıkla</span><button type="button" class="btn" id="snake-start" style="font-size:1rem;padding:12px 20px">▶ Oyuna Başla</button></div></div></div><div class="pad"><span></span><button class="btn" data-d="0,-1">▲</button><span></span><button class="btn" data-d="-1,0">◀</button><button class="btn" data-d="0,1">▼</button><button class="btn" data-d="1,0">▶</button></div></section><section id="g2" hidden><h2>🃏 Hafıza</h2><p class="d">Eş kartları bul.</p><div id="sz"></div><div id="m2" class="m"></div><div class="grid" id="gr2"></div></section><section id="g3" hidden><h2>❌ XOX</h2><p class="d">Sen X’sin, bilgisayar O.</p><div id="m3" class="m"></div><div class="grid" id="gr3" style="grid-template-columns:repeat(3,1fr);max-width:300px"></div><button class="btn" id="rs3" style="margin-top:12px">Yeni oyun</button></section><section id="g4" hidden><h2>🎴 101 Okey</h2><p class="d">22 taşla başlarsın; sıran geldiğinde desteden veya önceki oyuncunun attığı taştan alırsın. Aynı sayıdaki farklı renk taşlarla per, aynı renkte ardışık taşlarla seri oluştur. Geçerli grupların toplamı en az 101 puan olunca “101 Aç” düğmesini kullan. Taşı seçmek için tıkla, yerini değiştirmek için sürükle; atmak için “Seçili taşı at” düğmesine bas. Açtıktan sonra yeni grupları “Perleri masaya koy” ile oynayabilirsin. Deste bitince elde kalan puanı en az olan kazanır.</p><div id="ok"></div></section>
+<section id="g1" hidden><h2>🐍 Yılan</h2><p class="d">Ok tuşları, WASD ya da düğmeler. Başlamak için Space tuşuna bas veya ekrandaki düğmeye tıkla.</p><div id="m1" class="m"></div><div id="snake-stage" style="position:relative;width:min(756px,100%);max-width:100%"><canvas id="cv" width="756" height="756" style="display:block;width:100%;height:auto;border-radius:12px"></canvas><div id="snake-start-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.62);border-radius:8px;padding:16px;box-sizing:border-box"><div style="display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;color:#fff"><strong id="snake-start-title">🐍 Hazır mısın?</strong><span id="snake-start-hint">Space tuşuna bas veya düğmeye tıkla</span><button type="button" class="btn" id="snake-start" style="font-size:1rem;padding:12px 20px">▶ Oyuna Başla</button></div></div></div><div class="pad"><span></span><button class="btn" data-d="0,-1">▲</button><span></span><button class="btn" data-d="-1,0">◀</button><button class="btn" data-d="0,1">▼</button><button class="btn" data-d="1,0">▶</button></div></section><section id="g2" hidden><h2>🃏 Hafıza</h2><p class="d">Eş kartları bul.</p><div id="sz"></div><div id="m2" class="m"></div><div class="grid" id="gr2"></div></section><section id="g3" hidden><h2>❌ XOX</h2><p class="d">Sen X’sin, bilgisayar O.</p><div id="m3" class="m"></div><div class="grid" id="gr3" style="grid-template-columns:repeat(3,1fr);max-width:480px"></div><button class="btn" id="rs3" style="margin-top:12px">Yeni oyun</button></section><section id="g4" hidden><h2>🎴 101 Okey</h2><p class="d">22 taşla başlarsın; sıran geldiğinde desteden veya önceki oyuncunun attığı taştan alırsın. Aynı sayıdaki farklı renk taşlarla per, aynı renkte ardışık taşlarla seri oluştur. Geçerli grupların toplamı en az 101 puan olunca “101 Aç” düğmesini kullan. Taşı seçmek için tıkla, yerini değiştirmek için sürükle; atmak için “Seçili taşı at” düğmesine bas. Açtıktan sonra yeni grupları “Perleri masaya koy” ile oynayabilirsin. Deste bitince elde kalan puanı en az olan kazanır.</p><div id="ok"></div></section>
 <section id="g5" hidden>
   <div class="bj-wrap">
     <h2>🃏 21 Blackjack</h2>
@@ -563,24 +575,6 @@ main.zombie-wide{
   </div>
 </section>
 
-<style>
-:root{--bg:#0b1d3a;--side:#10294f;--card:#1c3d73;--fg:#e6efff;--mut:#93acd1;--acc:#3b82f6;color-scheme:dark}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,sans-serif;padding:20px}
-main{max-width:420px;margin:auto}
-h2{margin:0 0 4px}
-.d{color:var(--mut);margin:0;font-size:.9rem}
-.m{min-height:1.4em;margin:8px 0;font-weight:600}
-.btn{padding:9px 14px;border:0;border-radius:6px;background:var(--acc);color:#fff;cursor:pointer;margin:2px;font-size:.9rem}
-.b2k{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));grid-template-rows:repeat(var(--n,4),minmax(0,1fr));gap:8px;width:min(100%,380px);aspect-ratio:1;padding:8px;background:var(--side);border-radius:12px;touch-action:none;user-select:none;container-type:inline-size}
-.b2k .c{min-width:0;min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;border-radius:8px;font-weight:800;line-height:1;background:rgba(255,255,255,.08)}
-.b2k .c.pop{animation:p2k .15s}
-@keyframes p2k{from{transform:scale(.4)}to{transform:scale(1)}}
-.btn.off{background:var(--card);color:var(--fg)}
-</style>
-</head>
-<body>
-<main>
 <section id="g6"><h2>🔢 2048</h2><p class="d">Ok tuşları, WASD ya da parmakla kaydır. Aynı sayıları birleştir. Oyun 2048’de bitmez, sonsuza kadar devam eder.</p>
 <div class="m"><span id="s2048">Skor: 0</span> · <span id="bs2048">En iyi: 0</span> · <span id="x2048"></span></div>
 <div id="z2048" style="margin:8px 0"></div><div id="b2048" class="b2k"></div>
@@ -609,7 +603,6 @@ h2{margin:0 0 4px}
 <div class="zs-wrap">
   <div class="zs-heading">
     <div>
-      <p class="zs-kicker">DALGALAR · BOSS SAVAŞI · KALICI GELİŞİM</p>
       <h2>🪖 Zombi Hayatta Kalma</h2>
       <p class="d">Büyük haritada hareket et, zombileri temizle, her dalganın boss'unu yen ve altınlarınla cephaneliğini güçlendir.</p>
     </div>
@@ -667,10 +660,9 @@ h2{margin:0 0 4px}
 </section>
 <section id="g11" hidden>
   <h2>🏎️ Mini Araba Yarışı</h2>
-  <p class="d">Araçlar otomatik yarışır; derecene göre kredi kazan, garajına yatırım yap ve sonraki yarışlarda güçlen. İlerlemen bu tarayıcıda saklanır.</p>
+  <p class="d">Araçlar otomatik yarışır. Derecene göre kredi kazan, garajına yatırım yap ve otomobilini geliştir. İlerlemen aynı tarayıcıda saklanır.</p>
   <iframe id="car-race-frame" title="Mini Araba Yarışı" data-src="/mini-araba-yarisi.html" src="about:blank" loading="lazy" style="display:block;width:100%;height:1450px;border:0;border-radius:14px;background:#0a1010" referrerpolicy="same-origin"></iframe>
 </section>
-
 </main>
 <script>
 const T=[["beyaz","Beyaz","#ffffff"],["siyah","Siyah","#000000"],["mavi","Mavi","#1c3d73"],["yesil","Yeşil","#1e5a3a"]];
@@ -702,7 +694,7 @@ let stopG=()=>{};
 const PAGE_PATHS=Object.freeze({
 p0:"/",p1:"/ayarlar",p2:"/paylas",
 g1:"/yilan",g2:"/hafiza",g3:"/xox",g4:"/101-okey",
-g5:"/21-blackjack",g6:"/2048",g8:"/mayin-tarlasi",g9:"/kelime-tahmin",g10:"/zombi-hayatta-kalma",g11:"/pitlane-tycoon"
+g5:"/21-blackjack",g6:"/2048",g8:"/mayin-tarlasi",g9:"/kelime-tahmin",g10:"/zombi-hayatta-kalma",g11:"/mini-araba-yarisi"
 });
 const PATH_PAGES=Object.fromEntries(Object.entries(PAGE_PATHS).map(([id,path])=>[path,id]));
 const PAGE_TITLES={
@@ -728,6 +720,7 @@ const mainEl=document.querySelector("main");
 mainEl.classList.toggle("okey-wide",id==="g4");
 mainEl.classList.toggle("home-wide",id==="p0");
 mainEl.classList.toggle("zombie-wide",id==="g10");
+mainEl.classList.toggle("race-wide",id==="g11");
 document.querySelectorAll("main>section").forEach(s=>s.hidden=s.id!==id);
 document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.p===id));
 if(id==="g1")snake();
@@ -743,7 +736,7 @@ const raceFrame=q("car-race-frame");
 if(raceFrame){if(id==="g11"){if(raceFrame.dataset.loaded!=="1"){raceFrame.src=raceFrame.dataset.src;raceFrame.dataset.loaded="1";}}else if(raceFrame.dataset.loaded==="1"){raceFrame.src="about:blank";raceFrame.dataset.loaded="0";}}
 }
 function snake(){
-const canvas=q("cv"),x=canvas.getContext("2d"),N=18,S=36,m=q("m1");
+const canvas=q("cv"),x=canvas.getContext("2d"),N=18,S=42,m=q("m1");
 const overlay=q("snake-start-overlay"),startBtn=q("snake-start"),startTitle=q("snake-start-title"),startHint=q("snake-start-hint");
 let s,d,f,sc,run=false,gameOver=false;
 function food(){do{f=[Math.floor(Math.random()*N),Math.floor(Math.random()*N)]}while(s.some(p=>p[0]===f[0]&&p[1]===f[1]))}
@@ -810,9 +803,9 @@ function memory(){
 const E=["🍎","🚀","⚽","🎧","🐱","🌙","🍕","🎮"],P=E.concat(XE),n=msz*msz,pairs=n>>1,c=P.slice(0,pairs).flatMap(e=>[e,e]).concat(n%2?["⭐"]:[]).sort(()=>Math.random()-.5),gr=q("gr2"),m=q("m2");
 let op=[],done=0,mv=0,lock=false;
 gr.innerHTML="";m.textContent="Hamle: 0";
-gr.style.gridTemplateColumns="repeat("+msz+",1fr)";gr.style.maxWidth=(msz*72)+"px";
+gr.style.gridTemplateColumns="repeat("+msz+",1fr)";gr.style.maxWidth=(msz*115)+"px";
 const sb=q("sz");sb.innerHTML="";[4,5,6].forEach(k=>{const bt=document.createElement("button");bt.className="btn"+(k===msz?"":" off");bt.textContent=k+"×"+k;bt.onclick=()=>{msz=k;memory()};sb.appendChild(bt)});
-c.forEach(e=>{const b=document.createElement("button");b.className="cell";b.textContent="?";b.style.fontSize=msz>5?"1.3rem":msz>4?"1.6rem":"2rem";if(e==="⭐"){b.textContent=e;b.disabled=true;gr.appendChild(b);return}b.onclick=()=>{
+c.forEach(e=>{const b=document.createElement("button");b.className="cell";b.textContent="?";b.style.fontSize=msz>5?"1.9rem":msz>4?"2.3rem":"2.8rem";if(e==="⭐"){b.textContent=e;b.disabled=true;gr.appendChild(b);return}b.onclick=()=>{
 if(lock||b.dataset.o||op.length===2)return;
 b.textContent=e;b.dataset.o=1;op.push([b,e]);
 if(op.length===2){mv++;m.textContent="Hamle: "+mv;
@@ -1394,27 +1387,52 @@ function okey101(){
 function blackjack(){
   const $=id=>document.getElementById(id);
   const suits=[["♠","black"],["♥","red"],["♦","red"],["♣","black"]];
-  let balance=1000,bet=50,player=[],dealer=[],active=false,finished=true,hideHole=true,canDouble=false;
+  const BETS=[10,25,50,100,250,500,1000,2500,5000,10000];
+  let balance=1000,bet=50,player=[],dealer=[],active=false,finished=true,hideHole=true,canDouble=false,busy=false,alive=true;
   try{const saved=localStorage.getItem("mini_bj_balance");if(saved!==null&&Number.isFinite(+saved)&&+saved>=0)balance=+saved}catch(e){}
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   const value=c=>c.r==="A"?11:(["J","Q","K"].includes(c.r)?10:+c.r);
   function score(hand){let n=hand.reduce((a,c)=>a+value(c),0),aces=hand.filter(c=>c.r==="A").length;while(n>21&&aces){n-=10;aces--}return n}
   function drawCard(){const ranks=["A","2","3","4","5","6","7","8","9","10","J","Q","K"];return {r:ranks[Math.floor(Math.random()*ranks.length)],...(()=>{const s=suits[Math.floor(Math.random()*4)];return {s:s[0],color:s[1]}})()}}
   function save(){try{localStorage.setItem("mini_bj_balance",String(balance))}catch(e){}}
   function fmt(n){return Math.floor(n).toLocaleString("tr-TR")+" jeton"}
+  const sel=$("bj-bet-select");
+  sel.innerHTML=BETS.map(v=>`<option value="${v}">${v.toLocaleString("tr-TR")} jeton</option>`).join("");
+  sel.value="50";
+  function fitBet(){
+    [...sel.options].forEach(o=>{o.disabled=+o.value>balance&&+o.value!==BETS[0]});
+    let want=+sel.value||50;
+    if(want>balance)want=BETS.filter(v=>v<=balance).pop()||BETS[0];
+    sel.value=String(want);
+    bet=Math.min(want,balance);
+  }
   function cardHTML(c,back=false){if(back)return '<div class="bj-card back" aria-label="Kapalı kart">✦</div>';return `<div class="bj-card ${c.color}"><span>${c.r}<br>${c.s}</span><span class="bj-suit">${c.s}</span><span class="bj-bottom">${c.r}<br>${c.s}</span></div>`}
+  function cardEl(c,back,anim){const t=document.createElement("div");t.innerHTML=cardHTML(c,back);const el=t.firstChild;if(anim)el.classList.add("bj-anim");return el}
+  function syncHand(id,hand,hideSecond){
+    const box=$(id);
+    if(!hand.length){box.innerHTML="";return}
+    hand.forEach((c,i)=>{
+      const back=hideSecond&&i===1,el=box.children[i];
+      if(!el)box.appendChild(cardEl(c,back,true));
+      else if(el.classList.contains("back")&&!back){const n=cardEl(c,false,false);n.classList.add("bj-flip");box.replaceChild(n,el)}
+    });
+    while(box.children.length>hand.length)box.removeChild(box.lastChild);
+  }
   function render(){
+    if(!active&&!busy)fitBet();
     $("bj-balance").textContent=fmt(balance);$("bj-current-bet").textContent=fmt(bet);
-    $("bj-dealer-cards").innerHTML=dealer.map((c,i)=>cardHTML(c,hideHole&&i===1)).join("");
-    $("bj-player-cards").innerHTML=player.map(c=>cardHTML(c)).join("");
+    syncHand("bj-dealer-cards",dealer,hideHole);
+    syncHand("bj-player-cards",player,false);
     $("bj-player-score").textContent=player.length?"· "+score(player):"";
-    $("bj-dealer-score").textContent=dealer.length?"· "+(hideHole&&active?value(dealer[0])+(dealer[0].r==="A"?" / 11":"") :score(dealer)):"";
-    $("bj-hit").disabled=!active;$("bj-stand").disabled=!active;$("bj-double").disabled=!(active&&canDouble&&balance>=bet);
-    $("bj-deal").disabled=active||balance<=0;
-    $("bj-bet-select").disabled=active;
+    $("bj-dealer-score").textContent=dealer.length?"· "+(hideHole&&active?value(dealer[0])+(dealer[0].r==="A"?" / 11":""):score(dealer)):"";
+    const can=active&&!busy;
+    $("bj-hit").disabled=!can;$("bj-stand").disabled=!can;$("bj-double").disabled=!(can&&canDouble&&balance>=bet);
+    $("bj-deal").disabled=active||busy||balance<=0;
+    sel.disabled=active||busy;
   }
   function message(s){$("bj-message").textContent=s}
   function settle(outcome){
-    active=false;finished=true;hideHole=false;canDouble=false;
+    active=false;finished=true;hideHole=false;canDouble=false;busy=false;
     if(outcome==="win"){balance+=bet*2;message("Kazandın! Bahsin kadar kâr ettin: "+fmt(bet)+".")}
     else if(outcome==="blackjack"){const profit=Math.floor(bet*1.5);balance+=bet+profit;message("Blackjack! 3:2 ödeme: "+fmt(profit)+" kâr.")}
     else if(outcome==="push"){balance+=bet;message("Berabere! Bahsin iade edildi.")}
@@ -1422,30 +1440,51 @@ function blackjack(){
     $("bj-last-result").textContent=({"win":"Kazandın","blackjack":"Blackjack!","push":"Berabere","lose":"Kaybettin"}[outcome]||"Bitti");
     save();render();
   }
-  function dealerTurn(){
-    hideHole=false;
-    while(score(dealer)<17)dealer.push(drawCard());
+  async function reveal(){hideHole=false;render();await sleep(800)}
+  async function dealerTurn(){
+    busy=true;render();
+    await reveal();if(!alive)return;
+    while(score(dealer)<17){dealer.push(drawCard());render();await sleep(950);if(!alive)return}
     const ps=score(player),ds=score(dealer);
     if(ds>21||ps>ds)settle("win");else if(ps===ds)settle("push");else settle("lose");
   }
-  function deal(){
-    if(active||balance<=0)return;
-    bet=Math.min(+$("bj-bet-select").value,balance);
+  async function deal(){
+    if(active||busy||balance<=0)return;
+    bet=Math.min(+sel.value,balance);
     if(bet<=0){message("Bahis için yeterli jetonun yok.");return}
-    balance-=bet;player=[drawCard(),drawCard()];dealer=[drawCard(),drawCard()];
-    active=true;finished=false;hideHole=true;canDouble=true;$("bj-last-result").textContent="Devam ediyor";
-    if(score(player)===21){hideHole=false;if(score(dealer)===21)settle("push");else settle("blackjack")}
-    else if(score(dealer)===21){hideHole=false;settle("lose");message("Krupiyede blackjack var. Bahsi kaybettin.")}
-    else message("Sıra sende. Kart çekebilir, kalabilir veya bahsi ikiye katlayabilirsin.");
+    busy=true;balance-=bet;player=[];dealer=[];active=true;finished=false;hideHole=true;canDouble=true;
+    $("bj-last-result").textContent="Dağıtılıyor";message("Kartlar dağıtılıyor…");
     render();
+    for(const h of [player,dealer,player,dealer]){
+      await sleep(500);if(!alive)return;
+      h.push(drawCard());render();
+      await sleep(650);if(!alive)return;
+    }
+    $("bj-last-result").textContent="Devam ediyor";
+    if(score(player)===21){await reveal();if(!alive)return;if(score(dealer)===21)settle("push");else settle("blackjack")}
+    else if(score(dealer)===21){await reveal();if(!alive)return;settle("lose");message("Krupiyede blackjack var. Bahsi kaybettin.")}
+    else{busy=false;message("Sıra sende. Kart çekebilir, kalabilir veya bahsi ikiye katlayabilirsin.");render()}
   }
   $("bj-deal").onclick=deal;
-  $("bj-hit").onclick=()=>{if(!active)return;player.push(drawCard());canDouble=false;if(score(player)>21){hideHole=false;settle("lose");message("21'i geçtin! Bu eli kaybettin.")}else if(score(player)===21)dealerTurn();else message("Kart çektin. Devam et veya kal.");render()};
-  $("bj-stand").onclick=()=>{if(active)dealerTurn()};
-  $("bj-double").onclick=()=>{if(!active||!canDouble||balance<bet)return;balance-=bet;bet*=2;player.push(drawCard());canDouble=false;if(score(player)>21){hideHole=false;settle("lose");message("İkiye katladın ama 21'i geçtin. Bahsi kaybettin.")}else dealerTurn();render()};
-  $("bj-bet-select").onchange=()=>{bet=Math.min(+$("bj-bet-select").value,balance);render()};
-  $("bj-reset").onclick=()=>{if(active){message("Önce mevcut eli tamamla.");return}balance=1000;bet=50;$("bj-bet-select").value="50";$("bj-last-result").textContent="Sıfırlandı";save();message("Bakiyen 1.000 jetona sıfırlandı.");render()};
-  // A new page visit starts a fresh hand state but keeps the local virtual balance.
+  $("bj-hit").onclick=async()=>{
+    if(!active||busy)return;
+    busy=true;player.push(drawCard());canDouble=false;render();
+    await sleep(650);if(!alive)return;
+    if(score(player)>21){await reveal();if(!alive)return;settle("lose");message("21'i geçtin! Bu eli kaybettin.")}
+    else if(score(player)===21)await dealerTurn();
+    else{busy=false;message("Kart çektin. Devam et veya kal.");render()}
+  };
+  $("bj-stand").onclick=()=>{if(active&&!busy)dealerTurn()};
+  $("bj-double").onclick=async()=>{
+    if(!active||busy||!canDouble||balance<bet)return;
+    busy=true;balance-=bet;bet*=2;player.push(drawCard());canDouble=false;render();
+    await sleep(650);if(!alive)return;
+    if(score(player)>21){await reveal();if(!alive)return;settle("lose");message("İkiye katladın ama 21'i geçtin. Bahsi kaybettin.")}
+    else await dealerTurn();
+  };
+  sel.onchange=()=>{bet=Math.min(+sel.value,balance);render()};
+  $("bj-reset").onclick=()=>{if(active||busy){message("Önce mevcut eli tamamla.");return}balance=1000;bet=50;sel.value="50";$("bj-last-result").textContent="Sıfırlandı";save();message("Bakiyen 1.000 jetona sıfırlandı.");render()};
+  stopG=()=>{alive=false};
   player=[];dealer=[];render();
 }
 
