@@ -492,6 +492,33 @@ main.zombie-wide{
 .bj-card.bj-flip{animation:bj-flip .5s ease-out both}
 #gr3 .cell{font-size:clamp(2.4rem,9vw,4.4rem)}
 @media(max-width:560px){.zs-modal{padding:12px 10px}.zs-modal-icon{font-size:1.6rem}.zs-modal h3{font-size:1rem;margin:2px 0 4px}.zs-modal p{font-size:.78rem;line-height:1.35;margin:5px 0 8px}.zs-modal small{display:none}.zs-modal .btn{padding:9px 14px}.zs-overlay{padding:8px}}
+
+/* Blackjack responsive/performance polish */
+.bj-wrap{width:100%;max-width:760px;margin-inline:auto}
+.bj-wrap button,.bj-wrap select{touch-action:manipulation}
+.bj-wrap button:focus-visible,.bj-wrap select:focus-visible{outline:3px solid #f2c46d;outline-offset:3px}
+.bj-table{isolation:isolate}
+.bj-cards{min-width:0}
+.bj-card{flex-shrink:0;user-select:none;-webkit-user-select:none}
+@media(max-width:480px){
+  .bj-wrap{font-size:15px}
+  .bj-top{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .bj-stat{min-width:0;padding:10px}
+  .bj-stat strong{font-size:1rem;overflow-wrap:anywhere}
+  .bj-stat:last-child{grid-column:1/-1}
+  .bj-bet{align-items:stretch}
+  .bj-bet label{width:100%;text-align:center}
+  .bj-bet select,.bj-bet #bj-deal{flex:1;min-width:0;min-height:44px}
+  .bj-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .bj-controls .btn{min-height:44px;padding:10px 8px;font-size:.92rem}
+  .bj-table{min-height:260px}
+  .bj-zone{margin:7px 0 14px}
+  .bj-cards{gap:4px;min-height:66px}
+  .bj-card{flex-basis:clamp(36px,10vw,43px);width:clamp(36px,10vw,43px);height:clamp(54px,15vw,64px);font-size:.82rem}
+  .bj-card .bj-suit{font-size:1.05rem}
+}
+@media(prefers-reduced-motion:reduce){.bj-card,.bj-card.bj-anim,.bj-card.bj-flip{animation:none!important;transition:none!important}}
+
 </style>
 </head>
 <body>
